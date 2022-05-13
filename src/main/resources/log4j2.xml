@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn" monitorInterval="30">
+    <Appenders>
+        <Console name="StdOut" target="SYSTEM_OUT">
+            <PatternLayout pattern="%msg%n" />
+        </Console>
+        <File name="LogExample" filename="LogExample.log">
+            <PatternLayout
+                    pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+        </File>
+    </Appenders>
+    <Loggers>
+        # Set level
+        <Root level="trace">
+            <AppenderRef ref="StdOut" level="trace"/>
+        </Root>
+        <Logger name="Logging.Logging" level="trace">
+            <AppenderRef ref="StdOut" level="trace" />
+            <AppenderRef ref="LogExample" level="trace" />
+            <AppenderRef ref="LogExample" level="debug" />
+            <AppenderRef ref="LogExample" level="info" />
+            <AppenderRef ref="LogExample" level="warn" />
+            <AppenderRef ref="LogExample" level="error" />
+            <AppenderRef ref="LogExample" level="fatal" />
+        </Logger>
+    </Loggers>
+</Configuration>

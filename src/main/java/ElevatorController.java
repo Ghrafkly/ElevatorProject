@@ -1,5 +1,10 @@
 import java.util.ArrayList;
 
+/*
+    Rip out MAX_CAPACITY from creating the elevator.
+    Put it into another class, such as scheduler.
+ */
+
 public class ElevatorController {
     private int maxFloor;
     private int minFloor;
@@ -29,6 +34,10 @@ public class ElevatorController {
     public void setElevators() {
         for (int i = 0; i < numberOfElevators; i++)
             this.elevators.add(new Elevator(capacity, i));
+    }
+
+    public void runElevators() {
+        elevators.forEach(Thread::start);
     }
 
     @Override

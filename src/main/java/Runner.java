@@ -12,6 +12,6 @@ public class Runner {
 
         ElevatorController elevatorController = MAPPER.readValue(file, ElevatorController.class);
         elevatorController.setElevators();
-        System.out.println(elevatorController);
+        elevatorController.runElevators();
     }
 }

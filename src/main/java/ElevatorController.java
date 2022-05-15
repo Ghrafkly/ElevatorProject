@@ -10,7 +10,7 @@ public class ElevatorController {
     private int minFloor;
     private int numberOfElevators;
     private int capacity;
-    private final ArrayList<Elevator> elevators = new ArrayList<>();
+    private final ArrayList<Thread> elevators = new ArrayList<>();
 
     public ElevatorController() {
     }
@@ -31,9 +31,10 @@ public class ElevatorController {
         this.capacity = capacity;
     }
 
-    public void setElevators() {
+    public void setElevatorThreads() {
+        ElevatorRunnable runnable = new ElevatorRunnable();
         for (int i = 0; i < numberOfElevators; i++)
-            this.elevators.add(new Elevator(capacity, i));
+            elevators.add(new Thread(runnable, String.valueOf(i)));
     }
 
     public void runElevators() {

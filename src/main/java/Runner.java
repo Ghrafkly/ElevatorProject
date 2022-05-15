@@ -11,7 +11,7 @@ public class Runner {
         File file = new File(FILE_NAME);
 
         ElevatorController elevatorController = MAPPER.readValue(file, ElevatorController.class);
-        elevatorController.setElevators();
+        elevatorController.setElevatorThreads();
         elevatorController.runElevators();
     }
 }

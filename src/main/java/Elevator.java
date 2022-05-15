@@ -1,4 +1,4 @@
-public class Elevator extends Thread {
+public class Elevator {
     private final int TRAVEL_TIME_BETWEEN_FLOORS = 1000;
     private final int TIME_TO_OPEN_AND_CLOSE_DOOR = 1000;
 
@@ -71,10 +71,5 @@ public class Elevator extends Thread {
                 ", moveState=" + moveState +
                 ", elevatorID=" + ELEVATOR_ID +
                 '}';
-    }
-
-    @Override
-    public void run() {
-        System.out.printf("Elevator %d is running\n", ELEVATOR_ID);
     }
 }

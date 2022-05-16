@@ -10,7 +10,10 @@ public class EController {
     public static int minFloor;
     public static int capacity;
     private int numberOfElevators;
-    private final ArrayList<Thread> elevators = new ArrayList<>();
+    private final ArrayList<Elevator> elevators = new ArrayList<>();
+    private final ArrayList<Thread> threads = new ArrayList<>();
+
+    public String messageSend;
 
     public EController() {
     }
@@ -41,13 +44,20 @@ public class EController {
 
     // Need to link the Elevator object to a thread somehow
     public void setElevatorThreads() {
-        ERunnable runnable = new ERunnable();
-        for (int i = 0; i < numberOfElevators; i++)
-            elevators.add(new Thread(runnable, String.valueOf(i)));
+        for (int i = 0; i < numberOfElevators; i++) {
+            elevators.add(new Elevator(capacity, i));
+        }
     }
 
     public void runElevators() {
-        elevators.forEach(Thread::start);
+        for (int i = 0; i < elevators.size(); i++) {
+            threads.add(new Thread(elevators.get(i), String.valueOf(i)));
+        }
+        threads.forEach(Thread::start);
+    }
+
+    public void input() {
+
     }
 
     @Override

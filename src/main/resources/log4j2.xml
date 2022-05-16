@@ -2,7 +2,7 @@
 <Configuration status="warn" monitorInterval="30">
     <Appenders>
         <Console name="StdOut" target="SYSTEM_OUT">
-            <PatternLayout pattern="%msg%n" />
+            <PatternLayout pattern="" />
         </Console>
         <File name="ValidatorLog" filename="ValidatorLog.log">
             <PatternLayout
@@ -51,12 +51,12 @@
             <AppenderRef ref="GenCommandsLog" level="fatal" />
         </Logger>
         <Logger name="Scheduler" level="trace">
-        <AppenderRef ref="SchedulerLog" level="trace" />
-        <AppenderRef ref="SchedulerLog" level="debug" />
-        <AppenderRef ref="SchedulerLog" level="info" />
-        <AppenderRef ref="SchedulerLog" level="warn" />
-        <AppenderRef ref="SchedulerLog" level="error" />
-        <AppenderRef ref="SchedulerLog" level="fatal" />
-    </Logger>
+            <AppenderRef ref="SchedulerLog" level="trace" />
+            <AppenderRef ref="SchedulerLog" level="debug" />
+            <AppenderRef ref="SchedulerLog" level="info" />
+            <AppenderRef ref="SchedulerLog" level="warn" />
+            <AppenderRef ref="SchedulerLog" level="error" />
+            <AppenderRef ref="SchedulerLog" level="fatal" />
+        </Logger>
     </Loggers>
 </Configuration>

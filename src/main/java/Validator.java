@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 
 public class Validator implements IValidator {
 
@@ -27,11 +26,7 @@ public class Validator implements IValidator {
      */
     public boolean validateConfig(EController eController){
 
-        if (eController.getMaxFloor() >= eController.getMinFloor()){
-            return true;
-        }
-
-        return false;
+        return eController.getMaxFloor() >= eController.getMinFloor();
 
     }
 

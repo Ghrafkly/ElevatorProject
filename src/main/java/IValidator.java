@@ -1,5 +1,7 @@
+import java.util.ArrayList;
+
 public interface IValidator {
 
-    public char[] validate(String command);
+    public boolean validate(String command);
 
 }

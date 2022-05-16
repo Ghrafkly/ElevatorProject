@@ -35,15 +35,14 @@ public class Validator implements IValidator {
 
             String[] input = command.split(":");
 
-            if (input.length > 3)
+            if (input.length != 3)
                 return false;
 
-            for (int i = 0; i < input.length; i++) {
-                System.out.println(input[i]);
+            for (String s : input) {
 
-                boolean check = isInt(input[i]);
+                boolean check = isInt(s);
 
-                if (check == false) {
+                if (!check) {
 
                     return false;
 

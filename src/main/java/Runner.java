@@ -19,12 +19,12 @@ public class Runner {
         EController elevatorController = MAPPER.readValue(elevator, EController.class);
         GenCommands genCommands = MAPPER.readValue(commands, GenCommands.class);
 
-        if (v.validateConfig(elevatorController)) {
+        genCommands.generator();
+        System.out.println(genCommands.getCommand());
+
+        if (v.validateConfig(elevatorController) == true && v.validate(genCommands.getCommand()) == true) {
             elevatorController.setElevatorThreads();
             elevatorController.runElevators();
-
-            genCommands.generator();
-            System.out.println(genCommands.getCommand());
         }
         else {
             System.out.println("Please re-configure config.json and try again!");

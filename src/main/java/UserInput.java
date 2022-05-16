@@ -8,15 +8,15 @@ public class UserInput {
 
     }
 
-    public void execute(String command){
-
-        if (validate(command)){
-            //RUN COMMAND
-        }
-        else {
-            //IMPLEMENT ERROR MESSAGE
-        }
-
-    }
+//    public void execute(String command){
+//
+//        if (validate(command)){
+//            //RUN COMMAND
+//        }
+//        else {
+//            //IMPLEMENT ERROR MESSAGE
+//        }
+//
+//    }
 
 }

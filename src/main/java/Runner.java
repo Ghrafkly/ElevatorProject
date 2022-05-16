@@ -20,7 +20,6 @@ public class Runner {
         GenCommands genCommands = MAPPER.readValue(commands, GenCommands.class);
 
         genCommands.generator();
-        System.out.println(genCommands.getCommand());
 
         if (v.validateConfig(elevatorController) == true && v.validate(genCommands.getCommand()) == true) {
             elevatorController.setElevatorThreads();

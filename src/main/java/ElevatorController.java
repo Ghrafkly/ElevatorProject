@@ -31,6 +31,7 @@ public class ElevatorController {
         this.capacity = capacity;
     }
 
+    // Need to link the Elevator object to a thread somehow
     public void setElevatorThreads() {
         ElevatorRunnable runnable = new ElevatorRunnable();
         for (int i = 0; i < numberOfElevators; i++)
@@ -43,7 +44,12 @@ public class ElevatorController {
 
     @Override
     public String toString() {
-        return "ElevatorController[maxFloor=%d, minFloor=%d, numberOfElevators=%d, capacity=%d, elevators=%s]"
-                .formatted(maxFloor, minFloor, numberOfElevators, capacity, elevators);
+        return "ElevatorController{" +
+                "maxFloor=" + maxFloor +
+                ", minFloor=" + minFloor +
+                ", numberOfElevators=" + numberOfElevators +
+                ", capacity=" + capacity +
+                ", elevators=" + elevators +
+                '}';
     }
 }

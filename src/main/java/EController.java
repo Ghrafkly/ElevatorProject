@@ -5,35 +5,35 @@ import java.util.ArrayList;
     Put it into another class, such as scheduler.
  */
 
-public class ElevatorController {
-    private int maxFloor;
-    private int minFloor;
+public class EController {
+    public static int maxFloor;
+    public static int minFloor;
+    public static int capacity;
     private int numberOfElevators;
-    private int capacity;
     private final ArrayList<Thread> elevators = new ArrayList<>();
 
-    public ElevatorController() {
+    public EController() {
     }
 
     public void setMaxFloor(int maxFloor) {
-        this.maxFloor = maxFloor;
+        EController.maxFloor = maxFloor;
     }
 
     public void setMinFloor(int minFloor) {
-        this.minFloor = minFloor;
+        EController.minFloor = minFloor;
+    }
+
+    public void setCapacity(int capacity) {
+        EController.capacity = capacity;
     }
 
     public void setNumberOfElevators(int numberOfElevators) {
         this.numberOfElevators = numberOfElevators;
     }
 
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
-    }
-
     // Need to link the Elevator object to a thread somehow
     public void setElevatorThreads() {
-        ElevatorRunnable runnable = new ElevatorRunnable();
+        ERunnable runnable = new ERunnable();
         for (int i = 0; i < numberOfElevators; i++)
             elevators.add(new Thread(runnable, String.valueOf(i)));
     }

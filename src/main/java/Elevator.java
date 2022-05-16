@@ -5,7 +5,7 @@ public class Elevator {
     public final int MAX_CAPACITY;
     private final int ELEVATOR_ID;
     private int nextFloor = 0;
-    private ElevatorState moveState = ElevatorState.IDLE;
+    private EState moveState = EState.IDLE;
     private int currentFloor = 0;
     private int currentCapacity = 0;
     private boolean availability = true;
@@ -23,7 +23,7 @@ public class Elevator {
         return nextFloor;
     }
 
-    public ElevatorState getMoveState() {
+    public EState getMoveState() {
         return moveState;
     }
 
@@ -47,7 +47,7 @@ public class Elevator {
         this.nextFloor = nextFloor;
     }
 
-    public void setMoveState(ElevatorState moveState) {
+    public void setMoveState(EState moveState) {
         this.moveState = moveState;
     }
 

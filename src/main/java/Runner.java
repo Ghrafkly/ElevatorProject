@@ -11,10 +11,10 @@ public class Runner {
     protected static final ObjectMapper MAPPER = new ObjectMapper();
     private static final Logger logger = LogManager.getLogger();
 
-
     public static void main(String[] args) throws IOException {
         File file = new File("config.json");
         Validator v = new Validator();
+
 
         Map<String, Integer> json = readFromJSONFile(file);
         String elevator = MAPPER.writeValueAsString(json.get("elevator"));

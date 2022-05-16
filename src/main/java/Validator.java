@@ -1,5 +1,9 @@
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Validator implements IValidator {
+
+    private static final Logger logger = LogManager.getLogger();
 
     /**
      * Checks to see if the value in the string array is an integer
@@ -14,6 +18,7 @@ public class Validator implements IValidator {
 
         } catch (NumberFormatException e) {
 
+            logger.error("Command value not an integer!");
             return false;
 
         }

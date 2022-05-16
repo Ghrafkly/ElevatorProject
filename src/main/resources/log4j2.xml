@@ -4,7 +4,11 @@
         <Console name="StdOut" target="SYSTEM_OUT">
             <PatternLayout pattern="%msg%n" />
         </Console>
-        <File name="LogExample" filename="LogExample.log">
+        <File name="ValidatorLog" filename="ValidatorLog.log">
+            <PatternLayout
+                    pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+        </File>
+        <File name="RunnerLog" filename="RunnerLog.log">
             <PatternLayout
                     pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
         </File>
@@ -14,14 +18,23 @@
         <Root level="trace">
             <AppenderRef ref="StdOut" level="trace"/>
         </Root>
-        <Logger name="Logging.Logging" level="trace">
+        <Logger name="Validator" level="trace">
             <AppenderRef ref="StdOut" level="trace" />
-            <AppenderRef ref="LogExample" level="trace" />
-            <AppenderRef ref="LogExample" level="debug" />
-            <AppenderRef ref="LogExample" level="info" />
-            <AppenderRef ref="LogExample" level="warn" />
-            <AppenderRef ref="LogExample" level="error" />
-            <AppenderRef ref="LogExample" level="fatal" />
+            <AppenderRef ref="ValidatorLog" level="trace" />
+            <AppenderRef ref="ValidatorLog" level="debug" />
+            <AppenderRef ref="ValidatorLog" level="info" />
+            <AppenderRef ref="ValidatorLog" level="warn" />
+            <AppenderRef ref="ValidatorLog" level="error" />
+            <AppenderRef ref="ValidatorLog" level="fatal" />
+        </Logger>
+        <Logger name="Runner" level="trace">
+            <AppenderRef ref="StdOut" level="trace" />
+            <AppenderRef ref="RunnerLog" level="trace" />
+            <AppenderRef ref="RunnerLog" level="debug" />
+            <AppenderRef ref="RunnerLog" level="info" />
+            <AppenderRef ref="RunnerLog" level="warn" />
+            <AppenderRef ref="RunnerLog" level="error" />
+            <AppenderRef ref="RunnerLog" level="fatal" />
         </Logger>
     </Loggers>
 </Configuration>

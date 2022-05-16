@@ -27,13 +27,13 @@ public class Runner {
             genCommands.generator();
             v.validate(genCommands.getCommand());
 
-            if (v.validateConfig(elevatorController)) {
+//            if (v.validateConfig(elevatorController)) {
                 elevatorController.setElevatorThreads();
                 elevatorController.runElevators();
-            }
-            else {
-                logger.info("Please re-configure config.json and try again!");
-            }
+//            }
+//            else {
+//                logger.info("Please re-configure config.json and try again!");
+//            }
         }
         catch (IllegalArgumentException iae){
             logger.error("Please re-configure config.json and try again!");

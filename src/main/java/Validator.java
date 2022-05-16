@@ -45,13 +45,18 @@ public class Validator implements IValidator {
 
         try {
 
-            if (command.lastIndexOf(":") == command.length() - 1)
+            if (command.lastIndexOf(":") == command.length() - 1) {
+                logger.error("String ending in ':' is not a valid command");
                 return false;
+            }
 
             String[] input = command.split(":");
 
-            if (input.length != 3)
+            if (input.length != 3){
+                logger.error("Command of length: " + input.length + ". Commands should have length 3.");
                 return false;
+            }
+
 
             for (String s : input) {
 

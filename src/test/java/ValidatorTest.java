@@ -55,7 +55,7 @@ public class ValidatorTest {
     }
 
     @Test
-    void test_validate_returns_false_with_10_2_8(){
+    void test_validate_returns_false_with_10_2_8_colon(){
         assertFalse(validate.validate("10:2:8:"));
     }
 
@@ -75,57 +75,62 @@ public class ValidatorTest {
     }
 
     @Test
+    void test_validate_returns_false_with_2_8(){
+        assertFalse(validate.validate("2:8"));
+    }
+
+    @Test
     void test_user_validate_returns_false_when_empty(){
 
         assertFalse(validate.validate(" "));
 
     }
 
-    @Test
-    void test_user_validate_returns_false_with_alphabetic_input(){
-        assertFalse(user.validate("a:b:c"));
-    }
-
-    @Test
-    void test_user_validate_returns_false_with_mixed_input(){
-        assertFalse(user.validate("10:b:c"));
-    }
-
-    @Test
-    void test_user_validate_returns_false_with_mixed_input_per_branch(){
-        assertFalse(user.validate("10a:b:c"));
-    }
-
-    @Test
-    void test_user_validate_returns_true_with_10_2_8(){
-        assertTrue(user.validate("10:2:8"));
-    }
-
-    @Test
-    void test_user_validate_returns_false_with_10_2_8_9(){
-        assertFalse(user.validate("10:2:8:9"));
-    }
-
-    @Test
-    void test_user_validate_returns_false_with_10_2_8_colon(){
-        assertFalse(user.validate("10:2:8:"));
-    }
-
-    @Test
-    void test_user_validate_returns_false_with_10_point_5_2_8(){
-        assertFalse(user.validate("10.5:2:8"));
-    }
-
-    @Test
-    void test_user_validate_returns_false_with_2_10_point_5_8(){
-        assertFalse(user.validate("2:10.5:8"));
-    }
-
-    @Test
-    void test_user_validate_returns_false_with_2_8_10_point_5(){
-        assertFalse(user.validate("2:8:10.5"));
-    }
-
+//    @Test
+//    void test_user_validate_returns_false_with_alphabetic_input(){
+//        assertFalse(user.validate("a:b:c"));
+//    }
+//
+//    @Test
+//    void test_user_validate_returns_false_with_mixed_input(){
+//        assertFalse(user.validate("10:b:c"));
+//    }
+//
+//    @Test
+//    void test_user_validate_returns_false_with_mixed_input_per_branch(){
+//        assertFalse(user.validate("10a:b:c"));
+//    }
+//
+//    @Test
+//    void test_user_validate_returns_true_with_10_2_8(){
+//        assertTrue(user.validate("10:2:8"));
+//    }
+//
+//    @Test
+//    void test_user_validate_returns_false_with_10_2_8_9(){
+//        assertFalse(user.validate("10:2:8:9"));
+//    }
+//
+//    @Test
+//    void test_user_validate_returns_false_with_10_2_8_colon(){
+//        assertFalse(user.validate("10:2:8:"));
+//    }
+//
+//    @Test
+//    void test_user_validate_returns_false_with_10_point_5_2_8(){
+//        assertFalse(user.validate("10.5:2:8"));
+//    }
+//
+//    @Test
+//    void test_user_validate_returns_false_with_2_10_point_5_8(){
+//        assertFalse(user.validate("2:10.5:8"));
+//    }
+//
+//    @Test
+//    void test_user_validate_returns_false_with_2_8_10_point_5(){
+//        assertFalse(user.validate("2:8:10.5"));
+//    }
+//
 
 
     @Test

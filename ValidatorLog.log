@@ -1,24 +1,22 @@
-16:09:28.570 [main] ERROR Validator - Command value not an integer!
-16:09:28.580 [main] ERROR Validator - Command value not an integer!
-16:09:28.581 [main] ERROR Validator - Command value not an integer!
-16:09:28.584 [main] ERROR Validator - Command value not an integer!
-16:09:28.586 [main] ERROR Validator - Command value not an integer!
-16:09:28.736 [main] ERROR Validator - Command value not an integer!
-16:09:28.737 [main] ERROR Validator - Command value not an integer!
-16:09:28.740 [main] ERROR Validator - Command value not an integer!
-16:09:28.742 [main] ERROR Validator - Command value not an integer!
-16:09:28.743 [main] ERROR Validator - Command value not an integer!
-16:09:28.743 [main] ERROR Validator - Command value not an integer!
-16:09:28.752 [main] ERROR Validator - Command value not an integer!
-16:10:27.329 [main] ERROR Validator - Command value not an integer!
-16:10:27.338 [main] ERROR Validator - Command value not an integer!
-16:10:27.339 [main] ERROR Validator - Command value not an integer!
-16:10:27.343 [main] ERROR Validator - Command value not an integer!
-16:10:27.344 [main] ERROR Validator - Command value not an integer!
-16:10:27.489 [main] ERROR Validator - Command value not an integer!
-16:10:27.490 [main] ERROR Validator - Command value not an integer!
-16:10:27.492 [main] ERROR Validator - Command value not an integer!
-16:10:27.500 [main] ERROR Validator - Command value not an integer!
-16:10:27.501 [main] ERROR Validator - Command value not an integer!
-16:10:27.501 [main] ERROR Validator - Command value not an integer!
-16:10:27.503 [main] ERROR Validator - Command value not an integer!
+16:36:13.187 [main] ERROR Validator - String ending in ':' is not a valid command
+16:36:13.196 [main] ERROR Validator - Command value not an integer!
+16:36:13.198 [main] ERROR Validator - Command of length: 2. Commands should have length 3.
+16:36:13.359 [main] ERROR Validator - Command of length: 4. Commands should have length 3.
+16:36:13.360 [main] ERROR Validator - Command value not an integer!
+16:36:13.361 [main] ERROR Validator - Command value not an integer!
+16:36:13.363 [main] ERROR Validator - Command of length: 1. Commands should have length 3.
+16:36:13.364 [main] ERROR Validator - Command value not an integer!
+16:36:13.366 [main] ERROR Validator - Command value not an integer!
+16:36:13.367 [main] ERROR Validator - Command value not an integer!
+16:36:13.368 [main] ERROR Validator - Command of length: 1. Commands should have length 3.
+16:40:20.820 [main] ERROR Validator - String ending in ':' is not a valid command
+16:40:20.829 [main] ERROR Validator - Command value not an integer!
+16:40:20.830 [main] ERROR Validator - Command of length: 2. Commands should have length 3.
+16:40:20.972 [main] ERROR Validator - Command of length: 4. Commands should have length 3.
+16:40:20.973 [main] ERROR Validator - Command value not an integer!
+16:40:20.975 [main] ERROR Validator - Command value not an integer!
+16:40:20.976 [main] ERROR Validator - Command of length: 1. Commands should have length 3.
+16:40:20.977 [main] ERROR Validator - Command value not an integer!
+16:40:20.978 [main] ERROR Validator - Command value not an integer!
+16:40:20.979 [main] ERROR Validator - Command value not an integer!
+16:40:20.980 [main] ERROR Validator - Command of length: 1. Commands should have length 3.

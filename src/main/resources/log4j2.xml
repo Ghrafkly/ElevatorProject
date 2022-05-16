@@ -27,7 +27,6 @@
             <AppenderRef ref="StdOut" level="trace"/>
         </Root>
         <Logger name="Validator" level="trace">
-            <AppenderRef ref="StdOut" level="trace" />
             <AppenderRef ref="ValidatorLog" level="trace" />
             <AppenderRef ref="ValidatorLog" level="debug" />
             <AppenderRef ref="ValidatorLog" level="info" />
@@ -36,7 +35,6 @@
             <AppenderRef ref="ValidatorLog" level="fatal" />
         </Logger>
         <Logger name="Runner" level="trace">
-            <AppenderRef ref="StdOut" level="trace" />
             <AppenderRef ref="RunnerLog" level="trace" />
             <AppenderRef ref="RunnerLog" level="debug" />
             <AppenderRef ref="RunnerLog" level="info" />
@@ -45,7 +43,6 @@
             <AppenderRef ref="RunnerLog" level="fatal" />
         </Logger>
         <Logger name="GenCommands" level="trace">
-            <AppenderRef ref="StdOut" level="trace" />
             <AppenderRef ref="GenCommandsLog" level="trace" />
             <AppenderRef ref="GenCommandsLog" level="debug" />
             <AppenderRef ref="GenCommandsLog" level="info" />
@@ -54,7 +51,6 @@
             <AppenderRef ref="GenCommandsLog" level="fatal" />
         </Logger>
         <Logger name="Scheduler" level="trace">
-        <AppenderRef ref="StdOut" level="trace" />
         <AppenderRef ref="SchedulerLog" level="trace" />
         <AppenderRef ref="SchedulerLog" level="debug" />
         <AppenderRef ref="SchedulerLog" level="info" />

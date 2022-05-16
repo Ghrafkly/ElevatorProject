@@ -1,6 +1,11 @@
 {
-    "maxFloor": 8,
-    "minFloor": 2,
-    "numberOfElevators": 5,
-    "capacity": 8
+    "elevator": {
+        "maxFloor": 2,
+        "minFloor": 1,
+        "numberOfElevators": 5,
+        "capacity": 8
+        },
+    "commands": {
+        "timeInterval": 1000
+    }
 }

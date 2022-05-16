@@ -1,4 +1,4 @@
-public enum ElevatorState {
+public enum EState {
     UP,
     DOWN,
     IDLE

@@ -20,6 +20,10 @@ public class Validator implements IValidator {
         }
     }
 
+    public boolean validateConfig(){
+        return false;
+    }
+
     /**
      * Check to see if the user command is valid
      * @param command

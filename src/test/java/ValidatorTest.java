@@ -44,7 +44,12 @@ public class ValidatorTest {
     }
 
     @Test
-    void test_validate_returns_false_with_10_2_8_colon(){
+    void test_validate_returns_false_with_10_2_8_9(){
+        assertFalse(validate.validate("10:2:8:9"));
+    }
+
+    @Test
+    void test_validate_returns_false_with_10_2_8(){
         assertFalse(validate.validate("10:2:8:"));
     }
 

@@ -30,16 +30,16 @@ public class Validator implements IValidator {
 
         try {
 
-            String first = command.substring(0, command.indexOf(":"));
-            command = command.substring(command.indexOf(":") + 1);
-            String second = command.substring(0, command.indexOf(":"));
-            command = command.substring(command.indexOf(":") + 1);
-            String third = command;
+            if (command.lastIndexOf(":") == command.length() - 1)
+                return false;
 
+            String[] input = command.split(":");
 
-            String[] input = {first, second, third};
+            if (input.length > 3)
+                return false;
 
             for (int i = 0; i < input.length; i++) {
+                System.out.println(input[i]);
 
                 boolean check = isInt(input[i]);
 

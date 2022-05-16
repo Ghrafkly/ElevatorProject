@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Elevator implements Runnable {
     private final int TRAVEL_TIME_BETWEEN_FLOORS = 1000;
     private final int TIME_TO_OPEN_AND_CLOSE_DOOR = 1000;
@@ -9,10 +11,12 @@ public class Elevator implements Runnable {
     private int currentFloor = 0;
     private int currentCapacity = 0;
     private boolean availability = true;
+    private ArrayList<Event> events;
 
     public Elevator(int MAX_CAPACITY, int elevatorID) {
         this.MAX_CAPACITY = MAX_CAPACITY;
         this.ELEVATOR_ID = elevatorID;
+        events = new ArrayList<>();
     }
 
     // Use and remove commands
@@ -62,6 +66,26 @@ public class Elevator implements Runnable {
 
     public void setAvailability(boolean availability) {
         this.availability = availability;
+    }
+
+    public ArrayList<Event> getEvents()
+    {
+        return events;
+    }
+
+    public void addEvent(Event event)
+    {
+        events.add(event);
+    }
+
+    public void removeEvent(Event event)
+    {
+        events.remove(event);
+    }
+
+    public void sleepElevator() throws InterruptedException
+    {
+        Thread.sleep(TRAVEL_TIME_BETWEEN_FLOORS);
     }
 
     @Override

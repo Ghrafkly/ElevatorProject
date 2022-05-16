@@ -26,6 +26,14 @@ public class EController {
         EController.minFloor = minFloor;
     }
 
+    public int getMaxFloor() {
+        return EController.maxFloor;
+    }
+
+    public int getMinFloor() {
+        return EController.minFloor;
+    }
+
     public void setCapacity(int capacity) {
         EController.capacity = capacity;
     }

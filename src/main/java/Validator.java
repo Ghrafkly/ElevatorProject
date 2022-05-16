@@ -20,6 +20,11 @@ public class Validator implements IValidator {
         }
     }
 
+    /**
+     * Validates the input in the config file
+     * @param eController
+     * @return boolean
+     */
     public boolean validateConfig(EController eController){
 
         if (eController.getMaxFloor() >= eController.getMinFloor()){

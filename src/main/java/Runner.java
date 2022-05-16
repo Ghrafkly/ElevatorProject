@@ -5,7 +5,8 @@ import java.io.IOException;
 import java.util.Map;
 
 public class Runner {
-    private static final ObjectMapper MAPPER = new ObjectMapper();
+    //Made protected to make tests work
+    protected static final ObjectMapper MAPPER = new ObjectMapper();
 
     public static void main(String[] args) throws IOException {
         File file = new File("config.json");

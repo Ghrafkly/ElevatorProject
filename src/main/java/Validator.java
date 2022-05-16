@@ -1,6 +1,9 @@
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Checks commands and user input to ensure correct commands are sent to the scheduler
+ */
 public class Validator implements IValidator {
 
     private static final Logger logger = LogManager.getLogger();

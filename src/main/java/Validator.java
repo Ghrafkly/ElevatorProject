@@ -7,7 +7,7 @@ public class Validator implements IValidator {
      * @param input
      * @return boolean
      */
-    protected boolean isInt(String input) {
+    private boolean isInt(String input) {
         try {
 
             Integer.parseInt(input);

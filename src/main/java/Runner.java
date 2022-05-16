@@ -17,14 +17,18 @@ public class Runner {
         String commands = MAPPER.writeValueAsString(json.get("commands"));
 
         EController elevatorController = MAPPER.readValue(elevator, EController.class);
-        v.validateConfig(elevatorController);
         GenCommands genCommands = MAPPER.readValue(commands, GenCommands.class);
 
-        elevatorController.setElevatorThreads();
-        elevatorController.runElevators();
+        if (v.validateConfig(elevatorController)) {
+            elevatorController.setElevatorThreads();
+            elevatorController.runElevators();
 
-        genCommands.generator();
-        System.out.println(genCommands.getCommand());
+            genCommands.generator();
+            System.out.println(genCommands.getCommand());
+        }
+        else {
+            System.out.println("Please re-configure config.json and try again!");
+        }
     }
 
     public static Map<String, Integer> readFromJSONFile(File source) throws IOException {

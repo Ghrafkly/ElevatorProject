@@ -20,8 +20,14 @@ public class Validator implements IValidator {
         }
     }
 
-    public boolean validateConfig(){
+    public boolean validateConfig(EController eController){
+
+        if (eController.getMaxFloor() >= eController.getMinFloor()){
+            return true;
+        }
+
         return false;
+
     }
 
     /**

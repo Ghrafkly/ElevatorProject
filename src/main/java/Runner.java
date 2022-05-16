@@ -9,12 +9,14 @@ public class Runner {
 
     public static void main(String[] args) throws IOException {
         File file = new File("config.json");
+        Validator v = new Validator();
 
         Map<String, Integer> json = readFromJSONFile(file);
         String elevator = MAPPER.writeValueAsString(json.get("elevator"));
         String commands = MAPPER.writeValueAsString(json.get("commands"));
 
         EController elevatorController = MAPPER.readValue(elevator, EController.class);
+        v.validateConfig(elevatorController);
         GenCommands genCommands = MAPPER.readValue(commands, GenCommands.class);
 
         elevatorController.setElevatorThreads();

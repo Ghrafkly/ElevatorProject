@@ -1,6 +1,10 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Map;
+
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -67,6 +71,35 @@ public class ValidatorTest {
     void test_validate_returns_false_with_2_8_10_point_5(){
         assertFalse(validate.validate("2:8:10.5"));
     }
+
+    //Tests depreciated
+//    @Test
+//    void test_config_correctly_formatted_returns_true() throws IOException {
+//        File file = new File("config.json");
+//        Validator v = new Validator();
+//
+//        Map<String, Integer> json = Runner.readFromJSONFile(file);
+//        String elevator = Runner.MAPPER.writeValueAsString(json.get("elevator"));
+//        String commands = Runner.MAPPER.writeValueAsString(json.get("commands"));
+//
+//        EController elevatorController = Runner.MAPPER.readValue(elevator, EController.class);
+//
+//        assertTrue(v.validateConfig(elevatorController));
+//    }
+
+//    @Test
+//    void test_config_incorrectly_formatted_returns_false() throws IOException {
+//        File file = new File("config.json");
+//        Validator v = new Validator();
+//
+//        Map<String, Integer> json = Runner.readFromJSONFile(file);
+//        String elevator = Runner.MAPPER.writeValueAsString(json.get("elevator"));
+//        String commands = Runner.MAPPER.writeValueAsString(json.get("commands"));
+//
+//        EController elevatorController = Runner.MAPPER.readValue(elevator, EController.class);
+//
+//        assertFalse(v.validateConfig(elevatorController));
+//    }
 
 
 }

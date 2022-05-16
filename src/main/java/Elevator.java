@@ -1,4 +1,4 @@
-public class Elevator {
+public class Elevator implements Runnable {
     private final int TRAVEL_TIME_BETWEEN_FLOORS = 1000;
     private final int TIME_TO_OPEN_AND_CLOSE_DOOR = 1000;
 
@@ -15,6 +15,7 @@ public class Elevator {
         this.ELEVATOR_ID = elevatorID;
     }
 
+    // Use and remove commands
     public int getMAX_CAPACITY() {
         return MAX_CAPACITY;
     }
@@ -71,5 +72,10 @@ public class Elevator {
                 ", moveState=" + moveState +
                 ", elevatorID=" + ELEVATOR_ID +
                 '}';
+    }
+
+    @Override
+    public void run() {
+//        System.out.println(ELEVATOR_ID);
     }
 }

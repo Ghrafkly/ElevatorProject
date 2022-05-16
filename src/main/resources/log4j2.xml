@@ -2,7 +2,7 @@
 <Configuration status="warn" monitorInterval="30">
     <Appenders>
         <Console name="StdOut" target="SYSTEM_OUT">
-            <PatternLayout pattern="%msg%n" />
+            <PatternLayout pattern="" />
         </Console>
         <File name="LogExample" filename="LogExample.log">
             <PatternLayout
@@ -14,8 +14,8 @@
         <Root level="trace">
             <AppenderRef ref="StdOut" level="trace"/>
         </Root>
-        <Logger name="Logging.Logging" level="trace">
-            <AppenderRef ref="StdOut" level="trace" />
+        <Logger name="GenCommands" level="trace">
+<!--            <AppenderRef ref="StdOut" level="trace" />-->
             <AppenderRef ref="LogExample" level="trace" />
             <AppenderRef ref="LogExample" level="debug" />
             <AppenderRef ref="LogExample" level="info" />

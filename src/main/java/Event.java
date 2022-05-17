@@ -4,6 +4,7 @@ public class Event
     private int src;
     private int dest;
     private boolean delete;
+    private boolean srcReached;
 
     public Event(int numPeople, int src, int dest)
     {
@@ -11,6 +12,7 @@ public class Event
         this.src = src;
         this.dest = dest;
         this.delete = false;
+        this.srcReached = false;
     }
 
     public int getNumPeople()
@@ -41,5 +43,15 @@ public class Event
     public void setNumPeople(int numPeople)
     {
         this.numPeople = numPeople;
+    }
+
+    public void setSrcReached(boolean srcReached)
+    {
+        this.srcReached = srcReached;
+    }
+
+    public boolean getSrcReached()
+    {
+        return srcReached;
     }
 }

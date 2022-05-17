@@ -25,7 +25,7 @@ public class Runner {
         EController elevatorController = MAPPER.readValue(elevator, EController.class);
         GenCommands genCommands = MAPPER.readValue(commands, GenCommands.class);
         Thread commandGen = new Thread(genCommands, "commands");
-        Scheduler scheduler = new Scheduler(elevatorController.getElevators());
+        Scheduler scheduler = new Scheduler(eController.getElevators());
         Thread schedulerThread = new Thread(scheduler);
         commandGen.start();
         try{

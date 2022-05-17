@@ -10,29 +10,27 @@ public class Validator implements IValidator {
 
     /**
      * Checks to see if the value in the string array is an integer
+     *
      * @param input
      * @return boolean
      */
     private boolean isInt(String input) {
         try {
-
             Integer.parseInt(input);
             return true;
-
         } catch (NumberFormatException e) {
-
             logger.error("Command value not an integer!");
             return false;
-
         }
     }
 
     /**
      * Validates the input in the config file
+     *
      * @param eController
      * @return boolean
      */
-    public boolean validateConfig(EController eController){
+    public boolean validateConfig(EController eController) {
 
         return eController.getMaxFloor() >= eController.getMinFloor();
 
@@ -40,44 +38,24 @@ public class Validator implements IValidator {
 
     /**
      * Check to see if the user command is valid
+     *
      * @param command
      * @return boolean
      */
     @Override
     public boolean validate(String command) {
+        String[] input = command.split(":");
 
-        try {
-
-            if (command.lastIndexOf(":") == command.length() - 1) {
-                logger.error("String ending in ':' is not a valid command");
-                return false;
-            }
-
-            String[] input = command.split(":");
-
-            if (input.length != 3){
-                logger.error("Command of length: " + input.length + ". Commands should have length 3.");
-                return false;
-            }
-
-
-            for (String s : input) {
-
-                boolean check = isInt(s);
-
-                if (!check) {
-
-                    return false;
-
-                }
-            }
-
-            return true;
-
-        } catch (Exception e) {
-
+        if (input.length != 3 || command.lastIndexOf(":") == command.length() - 1) {
+            logger.error(String.format("Command (%s) of length: %d. Commands should have length 3 and format int:int:int.", command, input.length));
             return false;
-
+        } else {
+            for (String s : input)
+                if (!isInt(s)) {
+                    logger.error(String.format("Command (%s) is not numeric. Command should be int:int:int.", command));
+                    return false;
+                }
         }
+        return true;
     }
 }

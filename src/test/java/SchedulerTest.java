@@ -14,7 +14,7 @@ public class SchedulerTest
     @BeforeEach
     void setup()
     {
-        scheduler = new Scheduler();
+        scheduler = new Scheduler(elevators);
         elevators = new ArrayList<>();
     }
 

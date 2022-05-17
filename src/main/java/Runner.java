@@ -4,6 +4,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Scanner;
@@ -17,7 +18,6 @@ public class Runner {
         File file = new File("config.json");
         Validator v = new Validator();
 
-
         Map<String, Integer> json = readFromJSONFile(file);
         String elevator = MAPPER.writeValueAsString(json.get("elevator"));
         String commands = MAPPER.writeValueAsString(json.get("commands"));
@@ -25,37 +25,44 @@ public class Runner {
         EController elevatorController = MAPPER.readValue(elevator, EController.class);
         GenCommands genCommands = MAPPER.readValue(commands, GenCommands.class);
         Thread commandGen = new Thread(genCommands, "commands");
+
+        elevatorController.setElevatorThreads();
+        elevatorController.runElevators();
         commandGen.start();
 
-        try{
-            genCommands.generator();
-            v.validate(genCommands.getCommand());
-
-//            if (v.validateConfig(elevatorController)) {
-                elevatorController.setElevatorThreads();
-                elevatorController.runElevators();
-//            }
-//            else {
-//                logger.info("Please re-configure config.json and try again!");
-//            }
-        }
-        catch (IllegalArgumentException iae){
-            logger.error("Please re-configure config.json and try again!");
-        }
-
+        boolean waitCheck = false;
         String input;
         Scanner scanner = new Scanner(System.in);
         do {
+            /*
+                Time Interval: Integer
+                Command: src:dest:ppl
+                Simulate: morning, afternoon
+             */
             input = scanner.nextLine();
             if (isNumeric(input)) {
-                System.out.println(input);
-                genCommands.setTimeInterval(Integer.parseInt(input));
-            } else {
-                // Parse command elsewhere
+                 int inp = Integer.parseInt(input);
+
+                if (!waitCheck && inp <= 0) {
+                    commandGen.interrupt();
+                    waitCheck = true;
+                } else if (waitCheck && inp > 0) {
+                    commandGen = new Thread(genCommands, "commands");
+                    commandGen.start();
+                    waitCheck = false;
+                }
+
+                System.out.printf("New time interval: %d\n", inp);
+                genCommands.setTimeInterval(inp);
+            } else if (isAlpha(input) && !input.equals("stop")) {
+                System.out.println("Simulation: " + input);
+            } else if (v.validate(input)) {
+                System.out.println("Command: " + input);
             }
         } while (!Objects.equals(input, "stop"));
+
         commandGen.interrupt();
-        Thread.sleep(1000);
+        Thread.sleep(1);
         System.out.println("Program Ended");
     }
 
@@ -66,6 +73,11 @@ public class Runner {
         } catch (NumberFormatException e) {
             return false;
         }
+    }
+
+    public static boolean isAlpha(String str) {
+        String[] check = str.split("");
+        return Arrays.stream(check).noneMatch(Runner::isNumeric);
     }
 
     public static Map<String, Integer> readFromJSONFile(File source) throws IOException {

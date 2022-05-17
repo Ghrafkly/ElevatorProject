@@ -84,3 +84,96 @@
 12:13:06.020 [main] ERROR Validator - Command (stop) of length: 1. Commands should have length 3 and format int:int:int.
 12:13:51.522 [main] ERROR Validator - Command (stop) of length: 1. Commands should have length 3 and format int:int:int.
 12:15:17.334 [main] ERROR Validator - Command (stop) of length: 1. Commands should have length 3 and format int:int:int.
+15:25:06.500 [main] ERROR Validator - Command value not an integer!
+15:25:06.501 [main] ERROR Validator - Command value not an integer!
+15:25:06.501 [main] ERROR Validator - Command value not an integer!
+15:25:06.501 [main] ERROR Validator - Command value not an integer!
+15:25:06.501 [main] ERROR Validator - Command value not an integer!
+15:25:06.501 [main] ERROR Validator - Command value not an integer!
+15:25:11.195 [main] ERROR Validator - Command value not an integer!
+15:25:13.075 [main] ERROR Validator - Command value not an integer!
+15:25:13.075 [main] ERROR Validator - Command value not an integer!
+15:25:13.076 [main] ERROR Validator - Command value not an integer!
+15:25:13.076 [main] ERROR Validator - Command value not an integer!
+15:25:13.076 [main] ERROR Validator - Command value not an integer!
+15:25:13.076 [main] ERROR Validator - Command (stop) of length: 1. Commands should have length 3 and format int:int:int.
+16:01:37.724 [main] ERROR Validator - Command value not an integer!
+16:01:37.725 [main] ERROR Validator - Command value not an integer!
+16:01:37.725 [main] ERROR Validator - Command value not an integer!
+16:01:37.725 [main] ERROR Validator - Command value not an integer!
+16:01:37.725 [main] ERROR Validator - Command value not an integer!
+16:01:37.725 [main] ERROR Validator - Command value not an integer!
+16:01:37.725 [main] ERROR Validator - Incorrect (alpha) simulation entered
+16:01:44.152 [main] ERROR Validator - Command value not an integer!
+16:01:44.152 [main] ERROR Validator - Command value not an integer!
+16:01:44.152 [main] ERROR Validator - Command value not an integer!
+16:01:44.152 [main] ERROR Validator - Command value not an integer!
+16:01:44.152 [main] ERROR Validator - Command value not an integer!
+16:01:44.152 [main] ERROR Validator - Command value not an integer!
+16:01:44.152 [main] ERROR Validator - Command value not an integer!
+16:01:44.152 [main] ERROR Validator - Command value not an integer!
+16:01:46.921 [main] ERROR Validator - Command value not an integer!
+16:01:46.921 [main] ERROR Validator - Command value not an integer!
+16:01:46.921 [main] ERROR Validator - Command value not an integer!
+16:01:46.921 [main] ERROR Validator - Command value not an integer!
+16:01:46.921 [main] ERROR Validator - Command value not an integer!
+16:01:46.921 [main] ERROR Validator - Command value not an integer!
+16:01:46.921 [main] ERROR Validator - Command value not an integer!
+16:01:46.922 [main] ERROR Validator - Command value not an integer!
+16:01:46.922 [main] ERROR Validator - Command value not an integer!
+16:01:46.922 [main] ERROR Validator - Command value not an integer!
+16:01:46.922 [main] ERROR Validator - Incorrect (afternoon) simulation entered
+16:01:54.850 [main] ERROR Validator - Command value not an integer!
+16:01:54.850 [main] ERROR Validator - Command value not an integer!
+16:01:54.850 [main] ERROR Validator - Command value not an integer!
+16:01:54.850 [main] ERROR Validator - Command value not an integer!
+16:01:54.850 [main] ERROR Validator - Command value not an integer!
+16:01:54.850 [main] ERROR Validator - Command value not an integer!
+16:01:54.850 [main] ERROR Validator - Command value not an integer!
+16:01:54.850 [main] ERROR Validator - Command value not an integer!
+16:01:54.850 [main] ERROR Validator - Command value not an integer!
+16:01:54.850 [main] ERROR Validator - Command value not an integer!
+16:01:59.128 [main] ERROR Validator - Command value not an integer!
+16:01:59.128 [main] ERROR Validator - Command value not an integer!
+16:01:59.128 [main] ERROR Validator - Command value not an integer!
+16:01:59.128 [main] ERROR Validator - Command value not an integer!
+16:01:59.128 [main] ERROR Validator - Command value not an integer!
+16:01:59.128 [main] ERROR Validator - Command value not an integer!
+16:01:59.128 [main] ERROR Validator - Command value not an integer!
+16:02:07.679 [main] ERROR Validator - Command value not an integer!
+16:02:07.679 [main] ERROR Validator - Command value not an integer!
+16:02:07.679 [main] ERROR Validator - Command value not an integer!
+16:02:07.679 [main] ERROR Validator - Command value not an integer!
+16:02:07.679 [main] ERROR Validator - Command value not an integer!
+16:02:07.679 [main] ERROR Validator - Incorrect (stop) simulation entered
+16:02:57.590 [main] ERROR Validator - Command value not an integer!
+16:02:57.591 [main] ERROR Validator - Command value not an integer!
+16:02:57.591 [main] ERROR Validator - Command value not an integer!
+16:02:57.591 [main] ERROR Validator - Command value not an integer!
+16:02:57.591 [main] ERROR Validator - Command value not an integer!
+16:02:57.591 [main] ERROR Validator - Command value not an integer!
+16:02:57.591 [main] ERROR Validator - Command value not an integer!
+16:02:57.591 [main] ERROR Validator - Command value not an integer!
+16:02:57.591 [main] ERROR Validator - Command value not an integer!
+16:02:57.591 [main] ERROR Validator - Command value not an integer!
+16:02:59.330 [main] ERROR Validator - Command value not an integer!
+16:02:59.330 [main] ERROR Validator - Command value not an integer!
+16:02:59.330 [main] ERROR Validator - Command value not an integer!
+16:02:59.330 [main] ERROR Validator - Command value not an integer!
+16:02:59.330 [main] ERROR Validator - Command value not an integer!
+16:02:59.330 [main] ERROR Validator - Command value not an integer!
+16:02:59.330 [main] ERROR Validator - Command value not an integer!
+16:02:59.331 [main] ERROR Validator - Command value not an integer!
+16:03:01.077 [main] ERROR Validator - Command value not an integer!
+16:03:01.077 [main] ERROR Validator - Command value not an integer!
+16:03:01.077 [main] ERROR Validator - Command value not an integer!
+16:03:01.077 [main] ERROR Validator - Command value not an integer!
+16:03:01.078 [main] ERROR Validator - Command value not an integer!
+16:03:01.078 [main] ERROR Validator - Command value not an integer!
+16:03:01.078 [main] ERROR Validator - Command value not an integer!
+16:03:08.890 [main] ERROR Validator - Command value not an integer!
+16:03:08.891 [main] ERROR Validator - Command value not an integer!
+16:03:08.891 [main] ERROR Validator - Command value not an integer!
+16:03:08.891 [main] ERROR Validator - Command value not an integer!
+16:03:08.891 [main] ERROR Validator - Command value not an integer!
+16:03:08.891 [main] ERROR Validator - Incorrect (stop) simulation entered

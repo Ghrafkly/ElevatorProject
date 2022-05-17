@@ -1,40 +1,33 @@
-public class Event
-{
+public class Event {
     private int numPeople;
     private int src;
     private int dest;
     private boolean delete;
 
-    public Event(int numPeople, int src, int dest)
-    {
+    public Event(int numPeople, int src, int dest) {
         this.numPeople = numPeople;
         this.src = src;
         this.dest = dest;
         this.delete = false;
     }
 
-    public int getNumPeople()
-    {
+    public int getNumPeople() {
         return numPeople;
     }
 
-    public int getSrc()
-    {
+    public int getSrc() {
         return src;
     }
 
-    public int getDest()
-    {
+    public int getDest() {
         return dest;
     }
 
-    public boolean getDelete()
-    {
+    public boolean getDelete() {
         return delete;
     }
 
-    public void setDelete(boolean delete)
-    {
+    public void setDelete(boolean delete) {
         this.delete = delete;
     }
 }

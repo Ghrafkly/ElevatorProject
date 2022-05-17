@@ -130,7 +130,6 @@ public class Scheduler implements Runnable {
                 event.setDelete(true);
             }
         }
-
         return events;
     }
 

@@ -2,20 +2,28 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SchedulerTest
 {
-    Scheduler scheduler;
-    ArrayList<Elevator> elevators;
+    private Scheduler scheduler;
+    private ArrayList<Elevator> elevators;
+    private Elevator elevator1;
+    private Elevator elevator2;
+    private  Elevator elevator3;
+    private Elevator elevator4;
+    private String input;
 
     @BeforeEach
     void setup()
     {
-        scheduler = new Scheduler(elevators);
         elevators = new ArrayList<>();
+        elevator1 = new Elevator(8, 1);
+        elevator2 = new Elevator(8, 1);
+        elevator3 = new Elevator(8, 1);
+        elevator4 = new Elevator(8, 1);
+        scheduler = new Scheduler(elevators);
     }
 
     @Test
@@ -27,8 +35,20 @@ public class SchedulerTest
     }
 
     @Test
-    void test()
+    void test_manage_move_state_when_elevator_idle_and_needs_to_complete_a_go_down_event()
     {
+        elevator1.addEvent(new Event(0, 0, 2));
+        elevator1.addEvent(new Event(2, 2, 1));
+        elevators.add(elevator1);
+        scheduler.manageMoveState(elevators);
+        assertEquals(EState.UP, elevator1.getMoveState());
+    }
 
+    @Test
+    void test_manage_move_state_when_elevator_is_at_min_floor_and_has_no_events()
+    {
+        elevators.add(elevator1);
+        scheduler.manageMoveState(elevators);
+        assertEquals(EState.IDLE, elevator1.getMoveState());
     }
 }

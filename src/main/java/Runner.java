@@ -34,10 +34,13 @@ public class Runner {
 
     public void startThreads() throws InterruptedException {
         Thread commandGen = new Thread(genCommands, "commands");
+        Scheduler scheduler = new Scheduler(elevatorController.getElevators());
+        Thread schedulerThread = new Thread(scheduler);
         commandGen.start();
 
         eController.setElevatorThreads();
         eController.runElevators();
+        schedulerThread.start();
 
         UserInput u = new UserInput();
         u.userInput(commandGen, genCommands);

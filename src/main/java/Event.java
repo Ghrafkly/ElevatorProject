@@ -30,4 +30,9 @@ public class Event {
     public void setDelete(boolean delete) {
         this.delete = delete;
     }
+
+    public void setNumPeople(int numPeople)
+    {
+        this.numPeople = numPeople;
+    }
 }

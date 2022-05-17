@@ -31,6 +31,12 @@ public class Validator {
         if (input.length != 3 || command.endsWith(":")) {
             logger.error(String.format("Command (%s) of length: %d. Commands should have length 3 and format int:int:int.", command, input.length));
             return false;
+        } else {
+            for (String s : input)
+                if (!isNumeric(s)) {
+                    logger.error(String.format("Command (%s) is not numeric. Command should be int:int:int.", command));
+                    return false;
+                }
         }
         return true;
     }
@@ -68,6 +74,12 @@ public class Validator {
         }
     }
 
+    /**
+     * Checks if the value parsed is only alphabetic
+     *
+     * @param str
+     * @return
+     */
     public boolean isAlpha(String str) {
         String[] check = str.split("");
         return Arrays.stream(check).noneMatch(this::isNumeric);

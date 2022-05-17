@@ -37,4 +37,9 @@ public class Event
     {
         this.delete = delete;
     }
+
+    public void setNumPeople(int numPeople)
+    {
+        this.numPeople = numPeople;
+    }
 }

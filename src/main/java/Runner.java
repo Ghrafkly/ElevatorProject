@@ -25,8 +25,9 @@ public class Runner {
         EController elevatorController = MAPPER.readValue(elevator, EController.class);
         GenCommands genCommands = MAPPER.readValue(commands, GenCommands.class);
         Thread commandGen = new Thread(genCommands, "commands");
+        Scheduler scheduler = new Scheduler(elevatorController.getElevators());
+        Thread schedulerThread = new Thread(scheduler);
         commandGen.start();
-
         try{
             genCommands.generator();
             v.validate(genCommands.getCommand());
@@ -34,6 +35,7 @@ public class Runner {
 //            if (v.validateConfig(elevatorController)) {
                 elevatorController.setElevatorThreads();
                 elevatorController.runElevators();
+                schedulerThread.start();
 //            }
 //            else {
 //                logger.info("Please re-configure config.json and try again!");

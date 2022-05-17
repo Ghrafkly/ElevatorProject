@@ -68,23 +68,23 @@ public class Elevator implements Runnable {
         this.availability = availability;
     }
 
-    public ArrayList<Event> getEvents()
-    {
+    public ArrayList<Event> getEvents() {
         return events;
     }
 
-    public void addEvent(Event event)
-    {
+    public void addEvent(Event event) {
         events.add(event);
     }
 
-    public void removeEvent(Event event)
-    {
+    public void removeEvent(Event event) {
         events.remove(event);
     }
 
-    public void sleepElevator() throws InterruptedException
-    {
+    public void openOrCloseElevator() throws InterruptedException {
+        Thread.sleep(TIME_TO_OPEN_AND_CLOSE_DOOR);
+    }
+
+    public void moveElevator() throws InterruptedException {
         Thread.sleep(TRAVEL_TIME_BETWEEN_FLOORS);
     }
 

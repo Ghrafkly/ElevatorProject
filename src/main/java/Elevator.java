@@ -85,6 +85,7 @@ public class Elevator implements Runnable {
     }
 
     public void moveElevator() throws InterruptedException {
+
         Thread.sleep(TRAVEL_TIME_BETWEEN_FLOORS);
     }
 

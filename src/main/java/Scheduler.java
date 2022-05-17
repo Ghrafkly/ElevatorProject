@@ -11,8 +11,7 @@ public class Scheduler implements Runnable
     private String inputs;
     private static final Logger LOGGER = LogManager.getLogger(Scheduler.class);
 
-    public Scheduler(ArrayList<Elevator> elevators)
-    {
+    public Scheduler(ArrayList<Elevator> elevators) {
         events = new ArrayList<>();
         this.elevators = elevators;
     }
@@ -173,6 +172,7 @@ public class Scheduler implements Runnable
 
     /**
      * This function takes a single String input in the form src:dest:numPeople and returns an Event object
+     *
      * @param input string in the form src:destination:numPeople
      * @return event object
      */
@@ -188,13 +188,10 @@ public class Scheduler implements Runnable
     /**
      * @return the direction the elevator needs to travel in
      */
-    public EState getDirection(Event event)
-    {
-        if(event.getDest() > event.getSrc())
-        {
-            return EState.UP;
-        }
-        return EState.DOWN;
+    public EState getDirection(Event event) {
+        return event.getDest() > event.getSrc()
+                ? EState.UP
+                : EState.DOWN;
     }
 
     public void moveFloor(Elevator elevator, EState eState)
@@ -236,6 +233,7 @@ public class Scheduler implements Runnable
 
     /**
      * This function will get all inputs that are travelling in the same direction as the elevator and can be reached
+     *
      * @param elevator is the object being queried
      * @param events are all the events that needs to be processed
      */
@@ -371,10 +369,9 @@ public class Scheduler implements Runnable
         for(Iterator<Event> it = events.iterator(); it.hasNext();)
         {
             if (it.next().getDelete())
-            {
                 it.remove();
-            }
-        }
+
+        //        events.removeIf(Event::getDelete);
     }
 
 }

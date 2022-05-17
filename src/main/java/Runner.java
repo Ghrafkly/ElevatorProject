@@ -30,12 +30,18 @@ public class Runner {
 
         eController = MAPPER.readValue(elevator, EController.class);
         genCommands = MAPPER.readValue(commands, GenCommands.class);
+
     }
 
     public void startThreads() throws InterruptedException {
         Thread commandGen = new Thread(genCommands, "commands");
         Scheduler scheduler = new Scheduler(eController.getElevators());
         Thread schedulerThread = new Thread(scheduler);
+
+        FrameView fm = new FrameView(eController.getMinFloor(), eController.getMaxFloor(), eController.getNumberOfElevators(), eController.getElevators());
+        Thread graphics = new Thread(fm);
+
+        graphics.start();
         commandGen.start();
 
         eController.setElevatorThreads();
@@ -44,6 +50,7 @@ public class Runner {
 
         UserInput u = new UserInput();
         u.userInput(commandGen, genCommands);
+        fm.close();
     }
 
     public Map<String, Integer> readFromJSONFile(File source) throws IOException {

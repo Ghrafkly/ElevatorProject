@@ -366,12 +366,12 @@ public class Scheduler implements Runnable
      */
     public void cleanUpEvents(ArrayList<Event> events)
     {
-        for(Iterator<Event> it = events.iterator(); it.hasNext();)
-        {
+        for(Iterator<Event> it = events.iterator(); it.hasNext();) {
             if (it.next().getDelete())
                 it.remove();
 
-        //        events.removeIf(Event::getDelete);
+            //        events.removeIf(Event::getDelete);
+        }
     }
 
 }

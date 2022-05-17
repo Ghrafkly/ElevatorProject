@@ -73,6 +73,7 @@ public class Elevator implements Runnable {
     }
 
     public void addEvent(Event event) {
+
         events.add(event);
     }
 

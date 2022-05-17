@@ -47,6 +47,8 @@ public class SchedulerTest
     @Test
     void test_manage_move_state_when_elevator_is_at_min_floor_and_has_no_events()
     {
-
+        elevators.add(elevator1);
+        scheduler.manageMoveState(elevators);
+        assertEquals(EState.IDLE, elevator1.getMoveState());
     }
 }

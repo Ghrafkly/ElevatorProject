@@ -60,6 +60,10 @@ public class EController {
 
     }
 
+    public ArrayList<Elevator> getElevators() {
+        return elevators;
+    }
+
     @Override
     public String toString() {
         return "ElevatorController{" +

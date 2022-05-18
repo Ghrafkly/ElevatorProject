@@ -1,4 +1,6 @@
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,6 +8,9 @@ import java.util.Map;
 
 public class Runner {
     protected static final ObjectMapper MAPPER = new ObjectMapper();
+
+    private static final Logger logger = LogManager.getLogger();
+
     private EController eController;
     private GenCommands genCommands;
 
@@ -39,8 +44,7 @@ public class Runner {
         Thread controllerThread = new Thread(eController);
 
         FrameView fm = new FrameView(eController.getMinFloor(), eController.getMaxFloor(), eController.getNumberOfElevators(), eController.getElevators());
-        Thread graphics = new Thread(fm);
-        graphics.start();
+
 
         Validator v = new Validator();
         commandGen.start();
@@ -49,9 +53,12 @@ public class Runner {
         genCommands.generator();
         v.valCommand(genCommands.getCommand());
 
+        logger.info("This was printed");
+
         eController.setElevatorThreads(fm);
         eController.runElevators();
         schedulerThread.start();
+
 
         UserInput u = new UserInput();
         u.userInput(commandGen, genCommands);

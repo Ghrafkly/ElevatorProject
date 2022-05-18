@@ -31,8 +31,6 @@ public class Validator {
                 str = "simulation";
             }
         }
-
-
         return str;
     }
 

@@ -3,9 +3,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Pattern;
 
 public class Validator {
@@ -13,7 +11,7 @@ public class Validator {
     private final DateTimeFormatter format = DateTimeFormatter.ofPattern("ss.SSS");
     private final Pattern comP = Pattern.compile("^\\d+:\\d+:\\d+$");
     private final Pattern numeric = Pattern.compile("^\\d+$");
-    private final Pattern alpha = Pattern.compile("^[a-zA-Z]+$");
+//    private final Pattern alpha = Pattern.compile("^[a-zA-Z]+$");
     private ArrayList<String> commands = new ArrayList<>();
 
     public boolean valConfig() {
@@ -22,6 +20,7 @@ public class Validator {
 
     public String valInput(String input) throws InterruptedException {
         String str = "";
+        input = input.stripTrailing();
         if (input.contains(":")) {
             if (valCommand(input)) {
                 str = "command";
@@ -30,13 +29,9 @@ public class Validator {
             if (valInterval(Integer.parseInt(input))) {
                 str = "interval";
             }
-        } else if (alpha.matcher(input).find()) {
-            if (valSimulation(input)) {
-                str = "simulation";
-            }
+        } else if (valSimulation(input)) {
+            str = "simulation";
         }
-
-
         return str;
     }
 
@@ -57,7 +52,6 @@ public class Validator {
                 }
 
             }
-
         return commands.size() > 0;
     }
 
@@ -70,8 +64,9 @@ public class Validator {
     }
 
     public boolean valSimulation(String sim) {
+        String[] justSim = sim.split(" ");
         Set<String> simulations = Set.of("morning", "afternoon", "normal");
-        if (!simulations.contains(sim)) {
+        if (!simulations.contains(justSim[0].toLowerCase())) {
             logger.error(String.format("Incorrect (%s) simulation entered", sim));
             return false;
         }

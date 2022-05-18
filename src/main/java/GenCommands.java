@@ -8,6 +8,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class GenCommands implements Runnable {
+    public static String simulation = "normal";
+    public static int floorLock = EController.minFloor;
     private static final Logger LOGGER = LogManager.getLogger(GenCommands.class);
     private final DateTimeFormatter format = DateTimeFormatter.ofPattern("ss.SSS");
     private final int cap = EController.capacity;
@@ -22,13 +24,15 @@ public class GenCommands implements Runnable {
     // SRC and DES cannot be the same
     public void generator() throws InterruptedException {
         while (true) {
-            time = (LocalTime.now().format(format));
             int capacity = ThreadLocalRandom.current().nextInt(1, cap + 1);
-            int src = ThreadLocalRandom.current().nextInt(min, max + 1);
-            int des = ThreadLocalRandom.current().nextInt(min, max + 1);
-            while (des == src)
-                des = ThreadLocalRandom.current().nextInt(min, max + 1);
-            setCommand(String.format("%d:%d:%d", src, des, capacity));
+
+            switch (simulation) {
+                case "morning" -> setCommand(morningSim(capacity, floorLock));
+                case "afternoon" -> setCommand(afternoonSim(capacity, floorLock));
+                case "normal" -> setCommand(normalSim(capacity));
+            };
+
+            time = (LocalTime.now().format(format));
             LOGGER.info(time + " " + command);
             Thread.sleep(timeInterval);
         }
@@ -37,6 +41,31 @@ public class GenCommands implements Runnable {
     public String getCommand() {
         return String.format(time + " " + command);
     }
+
+    public String morningSim(int capacity, int floorLock) {;
+        int des = ThreadLocalRandom.current().nextInt(min, max + 1);
+        while (des == floorLock)
+            des = ThreadLocalRandom.current().nextInt(min, max + 1);
+
+        return String.format("%d:%d:%d", floorLock, des, capacity);
+    }
+    public String afternoonSim(int capacity, int floorLock) {
+        int src = ThreadLocalRandom.current().nextInt(min, max + 1);
+        while (floorLock == src)
+            src = ThreadLocalRandom.current().nextInt(min, max + 1);
+
+        return String.format("%d:%d:%d", src, floorLock, capacity);
+    }
+
+    public String normalSim(int capacity) {
+        int src = ThreadLocalRandom.current().nextInt(min, max + 1);
+        int des = ThreadLocalRandom.current().nextInt(min, max + 1);
+        while (des == src)
+            des = ThreadLocalRandom.current().nextInt(min, max + 1);
+
+        return String.format("%d:%d:%d", src, des, capacity);
+    }
+
 
 
     public int getTimeInterval() {

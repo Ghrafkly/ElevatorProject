@@ -1,20 +1,24 @@
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /*
     Rip out MAX_CAPACITY from creating the elevator.
     Put it into another class, such as scheduler.
  */
 
-public class EController implements Runnable {
+public class EController {
     public static int maxFloor;
     public static int minFloor;
     public static int capacity;
     private int numberOfElevators;
 
-    private FrameView fm;
     private final ArrayList<Elevator> elevators = new ArrayList<>();
     private final ArrayList<Thread> threads = new ArrayList<>();
     private ArrayList<Event> eControllerEvents = new ArrayList<>();
+    private static final Logger LOGGER = LogManager.getLogger(EController.class);
 
     public String messageSend;
 
@@ -50,9 +54,9 @@ public class EController implements Runnable {
     }
 
     // Need to link the Elevator object to a thread somehow
-    public void setElevatorThreads(FrameView fm) {
+    public void setElevatorThreads() {
         for (int i = 0; i < numberOfElevators; i++) {
-            elevators.add(new Elevator(capacity, i, fm));
+            elevators.add(new Elevator(capacity, i));
         }
     }
 
@@ -76,20 +80,6 @@ public class EController implements Runnable {
         return eControllerEvents;
     }
 
-    public void assignEvents()
-    {
-        for(Elevator elevator : elevators)
-        {
-            for(Event event : eControllerEvents)
-            {
-                if(elevator.getELEVATOR_ID() == event.getElevatorId())
-                {
-                    elevator.addEvent(event);
-                }
-            }
-        }
-    }
-
     @Override
     public String toString() {
         return "ElevatorController{" +
@@ -101,15 +91,4 @@ public class EController implements Runnable {
                 '}';
     }
 
-    @Override
-    public void run() {
-
-        while(true)
-        {
-            if(eControllerEvents.size() > 0)
-            {
-                assignEvents();
-            }
-        }
-    }
 }

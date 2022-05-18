@@ -36,20 +36,24 @@ public class Runner {
         Thread commandGen = new Thread(genCommands, "commands");
         Scheduler scheduler = new Scheduler(eController.getElevators(), eController.getEcontrollerEvents(), genCommands);
         Thread schedulerThread = new Thread(scheduler);
-
-        FrameView fm = new FrameView(eController.getMinFloor(), eController.getMaxFloor(), eController.getNumberOfElevators(), eController.getElevators());
+        // Thread eControllerThread = new Thread(eController);
 
         commandGen.start();
         schedulerThread.start();
 
-        eController.setElevatorThreads(fm);
+        eController.setElevatorThreads();
         eController.runElevators();
-
+        FrameView fm = new FrameView(eController.getMinFloor(), eController.getMaxFloor(), eController.getNumberOfElevators(), eController.getElevators());
+        Thread graphics = new Thread(fm);
+        graphics.start();
+        // eControllerThread.start();
         UserInput u = new UserInput();
 
         if (u.userInput(commandGen, genCommands)) {
             stopThreads(commandGen, schedulerThread);
         }
+
+
         fm.close();
     }
 

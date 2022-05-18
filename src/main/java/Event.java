@@ -19,15 +19,15 @@ public class Event {
         return numPeople;
     }
 
-    public int getSrc() {
+    public synchronized int getSrc() {
         return src;
     }
 
-    public int getDest() {
+    public synchronized int getDest() {
         return dest;
     }
 
-    public boolean getDelete() {
+    public synchronized boolean getDelete() {
         return delete;
     }
 
@@ -43,7 +43,7 @@ public class Event {
         this.srcReached = srcReached;
     }
 
-    public boolean getSrcReached() {
+    public synchronized boolean getSrcReached() {
         return srcReached;
     }
 

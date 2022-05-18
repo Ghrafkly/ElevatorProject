@@ -45,8 +45,10 @@ public class Runner {
         genCommands.generator();
         v.valCommand(genCommands.getCommand());
 
+        FrameView fm = new FrameView(eController.getMinFloor(), eController.getMaxFloor(), eController.getNumberOfElevators(), eController.getElevators());
 
-        eController.setElevatorThreads();
+
+        eController.setElevatorThreads(fm);
         eController.runElevators();
         schedulerThread.start();
 

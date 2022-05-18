@@ -43,6 +43,10 @@ public class EController implements Runnable {
         this.numberOfElevators = numberOfElevators;
     }
 
+    public int getNumberOfElevators(){
+        return numberOfElevators;
+    }
+
     // Need to link the Elevator object to a thread somehow
     public void setElevatorThreads(FrameView fm) {
         for (int i = 0; i < numberOfElevators; i++) {

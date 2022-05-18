@@ -34,16 +34,26 @@ public class Runner {
 
     public void startThreads() throws InterruptedException {
         Thread commandGen = new Thread(genCommands, "commands");
-        Scheduler scheduler = new Scheduler(elevatorController.getElevators());
+        Scheduler scheduler = new Scheduler(eController.getElevators());
         Thread schedulerThread = new Thread(scheduler);
+
         commandGen.start();
+        schedulerThread.start();
 
         eController.setElevatorThreads();
         eController.runElevators();
-        schedulerThread.start();
 
         UserInput u = new UserInput();
-        u.userInput(commandGen, genCommands);
+        if (u.userInput(commandGen, genCommands, scheduler)) {
+            stopThreads(commandGen, schedulerThread);
+        }
+    }
+
+    public void stopThreads(Thread a, Thread b) throws InterruptedException {
+        a.interrupt();
+//        b.interrupt();
+        Thread.sleep(1);
+        System.out.println("Program Ended");
     }
 
     public Map<String, Integer> readFromJSONFile(File source) throws IOException {

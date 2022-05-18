@@ -1,11 +1,16 @@
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 public class Validator {
     private static final Logger logger = LogManager.getLogger();
+    private final Pattern comP = Pattern.compile("^\\d+:\\d+:\\d+$");
+    private final Pattern numeric = Pattern.compile("^\\d+$");
+    private final Pattern alpha = Pattern.compile("^[a-zA-Z]+$");
+    private ArrayList<String> commands = new ArrayList<>();
 
     public boolean valConfig() {
         return EController.maxFloor > EController.minFloor;
@@ -14,31 +19,32 @@ public class Validator {
     public String valInput(String input) {
         String str = "";
         if (input.contains(":")) {
-            if (valCommand(input))
+            if (valCommand(input)) {
                 str = "command";
-        } else if (isNumeric(input)) {
-            if (valInterval(Integer.parseInt(input)))
+            }
+        } else if (numeric.matcher(input).find()) {
+            if (valInterval(Integer.parseInt(input))) {
                 str = "interval";
-        } else if (isAlpha(input)) {
-            if (valSimulation(input))
+            }
+        } else if (alpha.matcher(input).find()) {
+            if (valSimulation(input)) {
                 str = "simulation";
+            }
         }
+
+
         return str;
     }
 
     public boolean valCommand(String command) {
-        String[] input = command.split(":");
-        if (input.length != 3 || command.endsWith(":")) {
-            logger.error(String.format("Command (%s) of length: %d. Commands should have length 3 and format int:int:int.", command, input.length));
-            return false;
-        } else {
-            for (String s : input)
-                if (!isNumeric(s)) {
-                    logger.error(String.format("Command (%s) is not numeric. Command should be int:int:int.", command));
-                    return false;
-                }
-        }
-        return true;
+        String[] input = command.split(",");
+        for (String str : input)
+            if (!comP.matcher(str).find())
+                logger.error(String.format("Command (%s) of length: %d. Commands should have length 3 and format int:int:int.", str, input.length));
+            else
+                commands.add(str);
+
+        return commands.size() > 0;
     }
 
     public boolean valInterval(int interval) {
@@ -58,30 +64,11 @@ public class Validator {
         return true;
     }
 
-    /**
-     * Checks to see if the value in the string array is a numeric
-     *
-     * @param input         String of user input
-     * @return boolean      If the string is numeric
-     */
-    public boolean isNumeric(String input) {
-        try {
-            Integer.parseInt(input);
-            return true;
-        } catch (NumberFormatException e) {
-            logger.error("Command value not an integer!");
-            return false;
-        }
+    public ArrayList<String> getCommands() {
+        return commands;
     }
 
-    /**
-     * Checks if the value parsed is only alphabetic
-     *
-     * @param str
-     * @return
-     */
-    public boolean isAlpha(String str) {
-        String[] check = str.split("");
-        return Arrays.stream(check).noneMatch(this::isNumeric);
+    public void setCommands(ArrayList<String> commands) {
+        this.commands = commands;
     }
 }

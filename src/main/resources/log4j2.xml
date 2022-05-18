@@ -12,7 +12,7 @@
             <PatternLayout
                     pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
         </File>
-        <File name="GenCommandsLog" filename="GenCommandsLog.log">
+        <File name="CommandsLog" filename="CommandsLog.log">
             <PatternLayout
                     pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
         </File>
@@ -43,12 +43,20 @@
             <AppenderRef ref="RunnerLog" level="fatal" />
         </Logger>
         <Logger name="GenCommands" level="trace">
-            <AppenderRef ref="GenCommandsLog" level="trace" />
-            <AppenderRef ref="GenCommandsLog" level="debug" />
-            <AppenderRef ref="GenCommandsLog" level="info" />
-            <AppenderRef ref="GenCommandsLog" level="warn" />
-            <AppenderRef ref="GenCommandsLog" level="error" />
-            <AppenderRef ref="GenCommandsLog" level="fatal" />
+            <AppenderRef ref="CommandsLog" level="trace" />
+            <AppenderRef ref="CommandsLog" level="debug" />
+            <AppenderRef ref="CommandsLog" level="info" />
+            <AppenderRef ref="CommandsLog" level="warn" />
+            <AppenderRef ref="CommandsLog" level="error" />
+            <AppenderRef ref="CommandsLog" level="fatal" />
+        </Logger>
+        <Logger name="UserInput" level="trace">
+            <AppenderRef ref="CommandsLog" level="trace" />
+            <AppenderRef ref="CommandsLog" level="debug" />
+            <AppenderRef ref="CommandsLog" level="info" />
+            <AppenderRef ref="CommandsLog" level="warn" />
+            <AppenderRef ref="CommandsLog" level="error" />
+            <AppenderRef ref="CommandsLog" level="fatal" />
         </Logger>
         <Logger name="Scheduler" level="trace">
             <AppenderRef ref="SchedulerLog" level="trace" />

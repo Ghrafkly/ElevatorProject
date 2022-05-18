@@ -44,9 +44,9 @@ public class EController implements Runnable {
     }
 
     // Need to link the Elevator object to a thread somehow
-    public void setElevatorThreads() {
+    public void setElevatorThreads(FrameView fm) {
         for (int i = 0; i < numberOfElevators; i++) {
-            elevators.add(new Elevator(capacity, i));
+            elevators.add(new Elevator(capacity, i, fm));
         }
     }
 

@@ -11,13 +11,16 @@ public class Elevator implements Runnable {
     private EState moveState = EState.IDLE;
     private int currentFloor = 0;
     private int currentCapacity = 0;
+
+    private FrameView frameView;
     private boolean availability = true;
     private ArrayList<Event> events;
 
-    public Elevator(int MAX_CAPACITY, int elevatorID) {
+    public Elevator(int MAX_CAPACITY, int elevatorID, FrameView frameView) {
         this.MAX_CAPACITY = MAX_CAPACITY;
         this.ELEVATOR_ID = elevatorID;
         events = new ArrayList<>();
+        this.frameView = frameView;
     }
 
     // Use and remove commands

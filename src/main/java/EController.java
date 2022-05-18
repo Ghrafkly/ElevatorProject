@@ -10,6 +10,8 @@ public class EController implements Runnable {
     public static int minFloor;
     public static int capacity;
     private int numberOfElevators;
+
+    private FrameView fm;
     private final ArrayList<Elevator> elevators = new ArrayList<>();
     private final ArrayList<Thread> threads = new ArrayList<>();
     private ArrayList<Event> eControllerEvents = new ArrayList<>();

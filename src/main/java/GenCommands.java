@@ -13,11 +13,14 @@ public class GenCommands implements Runnable {
     public GenCommands() {
     }
 
+    // SRC and DES cannot be the same
     public void generator() throws InterruptedException {
         while (true) {
             int capacity = ThreadLocalRandom.current().nextInt(1, cap + 1);
             int src = ThreadLocalRandom.current().nextInt(min, max + 1);
             int des = ThreadLocalRandom.current().nextInt(min, max + 1);
+            while (des == src)
+                des = ThreadLocalRandom.current().nextInt(min, max + 1);
             setCommand(String.format("%d:%d:%d", src, des, capacity));
             LOGGER.info(timeInterval + " " + command);
             Thread.sleep(timeInterval);

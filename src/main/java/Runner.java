@@ -16,10 +16,12 @@ public class Runner {
 
         r.createObjects(file);
 
+
         if (v.valConfig())
             r.startThreads();
         else
             System.out.println("Issue with config file");
+
     }
 
     public void createObjects(File file) throws IOException {
@@ -40,8 +42,8 @@ public class Runner {
 
         FrameView fm = new FrameView(eController.getMinFloor(), eController.getMaxFloor(), eController.getNumberOfElevators(), eController.getElevators());
         Thread graphics = new Thread(fm);
-
         graphics.start();
+
         commandGen.start();
 
         eController.setElevatorThreads();

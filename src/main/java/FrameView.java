@@ -242,7 +242,7 @@ public class FrameView implements Runnable
 		switch (elevators.get(i).getMoveState())
 		{
 			case UP:
-				color = Color.RED;
+				color = Color.GREEN;
 				break;
 			case DOWN:
 				color = Color.YELLOW;

@@ -9,6 +9,7 @@ public class Scheduler implements Runnable
     private ArrayList<Event> events;
     private final ArrayList<Elevator> elevators;
     private String inputs;
+
     private static final Logger LOGGER = LogManager.getLogger(Scheduler.class);
 
     public Scheduler(ArrayList<Elevator> elevators) {
@@ -19,8 +20,8 @@ public class Scheduler implements Runnable
     @Override
     public void run()
     {
-        inputs = "1:2:3,4:5:2"; // TODO: dynamically get inputs
-        LOGGER.info("test");
+//        inputs = getCommand(); // TODO: dynamically get inputs
+//        LOGGER.info(getCommand() + " Command");
 
         while(true)
         {
@@ -38,6 +39,7 @@ public class Scheduler implements Runnable
 
                 // Manage moveState based on the events assigned to each elevator
                 manageMoveState(elevators);
+                LOGGER.info("State: " + elevator.getMoveState());
 
                 // Based on the move state, move the elevator up or down a floor
                 switch(elevator.getMoveState())
@@ -210,6 +212,9 @@ public class Scheduler implements Runnable
         else if(eState == EState.DOWN)
         {
             elevator.setCurrentFloor(elevator.getCurrentFloor() - 1);
+        }
+        else {
+            elevator.setCurrentFloor(elevator.getCurrentFloor());
         }
     }
 

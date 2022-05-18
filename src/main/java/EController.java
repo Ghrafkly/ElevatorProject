@@ -54,6 +54,7 @@ public class EController {
     }
 
     public void runElevators() {
+
         for (int i = 0; i < elevators.size(); i++) {
             threads.add(new Thread(elevators.get(i), String.valueOf(i)));
         }

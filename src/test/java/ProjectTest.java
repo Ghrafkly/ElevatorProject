@@ -93,19 +93,19 @@ public class ProjectTest {
 
     }
 
-    @Test
-    void test_config_correctly_formatted_returns_true() throws IOException {
-        File file = new File("config.json");
-        ValidatorOld v = new ValidatorOld();
-
-        Map<String, Integer> json = RunnerOld.readFromJSONFile(file);
-        String elevator = RunnerOld.MAPPER.writeValueAsString(json.get("elevator"));
-        String commands = RunnerOld.MAPPER.writeValueAsString(json.get("commands"));
-
-        EController elevatorController = RunnerOld.MAPPER.readValue(elevator, EController.class);
-
-        assertTrue(v.validateConfig(elevatorController));
-    }
+//    @Test
+//    void test_config_correctly_formatted_returns_true() throws IOException {
+//        File file = new File("config.json");
+//        ValidatorOld v = new ValidatorOld();
+//
+//        Map<String, Integer> json = Runner.readFromJSONFile(file);
+//        String elevator = Runner.MAPPER.writeValueAsString(json.get("elevator"));
+//        String commands = Runner.MAPPER.writeValueAsString(json.get("commands"));
+//
+//        EController elevatorController = Runner.MAPPER.readValue(elevator, EController.class);
+//
+//        assertTrue(v.validateConfig(elevatorController));
+//    }
     //Test depreciated
 //    @Test
 //    void test_config_incorrectly_formatted_returns_false() throws IOException {

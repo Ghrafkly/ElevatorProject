@@ -9,7 +9,11 @@ public class UserInput {
     private final Validator v = new Validator();
     private static final Logger LOGGER = LogManager.getLogger(UserInput.class);
 
+<<<<<<< HEAD
     public boolean userInput(Thread commandGen, GenCommands genCommands, Scheduler scheduler) throws InterruptedException {
+=======
+    public boolean userInput(Thread commandGen, GenCommands genCommands) throws InterruptedException {
+>>>>>>> master
         boolean waitCheck = false;
         String input;
         Scanner scanner = new Scanner(System.in);
@@ -46,6 +50,14 @@ public class UserInput {
             }
         } while (!Objects.equals(input, "stop"));
 
+<<<<<<< HEAD
         return true;
+=======
+        commandGen.interrupt();
+        Thread.sleep(1);
+        System.out.println("Program Ended");
+        return waitCheck;
+
+>>>>>>> master
     }
 }

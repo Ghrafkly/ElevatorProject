@@ -39,6 +39,8 @@ public class Runner {
         Thread controllerThread = new Thread(eController);
 
         FrameView fm = new FrameView(eController.getMinFloor(), eController.getMaxFloor(), eController.getNumberOfElevators(), eController.getElevators());
+        Thread graphics = new Thread(fm);
+        graphics.start();
 
         Validator v = new Validator();
         commandGen.start();
@@ -46,8 +48,6 @@ public class Runner {
 
         genCommands.generator();
         v.valCommand(genCommands.getCommand());
-
-
 
         eController.setElevatorThreads(fm);
         eController.runElevators();

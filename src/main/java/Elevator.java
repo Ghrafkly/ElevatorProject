@@ -133,6 +133,7 @@ public class Elevator implements Runnable {
                 if (!reachedEndEvent.isEmpty()) {
                     updateElevatorCapacity(reachedEndEvent, false);
                 }
+            }
         }
     }
 

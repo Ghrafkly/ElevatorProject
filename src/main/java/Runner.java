@@ -34,16 +34,6 @@ public class Runner {
 
     public void startThreads() throws InterruptedException {
         Thread commandGen = new Thread(genCommands, "commands");
-<<<<<<< HEAD
-        Scheduler scheduler = new Scheduler(eController.getElevators());
-        Thread schedulerThread = new Thread(scheduler);
-
-        commandGen.start();
-        schedulerThread.start();
-
-        eController.setElevatorThreads();
-        eController.runElevators();
-=======
         Scheduler scheduler = new Scheduler(eController.getElevators(), eController.getEcontrollerEvents(), genCommands);
         Thread schedulerThread = new Thread(scheduler);
 
@@ -51,23 +41,17 @@ public class Runner {
 
         commandGen.start();
         schedulerThread.start();
->>>>>>> master
 
         eController.setElevatorThreads(fm);
         eController.runElevators();
 
         UserInput u = new UserInput();
-<<<<<<< HEAD
-        if (u.userInput(commandGen, genCommands, scheduler)) {
-            stopThreads(commandGen, schedulerThread);
-        }
-=======
+
         if (u.userInput(commandGen, genCommands)) {
             stopThreads(commandGen, schedulerThread);
         }
         fm.close();
->>>>>>> master
-    }add
+    }
 
     public void stopThreads(Thread a, Thread b) throws InterruptedException {
         a.interrupt();

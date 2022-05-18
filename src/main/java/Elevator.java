@@ -97,40 +97,44 @@ public class Elevator implements Runnable {
     }
 
     @Override
-    public void run() {
-        while (true) {
-            if (events.size() > 0) {
-                // Manage moveState based on the events assigned to each elevator
-                manageMoveState();
+    public void run()
+    {
+        while (true)
+        {
+            // Manage moveState based on the events assigned to each elevator
+            manageMoveState();
 
-                // Based on the move state, move the elevator up or down a floor
-                switch (getMoveState()) {
-                    case DOWN:
-                        moveFloor(EState.DOWN);
-                        break;
-                    case UP:
-                        moveFloor(EState.UP);
-                        break;
-                    case IDLE:
-                        break;
-                }
+            // Based on the move state, move the elevator up or down a floor
+            switch (getMoveState())
+            {
+                case DOWN:
+                    moveFloor(EState.DOWN);
+                    break;
+                case UP:
+                    moveFloor(EState.UP);
+                    break;
+                case IDLE:
+                    break;
+            }
 
-                // If the elevator has reached the start or end of an event:
-                ArrayList<Event> reachedStartEvent = reachStartOfEvent();
-                ArrayList<Event> reachedEndEvent = reachEndOfEvent();
+            // If the elevator has reached the start or end of an event:
+            ArrayList<Event> reachedStartEvent = reachStartOfEvent();
+            ArrayList<Event> reachedEndEvent = reachEndOfEvent();
 
-                // If the elevator has reached a source floor:
-                if (!reachedStartEvent.isEmpty()) {
-                    updateElevatorCapacity(reachedStartEvent, true);
-                }
+            // If the elevator has reached a source floor:
+            if (!reachedStartEvent.isEmpty())
+            {
+                updateElevatorCapacity(reachedStartEvent, true);
+            }
 
-                // If the elevator has reached a destination floor:
-                if (!reachedEndEvent.isEmpty()) {
-                    updateElevatorCapacity(reachedEndEvent, false);
-                }
+            // If the elevator has reached a destination floor:
+            if (!reachedEndEvent.isEmpty())
+            {
+                updateElevatorCapacity(reachedEndEvent, false);
             }
         }
     }
+
     /**
      * This function will update Elevator Capacity upon entering an SRC or DEST floor
      * @param events is the

@@ -133,9 +133,9 @@ public class Elevator implements Runnable {
                 if (!reachedEndEvent.isEmpty()) {
                     updateElevatorCapacity(reachedEndEvent, false);
                 }
-            }
         }
     }
+
     /**
      * This function will update Elevator Capacity upon entering an SRC or DEST floor
      * @param events is the

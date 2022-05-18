@@ -39,10 +39,6 @@ public class Runner {
         Thread controllerThread = new Thread(eController);
         commandGen.start();
         controllerThread.start();
-        try{
-            genCommands.generator();
-            v.validate(genCommands.getCommand());
-
 
         eController.setElevatorThreads();
         eController.runElevators();

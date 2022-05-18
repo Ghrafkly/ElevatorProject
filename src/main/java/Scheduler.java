@@ -16,8 +16,6 @@ public class Scheduler implements Runnable
 
     public Scheduler(ArrayList<Elevator> elevators, ArrayList<Event> eControllerEvents, GenCommands genCommands)
     {
-        events = new ArrayList<>();
-
         this.elevators = elevators;
         this.schedulerEvents = new ArrayList<>();
         this.eControllerEvents = eControllerEvents;
@@ -52,9 +50,7 @@ public class Scheduler implements Runnable
      */
     public void processInput(String input)
     {
-        // 13:58:53.775 [commands] INFO  GenCommands - 1000 5:3:2 (general format of a command)
-        String[] genCommand = input.split(" ");
-        String[] inputsArr = genCommand[6].split(",");
+        String[] inputsArr = input.split(",");
         for(String str : inputsArr)
         {
             Event event = createEvent(str);

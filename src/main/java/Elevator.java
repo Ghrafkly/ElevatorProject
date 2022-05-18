@@ -13,10 +13,13 @@ public class Elevator implements Runnable {
     private boolean availability = true;
     private ArrayList<Event> events;
 
-    public Elevator(int MAX_CAPACITY, int elevatorID) {
+    private FrameView frameView;
+
+    public Elevator(int MAX_CAPACITY, int elevatorID, FrameView frameView) {
         this.MAX_CAPACITY = MAX_CAPACITY;
         this.ELEVATOR_ID = elevatorID;
         events = new ArrayList<>();
+        this.frameView = frameView;
     }
 
     // Use and remove commands
@@ -103,5 +106,8 @@ public class Elevator implements Runnable {
     @Override
     public void run() {
 //        System.out.println(ELEVATOR_ID);
+        Thread graphics = new Thread(frameView);
+        graphics.start();
+
     }
 }

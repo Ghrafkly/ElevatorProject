@@ -79,7 +79,7 @@ public class FrameView implements Runnable
 		jframe = new JFrame();
 		jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jframe.setSize(1080, 1050); // set size of the graphics
-		jframe.setTitle("Simulation for " + (maxFloor - 1) + " Floors and " + numLift + " Elevators");
+		jframe.setTitle("Simulation for " + (maxFloor) + " Floors and " + numLift + " Elevators");
 
 		TIMER = new Timer(10, null); // call every 10 milliseconds
 

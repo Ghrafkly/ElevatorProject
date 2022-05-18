@@ -20,8 +20,8 @@ public class Scheduler implements Runnable
     @Override
     public void run()
     {
-//        inputs = getCommand(); // TODO: dynamically get inputs
-//        LOGGER.info(getCommand() + " Command");
+        inputs = "3:1:3,3:1:5,6:1:2"; // TODO: dynamically get inputs
+        LOGGER.info("1:2:3" + " Command");
 
         while(true)
         {

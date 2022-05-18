@@ -41,18 +41,18 @@ public class Runner {
         Thread schedulerThread = new Thread(scheduler);
 
         FrameView fm = new FrameView(eController.getMinFloor(), eController.getMaxFloor(), eController.getNumberOfElevators(), eController.getElevators());
-        Thread graphics = new Thread(fm);
-        graphics.start();
 
         commandGen.start();
 
-        eController.setElevatorThreads();
+        eController.setElevatorThreads(fm);
         eController.runElevators();
         schedulerThread.start();
 
         UserInput u = new UserInput();
         u.userInput(commandGen, genCommands);
+
         fm.close();
+
     }
 
     public Map<String, Integer> readFromJSONFile(File source) throws IOException {

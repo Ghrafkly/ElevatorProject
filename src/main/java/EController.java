@@ -9,6 +9,8 @@ public class EController {
     public static int maxFloor;
     public static int minFloor;
     public static int capacity;
+
+    public FrameView frameView;
     private int numberOfElevators;
     private final ArrayList<Elevator> elevators = new ArrayList<>();
     private final ArrayList<Thread> threads = new ArrayList<>();
@@ -47,9 +49,9 @@ public class EController {
     }
 
     // Need to link the Elevator object to a thread somehow
-    public void setElevatorThreads() {
+    public void setElevatorThreads(FrameView frameView) {
         for (int i = 0; i < numberOfElevators; i++) {
-            elevators.add(new Elevator(capacity, i));
+            elevators.add(new Elevator(capacity, i, frameView));
         }
     }
 

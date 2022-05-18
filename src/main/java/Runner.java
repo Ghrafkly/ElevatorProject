@@ -34,9 +34,9 @@ public class Runner {
 
     public void startThreads() throws InterruptedException {
         Thread commandGen = new Thread(genCommands, "commands");
-        Scheduler scheduler = new Scheduler(elevatorController.getElevators(), elevatorController.getEcontrollerEvents(), genCommands);
+        Scheduler scheduler = new Scheduler(eController.getElevators(), eController.getEcontrollerEvents(), genCommands);
         Thread schedulerThread = new Thread(scheduler);
-        Thread controllerThread = new Thread(elevatorController);
+        Thread controllerThread = new Thread(eController);
         commandGen.start();
         controllerThread.start();
         try{

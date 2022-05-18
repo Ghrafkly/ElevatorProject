@@ -6,173 +6,58 @@ import java.util.Iterator;
 
 public class Scheduler implements Runnable
 {
-    private ArrayList<Event> events;
     private final ArrayList<Elevator> elevators;
-    private String inputs;
+    private String input;
+    private String tempString;
     private static final Logger LOGGER = LogManager.getLogger(Scheduler.class);
+    private ArrayList<Event> schedulerEvents;
+    private ArrayList<Event> eControllerEvents;
+    private GenCommands genCommands;
 
-    public Scheduler(ArrayList<Elevator> elevators)
+    public Scheduler(ArrayList<Elevator> elevators, ArrayList<Event> eControllerEvents, GenCommands genCommands)
     {
-        events = new ArrayList<>();
         this.elevators = elevators;
+        this.schedulerEvents = new ArrayList<>();
+        this.eControllerEvents = eControllerEvents;
+        this.genCommands = genCommands;
+        input = "";
+        tempString = "";
     }
 
     @Override
     public void run()
     {
-        inputs = "1:2:3,4:5:2"; // TODO: dynamically get inputs
-        LOGGER.info("test");
-
         while(true)
         {
-            // Add inputs to the events arrayList
-            if(!inputs.equals("")) {
-                processInput(inputs);
+            // Input is valid if it's not blank and the previous command is not the same as the one being processed
+            if(!input.equals("") && !((tempString = genCommands.getCommand()).equals(input))) {
+                processInput(input);
+                input = tempString;
             }
-            inputs = "";
 
             // Loop through all the elevators and move it up or down depending on it's moveState
             for(Elevator elevator : elevators)
             {
                 // Assign events to the appropriate elevator
-                manageEventList(elevator, events, elevators);
-
-                // Manage moveState based on the events assigned to each elevator
-                manageMoveState(elevators);
-
-                // Based on the move state, move the elevator up or down a floor
-                switch(elevator.getMoveState())
-                {
-                    case DOWN:
-                        moveFloor(elevator, EState.DOWN);
-                        break;
-                    case UP:
-                        moveFloor(elevator, EState.UP);
-                        break;
-                    case IDLE:
-                        break;
-                }
-
-                // If the elevator has reached the start or end of an event:
-                ArrayList<Event> reachedStartEvent = reachStartOfEvent(elevator);
-                ArrayList<Event> reachedEndEvent = reachEndOfEvent(elevator);
-
-                // If the elevator has reached a source floor:
-                if (!reachedStartEvent.isEmpty())
-                {
-                    updateElevatorCapacity(elevator, reachedStartEvent, true);
-                }
-
-                // If the elevator has reached a destination floor:
-                if (!reachedEndEvent.isEmpty())
-                {
-                    updateElevatorCapacity(elevator, reachedEndEvent, false);
-                }
+                manageEventList(elevator, schedulerEvents, elevators);
             }
         }
-    }
-
-    /**
-     * This function will update Elevator Capacity upon entering an SRC or DEST floor
-     * @param elevator is the elevator being queried
-     * @param events is the
-     * @param add
-     */
-    public void updateElevatorCapacity(Elevator elevator, ArrayList<Event> events, boolean add)
-    {
-        for(Event event : events)
-        {
-            int currCapacity = elevator.getCurrentCapacity();
-
-            // Update the number of occupants
-            if(add)
-            {
-                elevator.setCurrentCapacity(currCapacity + event.getNumPeople());
-            }
-            else
-            {
-                elevator.setCurrentCapacity(currCapacity - event.getNumPeople());
-            }
-        }
-
-        // Destination has been reached so job can be removed from the list
-        if(!add)
-        {
-            cleanUpEvents(elevator.getEvents());
-        }
-
-        // Sleep the elevator to allow passengers to enter/leave
-        if(events.size() > 0)
-        {
-            try {
-                elevator.openOrCloseElevator();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    /**
-     * Getter for events to be assigned
-     * @return all events to be processed
-     */
-    public ArrayList<Event> getEvents()
-    {
-        return events;
     }
 
     /**
      * This function will convert inputs into Event objects and appended to Elevator's jobs
-     * @param inputs in the form of src:dest:numPeople comma-separated
+     * @param input in the form of src:dest:numPeople comma-separated
      */
-    public void processInput(String inputs)
+    public void processInput(String input)
     {
-        String[] inputsArr = inputs.split(",");
-        for(String input : inputsArr)
+        // 13:58:53.775 [commands] INFO  GenCommands - 1000 5:3:2 (general format of a command)
+        String[] genCommand = input.split(" ");
+        String[] inputsArr = genCommand[6].split(",");
+        for(String str : inputsArr)
         {
-            Event event = createEvent(input);
-            events.add(event);
+            Event event = createEvent(str);
+            schedulerEvents.add(event);
         }
-    }
-
-    /**
-     * This function will return an event that have started its journey.
-     * @param elevator being queried
-     * @return event with a src that matches the elevator's current floor otherwise null
-     */
-    public ArrayList<Event> reachStartOfEvent(Elevator elevator)
-    {
-        ArrayList<Event> events = new ArrayList<>();
-
-        for(Event event : elevator.getEvents())
-        {
-            if(event.getSrc() == elevator.getCurrentFloor() && !event.getSrcReached())
-            {
-                event.setSrcReached(true);
-                events.add(event);
-            }
-        }
-        return events;
-    }
-
-    /**
-     * This function will return an event that have completed its journey.
-     * @param elevator being queried
-     * @return event with a dest that matches the elevator's current floor otherwise null
-     */
-    public ArrayList<Event> reachEndOfEvent(Elevator elevator)
-    {
-        ArrayList<Event> events = new ArrayList<>();
-
-        for(Event event : elevator.getEvents())
-        {
-            if(event.getDest() == elevator.getCurrentFloor() && event.getSrcReached())
-            {
-                event.setDelete(true);
-                events.add(event);
-            }
-        }
-        return events;
     }
 
     /**
@@ -186,7 +71,7 @@ public class Scheduler implements Runnable
         int dest = Integer.parseInt(input.split(":")[1]);
         int numPeople = Integer.parseInt(input.split(":")[2]);
 
-        return new Event(numPeople, src, dest);
+        return new Event(numPeople, src, dest, -1); // -1 elevatorID means it's not assigned yet
     }
 
     /**
@@ -199,71 +84,6 @@ public class Scheduler implements Runnable
             return EState.UP;
         }
         return EState.DOWN;
-    }
-
-    public void moveFloor(Elevator elevator, EState eState)
-    {
-        try
-        {
-            elevator.moveElevator();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        if(eState == EState.UP)
-        {
-            elevator.setCurrentFloor(elevator.getCurrentFloor() + 1);
-        }
-
-        else if(eState == EState.DOWN)
-        {
-            elevator.setCurrentFloor(elevator.getCurrentFloor() - 1);
-        }
-    }
-
-    /**
-     * Based on the events assigned to each elevator, we will change its moveState
-     * @param elevators arraylist of elevators
-     */
-    public void manageMoveState(ArrayList<Elevator> elevators)
-    {
-        int minFloor = EController.minFloor;
-
-        for(Elevator elevator : elevators)
-        {
-            // If the elevator is at the min floor and has no tasks, set it to IDLE
-            if(elevator.getCurrentFloor() == minFloor && elevator.getEvents().size() == 0)
-            {
-                elevator.setMoveState(EState.IDLE);
-            }
-
-            // If the elevator is being called from a floor lower than the src floor to move down, need to handle it
-            // If the elevator's state conflicts with the events' state then change it
-            else if(elevator.getEvents().size() > 0)
-            {
-                Event event = elevator.getEvents().get(0);
-                EState eState = getDirection(event);
-
-                if(eState != elevator.getMoveState() && checkAllEventSrcReached(elevator))
-                {
-                    elevator.setMoveState(getDirection(elevator.getEvents().get(0)));
-                }
-            }
-
-
-        }
-    }
-
-    public boolean checkAllEventSrcReached(Elevator elevator)
-    {
-        for(Event event : elevator.getEvents())
-        {
-            if (!event.getSrcReached())
-            {
-                return false;
-            }
-        }
-        return true;
     }
 
     /**
@@ -291,7 +111,6 @@ public class Scheduler implements Runnable
     {
         int currFloor = elevator.getCurrentFloor();
         int maxCapacity = elevator.MAX_CAPACITY;
-        int minFloor = EController.minFloor;
 
         for (Event event : events)
         {
@@ -308,8 +127,6 @@ public class Scheduler implements Runnable
             {
                 if(elevator.getMoveState() == EState.IDLE)
                 {
-                    // We need to tell the elevator to go up
-                    elevator.setMoveState(EState.UP);
                     manageEvent(elevatorCapacity, maxCapacity, event, elevator);
                 }
             }
@@ -327,7 +144,6 @@ public class Scheduler implements Runnable
                         (elevatorCapacity != maxCapacity))
                 {
                     manageEvent(elevatorCapacity, maxCapacity, event, elevator);
-
                 }
 
                 else if (direction == EState.DOWN &&
@@ -338,18 +154,7 @@ public class Scheduler implements Runnable
                 }
             }
         }
-
-        /*
-         * If the elevator:
-         * 1. is above the min floor
-         * 2. has no assigned task
-         * Return to the ground
-         */
-        if (currFloor > minFloor && elevator.getEvents().size() == 0)
-        {
-            elevator.setMoveState(EState.DOWN);
-        }
-
+        // If even in schedulerEvents has been fully processed then delete it
         cleanUpEvents(events);
     }
 
@@ -362,18 +167,20 @@ public class Scheduler implements Runnable
      */
     public void manageEvent(int currCapacity, int maxCapacity, Event event, Elevator elevator)
     {
+        event.setElevatorId(elevator.getELEVATOR_ID());
+
         // Elevator to take as many as it can before exceeding the max capacity
         if(currCapacity + event.getNumPeople() > maxCapacity)
         {
             int numPeopleCanAdd = maxCapacity - currCapacity;
-            Event elevatorEvent = new Event(numPeopleCanAdd, event.getSrc(), event.getDest());
-            elevator.addEvent(elevatorEvent);
+            Event elevatorEvent = new Event(numPeopleCanAdd, event.getSrc(), event.getDest(), elevator.getELEVATOR_ID());
+            eControllerEvents.add(elevatorEvent);
             event.setNumPeople(event.getNumPeople() - numPeopleCanAdd);
         }
         // Else the elevator can take all occupants
         else
         {
-            elevator.addEvent(new Event(event.getNumPeople(), event.getSrc(), event.getDest()));
+            eControllerEvents.add(new Event(event.getNumPeople(), event.getSrc(), event.getDest(), elevator.getELEVATOR_ID()));
             event.setDelete(true);
         }
     }

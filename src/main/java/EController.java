@@ -12,6 +12,7 @@ public class EController {
     private int numberOfElevators;
     private final ArrayList<Elevator> elevators = new ArrayList<>();
     private final ArrayList<Thread> threads = new ArrayList<>();
+    private ArrayList<Event> eControllerEvents = new ArrayList<>();
 
     public String messageSend;
 
@@ -62,6 +63,25 @@ public class EController {
 
     public ArrayList<Elevator> getElevators() {
         return elevators;
+    }
+
+    public ArrayList<Event> getEcontrollerEvents()
+    {
+        return eControllerEvents;
+    }
+
+    public void assignEvents()
+    {
+        for(Elevator elevator : elevators)
+        {
+            for(Event event : eControllerEvents)
+            {
+                if(elevator.getELEVATOR_ID() == event.getElevatorId())
+                {
+                    elevator.addEvent(event);
+                }
+            }
+        }
     }
 
     @Override

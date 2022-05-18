@@ -2,6 +2,10 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+CommandsLog.log
+RunnerLog.log
+SchedulerLog.log
+ValidatorLog.log
 
 ### IntelliJ IDEA ###
 .idea/modules.xml
@@ -36,3 +40,4 @@ build/
 
 ### Mac OS ###
 .DS_Store
+*.log

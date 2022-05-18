@@ -5,7 +5,7 @@ import java.util.ArrayList;
     Put it into another class, such as scheduler.
  */
 
-public class EController {
+public class EController implements Runnable {
     public static int maxFloor;
     public static int minFloor;
     public static int capacity;
@@ -93,5 +93,16 @@ public class EController {
                 ", capacity=" + capacity +
                 ", elevators=" + elevators +
                 '}';
+    }
+
+    @Override
+    public void run() {
+        while(true)
+        {
+            if(eControllerEvents.size() > 0)
+            {
+                assignEvents();
+            }
+        }
     }
 }

@@ -27,7 +27,9 @@ public class Runner {
         Thread commandGen = new Thread(genCommands, "commands");
         Scheduler scheduler = new Scheduler(elevatorController.getElevators(), elevatorController.getEcontrollerEvents(), genCommands);
         Thread schedulerThread = new Thread(scheduler);
+        Thread controllerThread = new Thread(elevatorController);
         commandGen.start();
+        controllerThread.start();
         try{
             genCommands.generator();
             v.validate(genCommands.getCommand());

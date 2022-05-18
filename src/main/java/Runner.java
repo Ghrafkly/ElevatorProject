@@ -54,6 +54,7 @@ public class Runner {
 
         UserInput u = new UserInput();
         u.userInput(commandGen, genCommands);
+        fm.close();
     }
 
         public Map<String, Integer> readFromJSONFile (File source) throws IOException {

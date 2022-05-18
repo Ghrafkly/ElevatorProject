@@ -101,6 +101,9 @@ public class Elevator implements Runnable {
 
     @Override
     public void run() {
+        Thread graphics = new Thread(frameView);
+        graphics.start();
+
         while (true) {
             if (events.size() > 0) {
                 // Manage moveState based on the events assigned to each elevator

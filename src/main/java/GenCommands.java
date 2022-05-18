@@ -11,6 +11,7 @@ public class GenCommands implements Runnable {
     public static String simulation = "normal";
     public static int floorLock = EController.minFloor;
     private static final Logger LOGGER = LogManager.getLogger(GenCommands.class);
+
     private final DateTimeFormatter format = DateTimeFormatter.ofPattern("ss.SSS");
     private final int cap = EController.capacity;
     private final int max = EController.maxFloor;
@@ -24,6 +25,7 @@ public class GenCommands implements Runnable {
     // SRC and DES cannot be the same
     public void generator() throws InterruptedException {
         while (true) {
+            time = (LocalTime.now().format(format));
             int capacity = ThreadLocalRandom.current().nextInt(1, cap + 1);
 
             switch (simulation) {
@@ -40,6 +42,7 @@ public class GenCommands implements Runnable {
 
     public String getCommand() {
         return String.format(time + " " + command);
+
     }
 
     public String morningSim(int capacity, int floorLock) {;

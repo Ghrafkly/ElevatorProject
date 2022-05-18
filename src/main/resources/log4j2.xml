@@ -20,6 +20,14 @@
             <PatternLayout
                     pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
         </File>
+        <File name="ElevatorLog" filename="ElevatorLog.log">
+            <PatternLayout
+                pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+        </File>
+        <File name="EControllerLog" filename="EControllerLog.log">
+            <PatternLayout
+                    pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+        </File>
     </Appenders>
     <Loggers>
         # Set level
@@ -65,6 +73,22 @@
             <AppenderRef ref="SchedulerLog" level="warn" />
             <AppenderRef ref="SchedulerLog" level="error" />
             <AppenderRef ref="SchedulerLog" level="fatal" />
+        </Logger>
+        <Logger name="Elevator" level="trace">
+            <AppenderRef ref="ElevatorLog" level="trace" />
+            <AppenderRef ref="ElevatorLog" level="debug" />
+            <AppenderRef ref="ElevatorLog" level="info" />
+            <AppenderRef ref="ElevatorLog" level="warn" />
+            <AppenderRef ref="ElevatorLog" level="error" />
+            <AppenderRef ref="ElevatorLog" level="fatal" />
+        </Logger>
+        <Logger name="EController" level="trace">
+            <AppenderRef ref="EControllerLog" level="trace" />
+            <AppenderRef ref="EControllerLog" level="debug" />
+            <AppenderRef ref="EControllerLog" level="info" />
+            <AppenderRef ref="EControllerLog" level="warn" />
+            <AppenderRef ref="EControllerLog" level="error" />
+            <AppenderRef ref="EControllerLog" level="fatal" />
         </Logger>
     </Loggers>
 </Configuration>

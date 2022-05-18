@@ -3,6 +3,8 @@ import org.apache.logging.log4j.Logger;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Set;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -13,6 +15,7 @@ public class Validator {
     private final Pattern numeric = Pattern.compile("^\\d+$");
 //    private final Pattern alpha = Pattern.compile("^[a-zA-Z]+$");
     private ArrayList<String> commands = new ArrayList<>();
+    private String time;
 
     public boolean valConfig() {
         return EController.maxFloor > EController.minFloor;
@@ -50,7 +53,6 @@ public class Validator {
                     System.out.println("Source and Destination are the same floor");
                     logger.error("Source and Destination are the same floor");
                 }
-
             }
         return commands.size() > 0;
     }

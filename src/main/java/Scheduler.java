@@ -16,8 +16,6 @@ public class Scheduler implements Runnable
 
     public Scheduler(ArrayList<Elevator> elevators, ArrayList<Event> eControllerEvents, GenCommands genCommands)
     {
-        events = new ArrayList<>();
-
         this.elevators = elevators;
         this.schedulerEvents = new ArrayList<>();
         this.eControllerEvents = eControllerEvents;

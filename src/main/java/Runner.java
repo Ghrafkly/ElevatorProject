@@ -36,20 +36,27 @@ public class Runner {
         Thread commandGen = new Thread(genCommands, "commands");
         Scheduler scheduler = new Scheduler(eController.getElevators(), eController.getEcontrollerEvents(), genCommands);
         Thread schedulerThread = new Thread(scheduler);
-        Thread controllerThread = new Thread(eController);
+
+        FrameView fm = new FrameView(eController.getMinFloor(), eController.getMaxFloor(), eController.getNumberOfElevators(), eController.getElevators());
+
         commandGen.start();
-        controllerThread.start();
-        try{
-            genCommands.generator();
-            v.validate(genCommands.getCommand());
-
-
-        eController.setElevatorThreads();
-        eController.runElevators();
         schedulerThread.start();
 
+        eController.setElevatorThreads(fm);
+        eController.runElevators();
+
         UserInput u = new UserInput();
-        u.userInput(commandGen, genCommands);
+        if (u.userInput(commandGen, genCommands)) {
+            stopThreads(commandGen, schedulerThread);
+        }
+        fm.close();
+    }
+
+    public void stopThreads(Thread a, Thread b) throws InterruptedException {
+        a.interrupt();
+//        b.interrupt();
+        Thread.sleep(1);
+        System.out.println("Program Ended");
     }
 
     public Map<String, Integer> readFromJSONFile(File source) throws IOException {

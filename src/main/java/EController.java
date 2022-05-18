@@ -10,6 +10,8 @@ public class EController implements Runnable {
     public static int minFloor;
     public static int capacity;
     private int numberOfElevators;
+
+    private FrameView fm;
     private final ArrayList<Elevator> elevators = new ArrayList<>();
     private final ArrayList<Thread> threads = new ArrayList<>();
     private ArrayList<Event> eControllerEvents = new ArrayList<>();
@@ -43,10 +45,14 @@ public class EController implements Runnable {
         this.numberOfElevators = numberOfElevators;
     }
 
+    public int getNumberOfElevators(){
+        return numberOfElevators;
+    }
+
     // Need to link the Elevator object to a thread somehow
-    public void setElevatorThreads() {
+    public void setElevatorThreads(FrameView fm) {
         for (int i = 0; i < numberOfElevators; i++) {
-            elevators.add(new Elevator(capacity, i));
+            elevators.add(new Elevator(capacity, i, fm));
         }
     }
 
@@ -97,6 +103,7 @@ public class EController implements Runnable {
 
     @Override
     public void run() {
+
         while(true)
         {
             if(eControllerEvents.size() > 0)

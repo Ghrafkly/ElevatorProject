@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class UserInput {
     private final Validator v = new Validator();
 
-    public void userInput(Thread commandGen, GenCommands genCommands) throws InterruptedException {
+    public boolean userInput(Thread commandGen, GenCommands genCommands) throws InterruptedException {
         boolean waitCheck = false;
         String input;
         Scanner scanner = new Scanner(System.in);
@@ -34,5 +34,7 @@ public class UserInput {
         commandGen.interrupt();
         Thread.sleep(1);
         System.out.println("Program Ended");
+        return waitCheck;
+
     }
 }

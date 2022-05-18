@@ -22,7 +22,7 @@ public class GenCommands implements Runnable {
             while (des == src)
                 des = ThreadLocalRandom.current().nextInt(min, max + 1);
             setCommand(String.format("%d:%d:%d", src, des, capacity));
-            LOGGER.info(timeInterval + " " + command);
+            LOGGER.info(command);
             Thread.sleep(timeInterval);
         }
     }

@@ -1,6 +1,4 @@
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,9 +6,6 @@ import java.util.Map;
 
 public class Runner {
     protected static final ObjectMapper MAPPER = new ObjectMapper();
-
-    private static final Logger logger = LogManager.getLogger();
-
     private EController eController;
     private GenCommands genCommands;
 
@@ -39,34 +34,29 @@ public class Runner {
 
     public void startThreads() throws InterruptedException {
         Thread commandGen = new Thread(genCommands, "commands");
-        Scheduler scheduler = new Scheduler(eController.getElevators(), eController.getEcontrollerEvents(), genCommands);
+        Scheduler scheduler = new Scheduler(eController.getElevators(), eController.getEcontrollerEvents(), );
         Thread schedulerThread = new Thread(scheduler);
-        Thread controllerThread = new Thread(eController);
 
-        FrameView fm = new FrameView(eController.getMinFloor(), eController.getMaxFloor(), eController.getNumberOfElevators(), eController.getElevators());
-
-
-        Validator v = new Validator();
         commandGen.start();
-        controllerThread.start();
-
-        genCommands.generator();
-        v.valCommand(genCommands.getCommand());
-
-        logger.info("This was printed");
-
-        eController.setElevatorThreads(fm);
-        eController.runElevators();
         schedulerThread.start();
 
+        eController.setElevatorThreads();
+        eController.runElevators();
 
         UserInput u = new UserInput();
-        u.userInput(commandGen, genCommands);
-        fm.close();
+        if (u.userInput(commandGen, genCommands, scheduler)) {
+            stopThreads(commandGen, schedulerThread);
+        }
     }
 
-        public Map<String, Integer> readFromJSONFile (File source) throws IOException {
-            return MAPPER.readValue(source, Map.class);
-        }
-}
+    public void stopThreads(Thread a, Thread b) throws InterruptedException {
+        a.interrupt();
+//        b.interrupt();
+        Thread.sleep(1);
+        System.out.println("Program Ended");
+    }
 
+    public Map<String, Integer> readFromJSONFile(File source) throws IOException {
+        return MAPPER.readValue(source, Map.class);
+    }
+}

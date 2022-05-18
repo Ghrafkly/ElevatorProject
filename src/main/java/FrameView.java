@@ -152,9 +152,9 @@ public class FrameView implements Runnable
 
 					// Display values options near lift
 					// Uncomment any display option you want
-					// drawValueToSide("" + elevators.get(i).getCurrentFloor(), graphics);
+					//drawValueToSide("" + elevators.get(i).getCurrentFloor(), graphics);
 					drawValueAbove(graphics, "" + elevators.get(i).getCurrentCapacity(), liftPoint);
-					// drawStringToSide(liftLabelText, graphics);
+					//drawStringToSide(liftLabelText, graphics);
 					drawStringInBase(this, graphics, liftLabelText, liftPoint);
 
 					graphics.setColor(getStateColor(i)); // use to show elevator state if implemented

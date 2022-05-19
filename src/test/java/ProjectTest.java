@@ -1,3 +1,6 @@
+import com.fasterxml.jackson.core.JsonProcessingException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -6,17 +9,17 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class ProjectTest {
 
-    ValidatorOld validate;
-    UserInputOld user;
+    Validator validate;
+    UserInput user;
 
     @Mock
     GenCommands gc = mock(GenCommands.class);;
@@ -24,73 +27,153 @@ public class ProjectTest {
     @BeforeEach
     void setUp(){
 
-        validate = new ValidatorOld();
-        user = new UserInputOld();
+        validate = new Validator();
+        user = new UserInput();
 
     }
 
     @Test
-    void test_validate_returns_false_when_empty(){
+    void test_validate_returns_false_when_empty() throws InterruptedException {
 
-        assertFalse(validate.validate(" "));
+        assertFalse(validate.valCommand(" "));
 
     }
 
     @Test
-    void test_validate_returns_false_with_alphabetic_input(){
-        assertFalse(validate.validate("a:b:c"));
+    void test_validate_returns_false_with_alphabetic_input() throws InterruptedException {
+        assertFalse(validate.valCommand("a:b:c"));
     }
 
     @Test
-    void test_validate_returns_false_with_mixed_input(){
-        assertFalse(validate.validate("10:b:c"));
+    void test_validate_returns_false_with_mixed_input() throws InterruptedException {
+        assertFalse(validate.valCommand("10:b:c"));
     }
 
     @Test
-    void test_validate_returns_false_with_mixed_input_per_branch(){
-        assertFalse(validate.validate("10a:b:c"));
+    void test_validate_returns_false_with_mixed_input_per_branch() throws InterruptedException {
+        assertFalse(validate.valCommand("10a:b:c"));
     }
 
     @Test
-    void test_validate_returns_true_with_10_2_8(){
-        assertTrue(validate.validate("10:2:8"));
+    void test_validate_returns_true_with_10_2_8() throws InterruptedException {
+        assertTrue(validate.valCommand("10:2:8"));
     }
 
     @Test
-    void test_validate_returns_false_with_10_2_8_9(){
-        assertFalse(validate.validate("10:2:8:9"));
+    void test_validate_returns_false_with_10_2_8_9() throws InterruptedException {
+        assertFalse(validate.valCommand("10:2:8:9"));
     }
 
     @Test
-    void test_validate_returns_false_with_10_2_8_colon(){
-        assertFalse(validate.validate("10:2:8:"));
+    void test_validate_returns_false_with_10_2_8_colon() throws InterruptedException {
+        assertFalse(validate.valCommand("10:2:8:"));
     }
 
     @Test
-    void test_validate_returns_false_with_10_point_5_2_8(){
-        assertFalse(validate.validate("10.5:2:8"));
+    void test_validate_returns_false_with_10_point_5_2_8() throws InterruptedException {
+        assertFalse(validate.valCommand("10.5:2:8"));
     }
 
     @Test
-    void test_validate_returns_false_with_2_10_point_5_8(){
-        assertFalse(validate.validate("2:10.5:8"));
+    void test_validate_returns_false_with_2_10_point_5_8() throws InterruptedException {
+        assertFalse(validate.valCommand("2:10.5:8"));
     }
 
     @Test
-    void test_validate_returns_false_with_2_8_10_point_5(){
-        assertFalse(validate.validate("2:8:10.5"));
+    void test_validate_returns_false_with_2_8_10_point_5() throws InterruptedException {
+        assertFalse(validate.valCommand("2:8:10.5"));
     }
 
     @Test
-    void test_validate_returns_false_with_2_8(){
-        assertFalse(validate.validate("2:8"));
+    void test_validate_returns_false_with_2_8() throws InterruptedException {
+        assertFalse(validate.valCommand("2:8"));
     }
 
     @Test
-    void test_user_validate_returns_false_when_empty(){
+    void test_user_validate_returns_false_when_empty() throws InterruptedException {
 
-        assertFalse(validate.validate(" "));
+        assertFalse(validate.valCommand(" "));
 
+    }
+
+    @Test
+    void test_user_validate_returns_false_when_wrong_format() throws InterruptedException {
+
+        assertFalse(validate.valCommand("2:2:3")); //Checks final else condition
+
+    }
+
+    @Test
+    void test_input_containing_colon_returns_command() throws InterruptedException {
+        assertEquals("command", validate.valInput("3:2:4"));
+    }
+    @Test
+    void test_containing_numeric_returns_interval() throws InterruptedException {
+        assertEquals("interval", validate.valInput(String.valueOf(204)));
+    }
+
+    @Test
+    void test_containing_numeric_returns_empty_string() throws InterruptedException {
+        assertEquals("", validate.valInput(String.valueOf(24)));
+    }
+
+    @Test
+    void test_containing_morning_returns_simulation() throws InterruptedException {
+        assertEquals("simulation", validate.valInput("morning"));
+    }
+
+    @Test
+    void test_containing_afternoon_returns_simulation() throws InterruptedException {
+        assertEquals("simulation", validate.valInput("afternoon"));
+    }
+
+    @Test
+    void test_containing_normal_returns_simulation() throws InterruptedException {
+        assertEquals("simulation", validate.valInput("normal"));
+    }
+
+    @Test
+    void test_containing_24_returns_false() throws InterruptedException {
+        assertFalse(validate.valSimulation("24"));
+    }
+
+    @Test
+    void test_containing_24_normal_returns_false() throws InterruptedException {
+        assertFalse(validate.valSimulation("24 normal"));
+    }
+
+    @Test
+    void test_containing_24normal_returns_false() throws InterruptedException {
+        assertFalse(validate.valSimulation("24normal"));
+    }
+
+    @Test
+    void test_containing_normal_24_returns_true() throws InterruptedException {
+        assertTrue(validate.valSimulation("normal 24"));
+    }
+
+    @Test
+    void test_getCommands_returns_list_of_commands() throws InterruptedException {
+        ArrayList<String> AnsCommand = new ArrayList<>();
+        AnsCommand.add("2:3:4");
+        AnsCommand.add("9:3:2");
+
+        ArrayList<String> command = new ArrayList<>();
+        command.add("2:3:4");
+        command.add("9:3:2");
+
+        validate.setCommands(command);
+
+        assertEquals(AnsCommand, validate.getCommands());
+    }
+
+    @Test
+    void test_valConfig_returns_true_when_config_is_correct() {
+        EController ec = new EController();
+        ec.maxFloor = 5;
+        ec.minFloor = 2;
+
+        assertTrue(validate.valConfig());
     }
 
 //    @Test

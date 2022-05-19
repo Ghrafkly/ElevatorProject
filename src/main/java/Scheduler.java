@@ -34,7 +34,7 @@ public class Scheduler implements Runnable
         while(true)
         {
             try {
-                Thread.sleep(100);
+                Thread.sleep(300);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -62,6 +62,14 @@ public class Scheduler implements Runnable
 
                 // Loop through all the elevators and move it up or down depending on it's moveState
 
+                for (Elevator elevator : elevators) {
+                    // Assign events to the appropriate elevator
+                    manageEventList(elevator, schedulerEvents);
+                }
+            }
+
+            if(schedulerEvents.size() > 0)
+            {
                 for (Elevator elevator : elevators) {
                     // Assign events to the appropriate elevator
                     manageEventList(elevator, schedulerEvents);
@@ -177,7 +185,7 @@ public class Scheduler implements Runnable
                 }
             }
 
-            else if (elevator.getState() == EState.IDLE && elevator.getEvents().size() == 0)
+            else if (elevator.getState() == EState.IDLE && (elevator.getSchedulerEvents().size() + elevator.getEvents().size() == 0))
             {
                 manageEvent(elevatorCapacity, maxCapacity, event, elevator);
             }

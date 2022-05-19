@@ -1,2 +1,54 @@
 13:09:23.552 [main] ERROR Validator - Incorrect (stop) simulation entered
 13:50:25.934 [main] ERROR Validator - Incorrect (stop) simulation entered
+14:12:07.123 [main] ERROR Validator - Command (10:2:8:) of length: 1. Commands should have length 3 and format int:int:int.
+14:12:07.133 [main] ERROR Validator - Source and Destination are the same floor
+14:12:07.138 [main] ERROR Validator - Command (2:8:10.5) of length: 1. Commands should have length 3 and format int:int:int.
+14:12:07.143 [main] ERROR Validator - Command (2:8) of length: 1. Commands should have length 3 and format int:int:int.
+14:12:07.145 [main] ERROR Validator - Incorrect (24 normal) simulation entered
+14:12:07.147 [main] ERROR Validator - Command (10:2:8:9) of length: 1. Commands should have length 3 and format int:int:int.
+14:12:07.148 [main] ERROR Validator - Command (10.5:2:8) of length: 1. Commands should have length 3 and format int:int:int.
+14:12:07.149 [main] ERROR Validator - Command (10:b:c) of length: 1. Commands should have length 3 and format int:int:int.
+14:12:07.151 [main] ERROR Validator - Incorrect (24normal) simulation entered
+14:12:07.153 [main] ERROR Validator - Command ( ) of length: 1. Commands should have length 3 and format int:int:int.
+14:12:07.154 [main] ERROR Validator - Incorrect (24) simulation entered
+14:12:07.155 [main] ERROR Validator - Interval of 24 is invalid. Please set the interval to a number higher than 100
+14:12:07.157 [main] ERROR Validator - Command (2:10.5:8) of length: 1. Commands should have length 3 and format int:int:int.
+14:12:07.158 [main] ERROR Validator - Command (a:b:c) of length: 1. Commands should have length 3 and format int:int:int.
+14:12:07.159 [main] ERROR Validator - Command (10a:b:c) of length: 1. Commands should have length 3 and format int:int:int.
+14:12:07.176 [main] ERROR Validator - Command ( ) of length: 1. Commands should have length 3 and format int:int:int.
+14:15:23.171 [main] ERROR Validator - Command (10:2:8:) of length: 1. Commands should have length 3 and format int:int:int.
+14:15:23.182 [main] ERROR Validator - Source and Destination are the same floor
+14:15:23.186 [main] ERROR Validator - Command (2:8:10.5) of length: 1. Commands should have length 3 and format int:int:int.
+14:15:23.190 [main] ERROR Validator - Command (2:8) of length: 1. Commands should have length 3 and format int:int:int.
+14:15:23.192 [main] ERROR Validator - Incorrect (24 normal) simulation entered
+14:15:23.193 [main] ERROR Validator - Command (10:2:8:9) of length: 1. Commands should have length 3 and format int:int:int.
+14:15:23.195 [main] ERROR Validator - Command (10.5:2:8) of length: 1. Commands should have length 3 and format int:int:int.
+14:15:23.196 [main] ERROR Validator - Command (10:b:c) of length: 1. Commands should have length 3 and format int:int:int.
+14:15:23.198 [main] ERROR Validator - Incorrect (24normal) simulation entered
+14:15:23.199 [main] ERROR Validator - Command ( ) of length: 1. Commands should have length 3 and format int:int:int.
+14:15:23.200 [main] ERROR Validator - Incorrect (24) simulation entered
+14:15:23.201 [main] ERROR Validator - Interval of 24 is invalid. Please set the interval to a number higher than 100
+14:15:23.203 [main] ERROR Validator - Command (2:10.5:8) of length: 1. Commands should have length 3 and format int:int:int.
+14:15:23.204 [main] ERROR Validator - Command (a:b:c) of length: 1. Commands should have length 3 and format int:int:int.
+14:15:23.205 [main] ERROR Validator - Command (10a:b:c) of length: 1. Commands should have length 3 and format int:int:int.
+14:15:23.218 [main] ERROR Validator - Command ( ) of length: 1. Commands should have length 3 and format int:int:int.
+14:15:23.222 [main] ERROR Validator - Incorrect (normal 24) simulation entered
+14:15:23.228 [main] ERROR Validator - Incorrect (morning 2) simulation entered
+14:19:27.322 [main] ERROR Validator - Command (10:2:8:) of length: 1. Commands should have length 3 and format int:int:int.
+14:19:27.332 [main] ERROR Validator - Source and Destination are the same floor
+14:19:27.337 [main] ERROR Validator - Command (2:8:10.5) of length: 1. Commands should have length 3 and format int:int:int.
+14:19:27.340 [main] ERROR Validator - Command (2:8) of length: 1. Commands should have length 3 and format int:int:int.
+14:19:27.342 [main] ERROR Validator - Incorrect (24 normal) simulation entered
+14:19:27.344 [main] ERROR Validator - Command (10:2:8:9) of length: 1. Commands should have length 3 and format int:int:int.
+14:19:27.345 [main] ERROR Validator - Command (10.5:2:8) of length: 1. Commands should have length 3 and format int:int:int.
+14:19:27.347 [main] ERROR Validator - Command (10:b:c) of length: 1. Commands should have length 3 and format int:int:int.
+14:19:27.348 [main] ERROR Validator - Incorrect (24normal) simulation entered
+14:19:27.350 [main] ERROR Validator - Command ( ) of length: 1. Commands should have length 3 and format int:int:int.
+14:19:27.351 [main] ERROR Validator - Incorrect (24) simulation entered
+14:19:27.352 [main] ERROR Validator - Interval of 24 is invalid. Please set the interval to a number higher than 100
+14:19:27.353 [main] ERROR Validator - Command (2:10.5:8) of length: 1. Commands should have length 3 and format int:int:int.
+14:19:27.355 [main] ERROR Validator - Command (a:b:c) of length: 1. Commands should have length 3 and format int:int:int.
+14:19:27.356 [main] ERROR Validator - Command (10a:b:c) of length: 1. Commands should have length 3 and format int:int:int.
+14:19:27.369 [main] ERROR Validator - Command ( ) of length: 1. Commands should have length 3 and format int:int:int.
+14:19:27.373 [main] ERROR Validator - Incorrect (normal 24) simulation entered
+14:19:27.379 [main] ERROR Validator - Incorrect (morning 2) simulation entered

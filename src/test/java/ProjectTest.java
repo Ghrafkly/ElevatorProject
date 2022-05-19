@@ -123,6 +123,11 @@ public class ProjectTest {
     }
 
     @Test
+    void test_containing_morning_2_returns_simulation() throws InterruptedException {
+        assertEquals("", validate.valInput("morning 2"));
+    }
+
+    @Test
     void test_containing_afternoon_returns_simulation() throws InterruptedException {
         assertEquals("simulation", validate.valInput("afternoon"));
     }

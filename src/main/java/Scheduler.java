@@ -183,7 +183,9 @@ public class Scheduler implements Runnable
                 if (direction == EState.UP &&
                         getDirection(event) == EState.UP &&
                         currFloor < eventSrc &&
+
                         (elevator.getPredictedCapacity() < maxCapacity))
+
                 {
                     manageEvent(maxCapacity, event, elevator);
                 }
@@ -195,6 +197,7 @@ public class Scheduler implements Runnable
                         currFloor < eventSrc &&
                         eventDest < maxDest &&
                         (elevator.getPredictedCapacity() < maxCapacity))
+
                 {
                     manageEvent(maxCapacity, event, elevator);
                 }

@@ -2,7 +2,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -55,6 +54,10 @@ public class UserInput {
                                     GenCommands.simulation = justSim[0];
                                     GenCommands.floorLock = Integer.parseInt(justSim[1]);
                                 }
+                            } else {
+                                System.out.println("Simulation: " + justSim[0]);
+                                GenCommands.simulation = justSim[0];
+                                GenCommands.floorLock = 1;
                             }
                         }
                         default -> throw new IllegalStateException("Unexpected value: " + input);

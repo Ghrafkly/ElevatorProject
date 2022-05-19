@@ -79,7 +79,7 @@ public class FrameView implements Runnable
 		jframe = new JFrame();
 		jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jframe.setSize(1080, 1050); // set size of the graphics
-		jframe.setTitle("Simulation for " + (maxFloor - 1) + " Floors and " + numLift + " Elevators");
+		jframe.setTitle("Simulation for " + (maxFloor) + " Floors and " + numLift + " Elevators");
 
 		TIMER = new Timer(10, null); // call every 10 milliseconds
 
@@ -121,7 +121,7 @@ public class FrameView implements Runnable
 			 */
 			public void paintComponent(Graphics graphics)
 			{
-				int numFloors = maxFloor - minFloor;
+				int numFloors = maxFloor - minFloor + 2;
 				int levelHeight = (getHeight() / (numFloors));
 				int adjustment = -minFloor;
 
@@ -189,7 +189,7 @@ public class FrameView implements Runnable
 	 */
 	private void drawBackgroundGrid(Graphics graphics, int height, int width)
 	{
-		int numFloors = maxFloor - minFloor;
+		int numFloors = maxFloor - minFloor + 2;
 		int levelHeight = height / (numFloors);
 		StringBuilder levelLabelText = new StringBuilder();
 
@@ -202,13 +202,19 @@ public class FrameView implements Runnable
 		gHeight = levelLabelDimension.height + 2 * LEFT_OFFSET;
 
 		// Draw the floors, lines and level numbers and background
-		for (int i = 0; i <= (numFloors + 1); i++)
+		for (int i = 0; i <= (numFloors + 2); i++)
 		{
 			levelLabelText.setLength(0); // clear it
-			levelLabelText.append("L" + Integer.toString(i + minFloor));
+			if (i == numFloors  - 1){
+				levelLabelText.append("Roof");
+			}
+			else {
+				levelLabelText.append("L" + Integer.toString(i + minFloor));
+
+			}
 
 			levelLabelDimension.width = (int) fm.getStringBounds(levelLabelText.toString(), graphics).getWidth();
-			levelLabelDimension.height = (int) fm.getStringBounds(levelLabelText.toString(), graphics).getHeight();
+			levelLabelDimension.height = ((int) fm.getStringBounds(levelLabelText.toString(), graphics).getHeight()) + 1;
 
 			graphics.setColor(Color.BLACK); // Draw text
 			graphics.drawString(levelLabelText.toString(), leftOffset - levelLabelDimension.width - 5,

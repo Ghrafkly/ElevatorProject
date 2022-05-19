@@ -49,7 +49,7 @@ public class Scheduler implements Runnable
                 e.printStackTrace();
             }
 
-            tempGenCommandInput = genCommands.getCommand();
+            //tempGenCommandInput = genCommands.getCommand();
             tempUserInput = userInputObj.getUserInput();
 
             // Check to see if the GenCommand input is new
@@ -183,7 +183,6 @@ public class Scheduler implements Runnable
                 if (direction == EState.UP &&
                         getDirection(event) == EState.UP &&
                         currFloor < eventSrc &&
-
                         (elevator.getPredictedCapacity() < maxCapacity))
 
                 {
@@ -195,7 +194,7 @@ public class Scheduler implements Runnable
                         eventDir == EState.UP &&
                         elevator.getState() == EState.UP &&
                         currFloor < eventSrc &&
-                        eventDest < maxDest &&
+                        maxDest < eventSrc &&
                         (elevator.getPredictedCapacity() < maxCapacity))
 
                 {

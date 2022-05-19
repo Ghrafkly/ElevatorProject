@@ -10,3 +10,8 @@
 15:19:48.827 [main] ERROR Validator - Incorrect (             */) simulation entered
 15:24:21.011 [main] ERROR Validator - Incorrect (                doorsOpen = true;) simulation entered
 16:06:11.953 [main] ERROR Validator - Incorrect () simulation entered
+21:10:21.444 [main] ERROR Validator - Command (7) of length: 5. Commands should have length 3 and format int:int:int.
+21:10:21.444 [main] ERROR Validator - Command (4) of length: 5. Commands should have length 3 and format int:int:int.
+21:10:21.444 [main] ERROR Validator - Command (2:0) of length: 5. Commands should have length 3 and format int:int:int.
+21:10:21.444 [main] ERROR Validator - Command (1) of length: 5. Commands should have length 3 and format int:int:int.
+21:10:21.445 [main] ERROR Validator - Command (3) of length: 5. Commands should have length 3 and format int:int:int.

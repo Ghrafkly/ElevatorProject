@@ -176,6 +176,11 @@ public class Elevator implements Runnable, FrameGUI
         Thread.sleep(TRAVEL_TIME_BETWEEN_FLOORS);
     }
 
+    public void setPredictedCapacity(int predictedCapacity)
+    {
+        this.predictedCapacity = predictedCapacity;
+    }
+
     @Override
     public String toString()
     {
@@ -196,7 +201,7 @@ public class Elevator implements Runnable, FrameGUI
         while (true)
         {
             // Batch process all events that have been allocated by the scheduler
-            if(receivedEvents.size() > 0)
+            if (receivedEvents.size() > 0)
             {
                 predictedCapacity += receivedEvents.stream().mapToInt(event -> event.getNumPeople()).sum();
                 events.addAll(receivedEvents);

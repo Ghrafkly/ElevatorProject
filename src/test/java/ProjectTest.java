@@ -189,41 +189,4 @@ public class ProjectTest {
         assertEquals(AnsCommand, validate.getCommands());
     }
 
-//    @Test
-//    void test_valConfig_returns_true_when_config_is_correct() {
-//        EController ec = new EController();
-//        ec.maxFloor = 5;
-//        ec.minFloor = 2;
-//
-//        assertTrue(validate.valConfig());
-//    }
-
-//    @Test
-//    void test_config_correctly_formatted_returns_true() throws IOException {
-//        File file = new File("config.json");
-//        ValidatorOld v = new ValidatorOld();
-//
-//        Map<String, Integer> json = Runner.readFromJSONFile(file);
-//        String elevator = Runner.MAPPER.writeValueAsString(json.get("elevator"));
-//        String commands = Runner.MAPPER.writeValueAsString(json.get("commands"));
-//
-//        EController elevatorController = Runner.MAPPER.readValue(elevator, EController.class);
-//
-//        assertTrue(v.validateConfig(elevatorController));
-//    }
-    //Test depreciated
-//    @Test
-//    void test_config_incorrectly_formatted_returns_false() throws IOException {
-//        File file = new File("config.json");
-//        Validator v = new Validator();
-//
-//        Map<String, Integer> json = Runner.readFromJSONFile(file);
-//        String elevator = Runner.MAPPER.writeValueAsString(json.get("elevator"));
-//        String commands = Runner.MAPPER.writeValueAsString(json.get("commands"));
-//
-//        EController elevatorController = Runner.MAPPER.readValue(elevator, EController.class);
-//
-//        assertFalse(v.validateConfig(elevatorController));
-//    }
-
 }

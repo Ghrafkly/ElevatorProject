@@ -2,6 +2,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
+import java.util.OptionalInt;
 
 public class Elevator implements Runnable, FrameGUI {
     private final int TRAVEL_TIME_BETWEEN_FLOORS = 1000;
@@ -76,12 +77,17 @@ public class Elevator implements Runnable, FrameGUI {
         receivedEvents.add(event);
     }
 
-    // public int setPredictedCapacity(int this.predictedCapacity = predictedCapacity; }
+    public void setPredictedCapacity (int predictedCapacity) {
+        this.predictedCapacity = predictedCapacity;
+    }
+
+    public int getPredictedCapacity() {
+        return predictedCapacity;
+    }
 
     public void openOrCloseElevator() throws InterruptedException {
         moveState = EState.STOP;
         Thread.sleep(TIME_TO_OPEN_AND_CLOSE_DOOR);
-        manageMoveState();
     }
 
     public void moveElevator() throws InterruptedException {
@@ -103,13 +109,16 @@ public class Elevator implements Runnable, FrameGUI {
         while (true) {
             if(receivedEvents.size() > 0)
             {
+                predictedCapacity += receivedEvents.stream().mapToInt(event -> event.getNumPeople()).sum();
                 events.addAll(receivedEvents);
                 receivedEvents.clear();
             }
+
             updateElevatorCapacity();
 
             // Manage moveState based on the events assigned to each elevator
             manageMoveState();
+
             // Based on the move state, move the elevator up or down a floor
             switch (getState())
             {
@@ -134,7 +143,6 @@ public class Elevator implements Runnable, FrameGUI {
         {
             if(event.getSrc() == currentFloor && !event.getSrcReached())
             {
-                numSrcReached += 1;
                 event.setSrcReached(true);
                 setCurrentCapacity(currentCapacity + event.getNumPeople());
                 try {
@@ -145,7 +153,7 @@ public class Elevator implements Runnable, FrameGUI {
             }
             else if(event.getDest() == currentFloor && event.getSrcReached())
             {
-                numSrcReached -= 1;
+                predictedCapacity -= event.getNumPeople();
                 setCurrentCapacity(currentCapacity - event.getNumPeople());
                 eventsToRemove.add(event);
                 try {
@@ -160,10 +168,21 @@ public class Elevator implements Runnable, FrameGUI {
 
     }
 
+    public boolean reachedAllSource(ArrayList<Event> events)
+    {
+        for(Event event : events)
+        {
+            if(!event.getSrcReached())
+            {
+                return false;
+            }
+        }
+        return true;
+    }
 
     public void moveFloor(EState eState)
     {
-        LOGGER.info(String.format("Moving ID: %d CurrFloor %d EventsSize %d", getELEVATOR_ID(), currentFloor, events.size()));
+        // .info(String.format("Moving ID: %d CurrFloor %d EventsSize %d", getELEVATOR_ID(), currentFloor, events.size()));
         try
         {
             moveElevator();
@@ -196,7 +215,7 @@ public class Elevator implements Runnable, FrameGUI {
         }
 
         // If the elevator is currently idle and has been allocated a task then move it up
-        else if(moveState== EState.IDLE && eventsSize > 0)
+        else if(moveState == EState.IDLE && eventsSize > 0)
         {
             setMoveState(EState.UP);
         }
@@ -213,16 +232,34 @@ public class Elevator implements Runnable, FrameGUI {
             setMoveState(EState.DOWN);
         }
 
-        // This deals with have down events
+        // This deals with having multiple events allocated to it
         else if(eventsSize > 0)
         {
             Event event = getEvents().get(0);
             EState eState = getDirection(event);
+            OptionalInt maxDest = getEvents().stream().mapToInt(x -> event.getDest()).max();
+            boolean reachedAllSource = reachedAllSource(events);
 
-            if(eState != getState() && numSrcReached == eventsSize)
+            // If it's an up elevator
+            if(eState == EState.UP &&
+                    currentFloor != maxDest.getAsInt())
             {
-                setMoveState(getDirection(getEvents().get(0)));
+                setMoveState(eState.UP);
             }
+
+            // If it's a down elevator
+            else if(eState == EState.DOWN &&
+                    reachedAllSource)
+            {
+                setMoveState(eState.DOWN);
+            }
+
+            else if(eState == EState.DOWN &&
+                    !reachedAllSource)
+            {
+                setMoveState(eState.UP);
+            }
+
         }
 
     }

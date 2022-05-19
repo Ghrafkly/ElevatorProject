@@ -122,9 +122,9 @@ public class Scheduler implements Runnable
     {
         String[] inputs = input.split(":");
 
-        int src = Integer.parseInt(inputs[1]);
-        int dest = Integer.parseInt(inputs[2]);
-        int numPeople = Integer.parseInt(inputs[0]);
+        int src = Integer.parseInt(inputs[0]);
+        int dest = Integer.parseInt(inputs[1]);
+        int numPeople = Integer.parseInt(inputs[2]);
 
         return new Event(numPeople, src, dest); // -1 elevatorID means it's not assigned yet
     }

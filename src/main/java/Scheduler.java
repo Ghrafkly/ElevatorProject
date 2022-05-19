@@ -169,29 +169,26 @@ public class Scheduler implements Runnable {
                 int maxDest = elevator.getEvents().get(0).getDest();
 
                 // If it's a UP elevator then grab jobs along the way that go UP also
-                if (direction == EState.UP &&
-                        getDirection(event) == EState.UP &&
-                        currFloor < eventSrc) {
+                if (direction == EState.UP
+                        && getDirection(event) == EState.UP
+                        && currFloor < eventSrc) {
                     manageEvent(maxCapacity, event, elevator);
                 }
-
                 // If it's a DOWN elevator then grab UP jobs that are along the way
-                else if (direction == EState.DOWN &&
-                        eventDir == EState.UP &&
-                        elevator.getState() == EState.UP &&
-                        currFloor < eventSrc &&
-                        maxDest < eventSrc) {
+                else if (direction == EState.DOWN
+                        && eventDir == EState.UP
+                        && elevator.getState() == EState.UP
+                        && currFloor < eventSrc
+                        && maxDest < eventSrc) {
                     manageEvent(maxCapacity, event, elevator);
                 }
-
                 // If it's a DOWN elevator that's going down then pick up DOWN jobs along the way
-                else if (direction == EState.DOWN &&
-                        eventDir == EState.DOWN &&
-                        elevator.getState() == EState.DOWN &&
-                        currFloor > eventSrc) {
+                else if (direction == EState.DOWN
+                        && eventDir == EState.DOWN
+                        && elevator.getState() == EState.DOWN
+                        && currFloor > eventSrc) {
                     manageEvent(maxCapacity, event, elevator);
                 }
-
             }
 
             // Else if there are no other elevators available and the current Elevator is IDLE and has no jobs, use it
@@ -199,7 +196,6 @@ public class Scheduler implements Runnable {
                 manageEvent(maxCapacity, event, elevator);
             }
         }
-
         // Remove and schedulerEvents that have been fully processed
         cleanUpEvents(schedulerEvents);
     }
@@ -227,7 +223,6 @@ public class Scheduler implements Runnable {
                     event.setNumPeople(event.getNumPeople() - numPeopleCanAdd);
                 }
             }
-
             // Elevator will add all the people
             else if (elevator.getPredictedCapacity() + unprocessedPeople + event.getNumPeople() <= maxCapacity) {
                 elevator.addEvent(new Event(event.getNumPeople(), event.getSrc(), event.getDest()));

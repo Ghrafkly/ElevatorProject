@@ -60,6 +60,11 @@ public class ProjectTest {
     }
 
     @Test
+    void test_validate_returns_true_with_1_2_4() throws InterruptedException {
+        assertTrue(validate.valCommand("1:2:4"));
+    }
+
+    @Test
     void test_validate_returns_false_with_1_2_8_9() throws InterruptedException {
         assertFalse(validate.valCommand("1:2:8:9"));
     }
@@ -184,14 +189,14 @@ public class ProjectTest {
         assertEquals(AnsCommand, validate.getCommands());
     }
 
-    @Test
-    void test_valConfig_returns_true_when_config_is_correct() {
-        EController ec = new EController();
-        ec.maxFloor = 5;
-        ec.minFloor = 2;
-
-        assertTrue(validate.valConfig());
-    }
+//    @Test
+//    void test_valConfig_returns_true_when_config_is_correct() {
+//        EController ec = new EController();
+//        ec.maxFloor = 5;
+//        ec.minFloor = 2;
+//
+//        assertTrue(validate.valConfig());
+//    }
 
 //    @Test
 //    void test_config_correctly_formatted_returns_true() throws IOException {

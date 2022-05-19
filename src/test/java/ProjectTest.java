@@ -158,6 +158,11 @@ public class ProjectTest {
     }
 
     @Test
+    void test_containing_normal_comma_24_returns_true() throws InterruptedException {
+        assertTrue(validate.valSimulation("normal,24"));
+    }
+
+    @Test
     void test_getCommands_returns_list_of_commands() throws InterruptedException {
         ArrayList<String> AnsCommand = new ArrayList<>();
         AnsCommand.add("2:3:4");

@@ -39,19 +39,33 @@ public class Validator {
     }
 
     public boolean valCommand(String command) throws InterruptedException {
+        boolean fail = false;
+        String message = "";
         String[] input = command.split(",");
         for (String str : input)
             if (!comP.matcher(str).find())
                 logger.error(String.format("Command (%s) of length: %d. Commands should have length 3 and format int:int:int.", str, input.length));
             else {
                 String[] checkCommand = str.split(":");
-                if (!Objects.equals(checkCommand[0], checkCommand[1])) {
+                int[] test = Arrays.stream(checkCommand).mapToInt(Integer::parseInt).toArray();
+                if (test[0] == test[1]) {
+                    message = "Source and Destination are the same floor";
+                    fail = true;
+                } else if (test[0] < EController.minFloor || test[1] < EController.minFloor) {
+                    message = "Floor entered is less than allowed floor";
+                    fail = true;
+                } else if (test[0] > EController.maxFloor || test[1] > EController.maxFloor) {
+                    message = "Floor entered is greater than allowed floor";
+                    fail = true;
+                }
+
+                if (fail) {
+                    System.out.println(message);
+                    logger.error(message);
+                } else {
                     String time = (LocalTime.now().format(format));
                     commands.add(time + " " + str);
                     Thread.sleep(1);
-                } else {
-                    System.out.println("Source and Destination are the same floor");
-                    logger.error("Source and Destination are the same floor");
                 }
             }
         return commands.size() > 0;

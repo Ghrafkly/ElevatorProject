@@ -5599,3 +5599,23 @@
 09:05:13.973 [1] INFO  Elevator - Moving ID: 1 CurrFloor 6 EventsSize 0
 09:05:14.983 [1] INFO  Elevator - Moving ID: 1 CurrFloor 5 EventsSize 0
 09:05:15.984 [1] INFO  Elevator - Moving ID: 1 CurrFloor 4 EventsSize 0
+09:48:10.855 [0] INFO  Elevator - Moving ID: 0 CurrFloor 0 EventsSize 1
+09:48:11.856 [0] INFO  Elevator - Moving ID: 0 CurrFloor 1 EventsSize 1
+09:48:12.871 [0] INFO  Elevator - Moving ID: 0 CurrFloor 2 EventsSize 1
+09:50:23.719 [0] INFO  Elevator - Moving ID: 0 CurrFloor 0 EventsSize 1
+09:50:24.731 [0] INFO  Elevator - Moving ID: 0 CurrFloor 1 EventsSize 1
+09:50:25.733 [0] INFO  Elevator - Moving ID: 0 CurrFloor 2 EventsSize 1
+09:50:26.734 [0] INFO  Elevator - Moving ID: 0 CurrFloor 3 EventsSize 1
+09:50:27.741 [0] INFO  Elevator - Moving ID: 0 CurrFloor 4 EventsSize 1
+09:50:28.301 [1] INFO  Elevator - Moving ID: 1 CurrFloor 0 EventsSize 1
+09:50:28.746 [0] INFO  Elevator - Moving ID: 0 CurrFloor 5 EventsSize 1
+09:50:29.306 [1] INFO  Elevator - Moving ID: 1 CurrFloor 1 EventsSize 1
+09:50:29.752 [0] INFO  Elevator - Moving ID: 0 CurrFloor 6 EventsSize 1
+09:50:30.313 [1] INFO  Elevator - Moving ID: 1 CurrFloor 2 EventsSize 1
+09:50:31.320 [1] INFO  Elevator - Moving ID: 1 CurrFloor 3 EventsSize 1
+09:50:31.766 [0] INFO  Elevator - Moving ID: 0 CurrFloor 7 EventsSize 1
+09:50:32.323 [1] INFO  Elevator - Moving ID: 1 CurrFloor 4 EventsSize 1
+09:51:21.900 [0] INFO  Elevator - ID: %d   Cap: %d
+09:51:26.471 [1] INFO  Elevator - ID: %d   Cap: %d
+09:51:49.603 [0] INFO  Elevator - ID: 0   Cap: 7
+09:51:54.160 [1] INFO  Elevator - ID: 1   Cap: 2

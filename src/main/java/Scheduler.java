@@ -92,23 +92,6 @@ public class Scheduler implements Runnable
     }
 
     /**
-     * This will return the anticipated capacity of the elevator based on the Events assigned to it
-     * @param elevator is the elevator being queried
-     * @return the calculated capacity
-     */
-    public int getElevatorCurrCapacity(Elevator elevator)
-    {
-        int sum = 0;
-
-        for(Event event : elevator.getEvents())
-        {
-            sum += event.getNumPeople();
-        }
-
-        return sum;
-    }
-
-    /**
      * This function will get all inputs that are travelling in the same direction as the elevator and can be reached
      *
      * @param elevator is the object being queried
@@ -120,7 +103,7 @@ public class Scheduler implements Runnable
 
         for (Event event : events)
         {
-            int elevatorCapacity = getElevatorCurrCapacity(elevator);
+            int elevatorCapacity = elevator.getPredictedCapacity();
             int currFloor = elevator.getCurrentFloor();
             int eventSrc = event.getSrc();
             int eventDest = event.getDest();
@@ -163,7 +146,7 @@ public class Scheduler implements Runnable
                 }
             }
 
-            else if (elevator.getState() == EState.IDLE)
+            else if (elevator.getState() == EState.IDLE && elevator.getEvents().size() == 0)
             {
                 manageEvent(elevatorCapacity, maxCapacity, event, elevator);
             }

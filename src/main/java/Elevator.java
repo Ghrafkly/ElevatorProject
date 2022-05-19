@@ -18,7 +18,6 @@ public class Elevator implements Runnable, FrameGUI
 
     private ArrayList<Event> events;            // Holds events allocated to elevator
     private ArrayList<Event> receivedEvents;    // Holds events received by the scheduler
-    private int numSrcReached;                  // Counter for the number of SRC locations reached by elevator
     private int predictedCapacity;              // Number of people allocated to an elevator to be transported
 
     /**
@@ -33,9 +32,8 @@ public class Elevator implements Runnable, FrameGUI
         events = new ArrayList<>();
         receivedEvents = new ArrayList<>();
         moveState = EState.IDLE;
-        currentFloor = 0;
+        currentFloor = EController.minFloor;
         currentCapacity = 0;
-        numSrcReached = 0;
         predictedCapacity = 0;
     }
 
@@ -54,14 +52,13 @@ public class Elevator implements Runnable, FrameGUI
      * @return the jobs worked on by the elevator in the form (src : dest : numPeople)
      */
     @Override
-    public synchronized String getCommand()
+    public String getCommand()
     {
         String returnStr = "";
         for(Event event : events)
         {
             returnStr += String.format("(%d:%d:%d) ", event.getSrc(), event.getDest(), event.getNumPeople());
         }
-
         return returnStr;
     }
 
@@ -176,6 +173,11 @@ public class Elevator implements Runnable, FrameGUI
         Thread.sleep(TRAVEL_TIME_BETWEEN_FLOORS);
     }
 
+    public void setPredictedCapacity(int predictedCapacity)
+    {
+        this.predictedCapacity = predictedCapacity;
+    }
+
     @Override
     public String toString()
     {
@@ -196,7 +198,7 @@ public class Elevator implements Runnable, FrameGUI
         while (true)
         {
             // Batch process all events that have been allocated by the scheduler
-            if(receivedEvents.size() > 0)
+            if (receivedEvents.size() > 0)
             {
                 predictedCapacity += receivedEvents.stream().mapToInt(event -> event.getNumPeople()).sum();
                 events.addAll(receivedEvents);
@@ -261,23 +263,6 @@ public class Elevator implements Runnable, FrameGUI
 
         // Remove all events that are needed to be deleted
         events.removeAll(eventsToRemove);
-    }
-
-    /**
-     * This is a checker for if the elevator has reached the SRC floor for all of its allocated job
-     * @param events contains the events allocated to the elevator
-     * @return true or false
-     */
-    public boolean reachedAllSource(ArrayList<Event> events)
-    {
-        for(Event event : events)
-        {
-            if(!event.getSrcReached())
-            {
-                return false;
-            }
-        }
-        return true;
     }
 
     /**
@@ -348,9 +333,7 @@ public class Elevator implements Runnable, FrameGUI
 
             Event event = getEvents().get(0); // To determine if it's a UP or DOWN elevator we look at the first event allocated.
             EState eState = getDirection(event);
-            OptionalInt maxDest = getEvents().stream().mapToInt(x -> event.getDest()).max(); // The maximum destination floor among its jobs allocated.
-
-            boolean reachedAllSource = reachedAllSource(events);
+            OptionalInt maxDest = getEvents().stream().mapToInt(x -> x.getDest()).max(); // The maximum destination floor among its jobs allocated.
 
             // If it's an up elevator and hasn't reached the maximum destination floor among its jobs then keep going up
             if(eState == EState.UP &&
@@ -359,24 +342,14 @@ public class Elevator implements Runnable, FrameGUI
                 setMoveState(EState.UP);
             }
 
-            // If it's a down elevator and has reached all the SRC floors allocated to it then move DOWN
-            else if(eState == EState.DOWN &&
-                    reachedAllSource)
+            else if(moveState == EState.DOWN)
             {
                 setMoveState(EState.DOWN);
             }
 
-            // If it's a down elevator and has not reached the SRC location of the down event then keep going up
+            // If it's a down elevator and has reached the source of the down even then go down
             else if(eState == EState.DOWN &&
-                    !reachedAllSource &&
-                    currentFloor < event.getSrc())
-            {
-                setMoveState(EState.UP);
-            }
-
-            // If a DOWN elevator has completed its initial job and allocated DOWN jobs along the way to GROUND, ensure it moves down.
-            else if(eState == EState.DOWN &&
-                    currentFloor > event.getSrc())
+                    event.getSrcReached())
             {
                 setMoveState(EState.DOWN);
             }

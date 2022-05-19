@@ -2,7 +2,7 @@
     "elevator": {
         "maxFloor": 8,
         "minFloor": 0,
-        "numberOfElevators": 2,
+        "numberOfElevators": 1,
         "capacity": 8
         },
     "commands": {

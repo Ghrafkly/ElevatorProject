@@ -148,17 +148,16 @@ public class Scheduler implements Runnable {
         for (Event event : schedulerEvents) {
             int currFloor = elevator.getCurrentFloor();             // The current floor of the elevator
             int eventSrc = event.getSrc();                          // The source floor of event
-            int eventDest = event.getDest();                        // The destination floor of event
             EState eventDir = getDirection(event);                  // The direction from SRC to DEST
 
             /*
              * Here we check if the elevator has completed all it's jobs and is returning to the ground floor.
              * If so it will grab events that are along the way for it on the way down to the ground floor.
              */
-            if (elevator.getEvents().size() == 0 &&
-                    elevator.getState() == EState.DOWN &&
-                    eventDir == EState.DOWN &&
-                    currFloor > event.getSrc()) {
+            if (elevator.getEvents().size() == 0
+                    && elevator.getState() == EState.DOWN
+                    && eventDir == EState.DOWN
+                    && currFloor > eventSrc) {
                 manageEvent(maxCapacity, event, elevator);
             }
 
@@ -190,7 +189,6 @@ public class Scheduler implements Runnable {
                     manageEvent(maxCapacity, event, elevator);
                 }
             }
-
             // Else if there are no other elevators available and the current Elevator is IDLE and has no jobs, use it
             else if (elevator.getState() == EState.IDLE && (elevator.getSchedulerEvents().size() + elevator.getEvents().size() == 0)) {
                 manageEvent(maxCapacity, event, elevator);
@@ -236,13 +234,11 @@ public class Scheduler implements Runnable {
                     elevator.addEvent(elevatorEvent);
                     event.setNumPeople(event.getNumPeople() - numPeopleCanAdd);
                 }
-
             } else if (elevator.getPredictedCapacity() + event.getNumPeople() <= maxCapacity) {
                 elevator.addEvent(new Event(event.getNumPeople(), event.getSrc(), event.getDest()));
                 event.setDelete(true);
             }
         }
-
     }
 
     /**

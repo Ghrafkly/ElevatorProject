@@ -77,8 +77,8 @@ public class Elevator implements Runnable, FrameGUI {
         receivedEvents.add(event);
     }
 
-    public void setPredictedCapacity (int predictedCapacity) {
-        this.predictedCapacity = predictedCapacity;
+    public synchronized ArrayList<Event> getSchedulerEvents() {
+        return receivedEvents;
     }
 
     public int getPredictedCapacity() {
@@ -255,11 +255,17 @@ public class Elevator implements Runnable, FrameGUI {
             }
 
             else if(eState == EState.DOWN &&
-                    !reachedAllSource)
+                    !reachedAllSource &&
+                    currentFloor < event.getSrc())
             {
                 setMoveState(eState.UP);
             }
 
+            else if(eState == EState.DOWN &&
+                    currentFloor > event.getSrc())
+            {
+                setMoveState(eState.DOWN);
+            }
         }
 
     }

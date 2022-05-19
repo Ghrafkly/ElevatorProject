@@ -55,23 +55,23 @@ public class ProjectTest {
     }
 
     @Test
-    void test_validate_returns_true_with_10_2_8() throws InterruptedException {
-        assertTrue(validate.valCommand("10:2:8"));
+    void test_validate_returns_true_with_4_2_4() throws InterruptedException {
+        assertTrue(validate.valCommand("4:2:4"));
     }
 
     @Test
-    void test_validate_returns_false_with_10_2_8_9() throws InterruptedException {
-        assertFalse(validate.valCommand("10:2:8:9"));
+    void test_validate_returns_false_with_1_2_8_9() throws InterruptedException {
+        assertFalse(validate.valCommand("1:2:8:9"));
     }
 
     @Test
-    void test_validate_returns_false_with_10_2_8_colon() throws InterruptedException {
-        assertFalse(validate.valCommand("10:2:8:"));
+    void test_validate_returns_false_with_1_2_8_colon() throws InterruptedException {
+        assertFalse(validate.valCommand("1:2:8:"));
     }
 
     @Test
-    void test_validate_returns_false_with_10_point_5_2_8() throws InterruptedException {
-        assertFalse(validate.valCommand("10.5:2:8"));
+    void test_validate_returns_false_with_1_point_5_2_8() throws InterruptedException {
+        assertFalse(validate.valCommand("1.5:2:8"));
     }
 
     @Test

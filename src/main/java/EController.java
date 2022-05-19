@@ -2,25 +2,15 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-
-/*
-    Rip out MAX_CAPACITY from creating the elevator.
-    Put it into another class, such as scheduler.
- */
 
 public class EController {
     public static int maxFloor;
     public static int minFloor;
     public static int capacity;
     private int numberOfElevators;
-
     private final ArrayList<Elevator> elevators = new ArrayList<>();
     private final ArrayList<Thread> threads = new ArrayList<>();
-    private ArrayList<Event> eControllerEvents = new ArrayList<>();
     private static final Logger LOGGER = LogManager.getLogger(EController.class);
-
-    public String messageSend;
 
     public EController() {
     }
@@ -49,7 +39,7 @@ public class EController {
         this.numberOfElevators = numberOfElevators;
     }
 
-    public int getNumberOfElevators(){
+    public int getNumberOfElevators() {
         return numberOfElevators;
     }
 
@@ -67,17 +57,8 @@ public class EController {
         threads.forEach(Thread::start);
     }
 
-    public void input() {
-
-    }
-
     public ArrayList<Elevator> getElevators() {
         return elevators;
-    }
-
-    public ArrayList<Event> getEcontrollerEvents()
-    {
-        return eControllerEvents;
     }
 
     @Override
@@ -90,5 +71,4 @@ public class EController {
                 ", elevators=" + elevators +
                 '}';
     }
-
 }

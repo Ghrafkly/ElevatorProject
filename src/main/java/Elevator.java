@@ -79,15 +79,6 @@ public class Elevator implements Runnable, FrameGUI {
     }
 
     /**
-     * Getter for the ELEVATOR_ID
-     *
-     * @return
-     */
-    public synchronized int getELEVATOR_ID() {
-        return ELEVATOR_ID;
-    }
-
-    /**
      * Setter for the moveState
      *
      * @param moveState
@@ -169,10 +160,6 @@ public class Elevator implements Runnable, FrameGUI {
         Thread.sleep(TRAVEL_TIME_BETWEEN_FLOORS);
     }
 
-    public void setPredictedCapacity(int predictedCapacity) {
-        this.predictedCapacity = predictedCapacity;
-    }
-
     @Override
     public String toString() {
         return "Elevator{" +
@@ -234,7 +221,6 @@ public class Elevator implements Runnable, FrameGUI {
                 doorsOpen = true;
                 setCurrentCapacity(currentCapacity - event.getNumPeople());
                 eventsToRemove.add(event);
-
             }
         }
 
@@ -304,26 +290,22 @@ public class Elevator implements Runnable, FrameGUI {
              * DOWN elevator means its responsible for getting events that go DOWN.
              * A DOWN elevator will try to grab UP events only if it's along the way.
              */
-
             Event event = getEvents().get(0); // To determine if it's a UP or DOWN elevator we look at the first event allocated.
             EState eState = getDirection(event);
             OptionalInt maxDest = getEvents().stream().mapToInt(x -> x.getDest()).max(); // The maximum destination floor among its jobs allocated.
 
             // If it's an up elevator and hasn't reached the maximum destination floor among its jobs then keep going up
-            if (eState == EState.UP &&
-                    currentFloor != maxDest.getAsInt()) {
+            if (eState == EState.UP && currentFloor != maxDest.getAsInt()) {
                 setMoveState(EState.UP);
             } else if (moveState == EState.DOWN) {
                 setMoveState(EState.DOWN);
             }
 
             // If it's a down elevator and has reached the source of the down even then go down
-            else if (eState == EState.DOWN &&
-                    event.getSrcReached()) {
+            else if (eState == EState.DOWN && event.getSrcReached()) {
                 setMoveState(EState.DOWN);
             }
         }
-
     }
 
     /**
@@ -332,9 +314,8 @@ public class Elevator implements Runnable, FrameGUI {
      * @return an EState either UP or DOWN
      */
     public EState getDirection(Event event) {
-        if (event.getDest() > event.getSrc()) {
-            return EState.UP;
-        }
-        return EState.DOWN;
+        return event.getDest() > event.getSrc()
+                ? EState.UP
+                : EState.DOWN;
     }
 }

@@ -18,10 +18,17 @@ public class GenCommands implements Runnable {
     private String command;
     private String time;
     public int timeInterval;
+
+    /**
+     * Initialize for Jackson
+     */
     public GenCommands() {
     }
 
-    // SRC and DES cannot be the same
+    /**
+     * Loop to generate commands. Is modified through the timeInterval and simulation variables
+     *
+     */
     public void generator() throws InterruptedException {
         while (true) {
             time = (LocalTime.now().format(format));
@@ -31,7 +38,8 @@ public class GenCommands implements Runnable {
                 case "morning" -> setCommand(morningSim(capacity, floorLock));
                 case "afternoon" -> setCommand(afternoonSim(capacity, floorLock));
                 case "normal" -> setCommand(normalSim(capacity));
-            };
+            }
+            ;
 
             time = (LocalTime.now().format(format));
             LOGGER.info(time + " " + command);
@@ -39,18 +47,38 @@ public class GenCommands implements Runnable {
         }
     }
 
+    /**
+     * Getter for commands generated
+     *
+     * @return      Time (seconds.MILLISECONDS) and the command for Scheduler processing
+     */
     public String getCommand() {
         return String.format(time + " " + command);
 
     }
 
-    public String morningSim(int capacity, int floorLock) {;
+    /**
+     * Simulation for a morning rush
+     *
+     * @param capacity      Randomly generated number of people, between 0 and MAX_CAPACITY inclusive
+     * @param floorLock     Lets the user lock the source floor to a specific one
+     * @return              Command generated
+     */
+    public String morningSim(int capacity, int floorLock) {
         int des = ThreadLocalRandom.current().nextInt(min, max + 1);
         while (des == floorLock)
             des = ThreadLocalRandom.current().nextInt(min, max + 1);
 
         return String.format("%d:%d:%d", floorLock, des, capacity);
     }
+
+    /**
+     * Simulation for afternoon rush
+     *
+     * @param capacity      Randomly generated number of people, between 0 and MAX_CAPACITY inclusive
+     * @param floorLock     Lets the user lock the destination floor to a specific one
+     * @return              Command generated
+     */
     public String afternoonSim(int capacity, int floorLock) {
         int src = ThreadLocalRandom.current().nextInt(min, max + 1);
         while (floorLock == src)
@@ -59,6 +87,12 @@ public class GenCommands implements Runnable {
         return String.format("%d:%d:%d", src, floorLock, capacity);
     }
 
+    /**
+     * Normal simulation of a day. Random source and destination floors
+     *
+     * @param capacity      Randomly generated number of people, between 0 and MAX_CAPACITY inclusive
+     * @return              Command generated
+     */
     public String normalSim(int capacity) {
         int src = ThreadLocalRandom.current().nextInt(min, max + 1);
         int des = ThreadLocalRandom.current().nextInt(min, max + 1);
@@ -68,18 +102,27 @@ public class GenCommands implements Runnable {
         return String.format("%d:%d:%d", src, des, capacity);
     }
 
-    public int getTimeInterval() {
-        return timeInterval;
-    }
-
+    /**
+     * Setter for command
+     */
     public void setCommand(String command) {
         this.command = command;
     }
 
+    /**
+     * Setter for time interval
+     *
+     * @param timeInterval      Takes in an integer representing the time interval in milliseconds
+     */
     public void setTimeInterval(int timeInterval) {
         this.timeInterval = timeInterval;
     }
 
+    /**
+     * Override method for toString()
+     *
+     * @return      Custom format string
+     */
     @Override
     public String toString() {
         return "GenCommands{" +
@@ -88,6 +131,9 @@ public class GenCommands implements Runnable {
                 '}';
     }
 
+    /**
+     * Override method for run()
+     */
     @Override
     public void run() {
         try {

@@ -9,6 +9,7 @@ import java.util.Scanner;
 public class UserInput {
     private final Validator v = new Validator();
     private static final Logger LOGGER = LogManager.getLogger(UserInput.class);
+    private String userInput = "";
 
     public boolean userInput(Thread commandGen, GenCommands genCommands) throws InterruptedException {
         boolean waitCheck = false;
@@ -20,8 +21,9 @@ public class UserInput {
             switch (v.valInput(input)) {
                 case "command" -> {
                     for (String str : v.getCommands()) {
+                        userInput = str;
                         LOGGER.info(str);
-                        Thread.sleep(1);
+                        Thread.sleep(500);
                     }
                     System.out.println("Command(s): " + v.getCommands());
                     v.setCommands(new ArrayList<>());
@@ -63,5 +65,9 @@ public class UserInput {
         } while (!Objects.equals(input, "stop"));
 
         return true;
+    }
+
+    public String getUserInput() {
+        return userInput;
     }
 }

@@ -68,10 +68,17 @@ public class Validator {
     public boolean valSimulation(String sim) {
         String[] justSim = sim.split(" ");
         Set<String> simulations = Set.of("morning", "afternoon", "normal");
-        for (int i =0; i < justSim.length; i++){
-            if (!simulations.contains(justSim[i].toLowerCase())) {
+
+        for (int i = 0; i < justSim.length; i++){
+            if (justSim[i].equals("normal") && justSim.length == 1){
+                return true;
+            }
+            else if (!simulations.contains(justSim[i].toLowerCase())) {
                 logger.error(String.format("Incorrect (%s) simulation entered", sim));
                 return false;
+            }
+            else {
+                return true;
             }
         }
 

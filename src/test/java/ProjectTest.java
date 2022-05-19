@@ -122,9 +122,11 @@ public class ProjectTest {
         assertEquals("simulation", validate.valInput("morning"));
     }
 
+
+
     @Test
     void test_containing_morning_2_returns_simulation() throws InterruptedException {
-        assertEquals("", validate.valInput("morning 2"));
+        assertEquals("simulation", validate.valInput("morning 10"));
     }
 
     @Test
@@ -154,12 +156,17 @@ public class ProjectTest {
 
     @Test
     void test_containing_normal_24_returns_true() throws InterruptedException {
-        assertTrue(validate.valSimulation("normal 24"));
+        assertFalse(validate.valSimulation("normal 24"));
+    }
+
+    @Test
+    void test_containing_morning_24_returns_true() throws InterruptedException {
+        assertTrue(validate.valSimulation("morning 24"));
     }
 
     @Test
     void test_containing_normal_comma_24_returns_true() throws InterruptedException {
-        assertTrue(validate.valSimulation("normal,24"));
+        assertFalse(validate.valSimulation("normal,24"));
     }
 
     @Test

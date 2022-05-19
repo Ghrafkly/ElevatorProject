@@ -120,44 +120,6 @@ public class ElevatorTest
     }
 
     @Test
-    void test_function_reach_all_source_when_all_source_reached_return_true()
-    {
-        ArrayList<Event> events = new ArrayList<>();
-
-        Event event1 = new Event(2, 2, 5);
-        Event event2 = new Event(6, 5, 8);
-
-        events.add(event1);
-        events.add(event2);
-
-        event1.setSrcReached(true);
-        event2.setSrcReached(true);
-
-        boolean result = elevator.reachedAllSource(events);
-
-        assertEquals(true, result);
-    }
-
-    @Test
-    void test_function_reach_all_source_when_not_all_source_reached_return_false()
-    {
-        ArrayList<Event> events = new ArrayList<>();
-
-        Event event1 = new Event(2, 2, 5);
-        Event event2 = new Event(6, 5, 8);
-
-        events.add(event1);
-        events.add(event2);
-
-        event1.setSrcReached(true);
-        event2.setSrcReached(false);
-
-        boolean result = elevator.reachedAllSource(events);
-
-        assertEquals(false, result);
-    }
-
-    @Test
     void test_moveFloor_up_from_1_to_2_when_UP_STATE_passed()
     {
         elevator.setCurrentFloor(1);                        // Start at Floor 1
@@ -310,24 +272,6 @@ public class ElevatorTest
         EState resultState = elevator.getState();
 
         assertEquals(EState.UP, resultState);
-    }
-
-    @Test
-    void test_manageMoveState_function_a_DOWN_elevator_that_completed_its_job_will_go_down_when_it_complete_all_its_jobs_and_gets_a_new_down_job_below()
-    {
-        elevator.setMoveState(EState.UP);
-        elevator.setCurrentFloor(5);
-
-        Event event1 = new Event(1, 4, 3);
-        event1.setSrcReached(false);
-
-        elevator.getEvents().add(event1);
-
-        elevator.manageMoveState();
-
-        EState resultState = elevator.getState();
-
-        assertEquals(EState.DOWN, resultState);
     }
 
     @Test

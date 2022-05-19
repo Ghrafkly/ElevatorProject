@@ -203,4 +203,24 @@ public class SchedulerTest
         assertEquals(1, result);            // Check the event is received by elevator as its along the way up
     }
 
+    @Test
+    void test_manageEventList_if_a_DOWN_elevator_gets_a_down_event_along_the_way()
+    {
+        elevator0.setCurrentCapacity(0);
+        elevator0.setCurrentFloor(8);                              // Current at L8
+        elevator0.setMoveState(EState.DOWN);
+
+        Event event0 = new Event(2, 4, 3);       // Initial event of L6 to L4
+        Event event1 = new Event(1, 3, 2);       // Scheduler receives an event going from L2 to L1
+
+        elevator0.getEvents().add(event0);
+        scheduler.getSchedulerEvents().add(event1);
+
+        scheduler.manageEventList(elevator0, scheduler.getSchedulerEvents());
+
+        int result = elevator0.getSchedulerEvents().size();
+
+        assertEquals(1, result);            // Check the event is received by elevator as its along the way down
+    }
+
 }

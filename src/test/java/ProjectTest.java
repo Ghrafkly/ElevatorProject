@@ -15,21 +15,14 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
 public class ProjectTest {
 
     Validator validate;
-    UserInput user;
 
-    @Mock
-    GenCommands gc = mock(GenCommands.class);;
 
     @BeforeEach
     void setUp(){
-
         validate = new Validator();
-        user = new UserInput();
-
     }
 
     @Test
@@ -56,12 +49,26 @@ public class ProjectTest {
 
     @Test
     void test_validate_returns_true_with_4_2_4() throws InterruptedException {
+        EController.maxFloor = 10;
+        EController.minFloor = 0;
+
         assertTrue(validate.valCommand("4:2:4"));
     }
 
     @Test
     void test_validate_returns_true_with_1_2_4() throws InterruptedException {
+        EController.maxFloor = 10;
+        EController.minFloor = 0;
+
         assertTrue(validate.valCommand("1:2:4"));
+    }
+
+    @Test
+    void test_validate_returns_false_with_1_1_4() throws InterruptedException {
+        EController.maxFloor = 10;
+        EController.minFloor = 0;
+
+        assertFalse(validate.valCommand("1:1:4"));
     }
 
     @Test
@@ -109,9 +116,28 @@ public class ProjectTest {
     }
 
     @Test
+    void test_user_validate_returns_false_less_min_value_wrong_format() throws InterruptedException {
+        EController.minFloor = 5;
+
+        assertFalse(validate.valCommand("2:3:3")); //Checks final else condition
+
+    }
+    @Test
+    void test_user_validate_returns_false_greater_max_value_wrong_format() throws InterruptedException {
+        EController.maxFloor = 1;
+        EController.minFloor = 0;
+        assertFalse(validate.valCommand("2:3:3")); //Checks final else condition
+
+    }
+
+    @Test
     void test_input_containing_colon_returns_command() throws InterruptedException {
+        EController.maxFloor = 10;
+        EController.minFloor = 0;
+
         assertEquals("command", validate.valInput("3:2:4"));
     }
+
     @Test
     void test_containing_numeric_returns_interval() throws InterruptedException {
         assertEquals("interval", validate.valInput(String.valueOf(204)));
@@ -145,33 +171,33 @@ public class ProjectTest {
     }
 
     @Test
-    void test_containing_24_returns_false() throws InterruptedException {
-        assertFalse(validate.valSimulation("24"));
+    void test_containing_8_returns_false() throws InterruptedException {
+        assertFalse(validate.valSimulation("8"));
     }
 
     @Test
-    void test_containing_24_normal_returns_false() throws InterruptedException {
-        assertFalse(validate.valSimulation("24 normal"));
+    void test_containing_8_normal_returns_false() throws InterruptedException {
+        assertFalse(validate.valSimulation("8 normal"));
     }
 
     @Test
-    void test_containing_24normal_returns_false() throws InterruptedException {
-        assertFalse(validate.valSimulation("24normal"));
+    void test_containing_8normal_returns_false() throws InterruptedException {
+        assertFalse(validate.valSimulation("8normal"));
     }
 
     @Test
-    void test_containing_normal_24_returns_true() throws InterruptedException {
-        assertFalse(validate.valSimulation("normal 24"));
+    void test_containing_normal_8_returns_true() throws InterruptedException {
+        assertTrue(validate.valSimulation("normal 8"));
     }
 
     @Test
-    void test_containing_morning_24_returns_true() throws InterruptedException {
-        assertTrue(validate.valSimulation("morning 24"));
+    void test_containing_morning_8_returns_true() throws InterruptedException {
+        assertTrue(validate.valSimulation("morning 8"));
     }
 
     @Test
-    void test_containing_normal_comma_24_returns_true() throws InterruptedException {
-        assertFalse(validate.valSimulation("normal,24"));
+    void test_containing_normal_comma_8_returns_false() throws InterruptedException {
+        assertFalse(validate.valSimulation("normal,8"));
     }
 
     @Test
@@ -187,6 +213,27 @@ public class ProjectTest {
         validate.setCommands(command);
 
         assertEquals(AnsCommand, validate.getCommands());
+    }
+
+    @Test
+    void test_minFloor_less_maxFloor_returns_true(){
+        EController.maxFloor = 10;
+        EController.minFloor = 0;
+        assertTrue(validate.valConfig());
+    }
+
+    @Test
+    void test_minFloor_equals_maxFloor_returns_false(){
+        EController.maxFloor = 10;
+        EController.minFloor = 10;
+        assertFalse(validate.valConfig());
+    }
+
+    @Test
+    void test_minFloor_greater_maxFloor_returns_false(){
+        EController.maxFloor = 10;
+        EController.minFloor = 11;
+        assertFalse(validate.valConfig());
     }
 
 }

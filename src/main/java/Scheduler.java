@@ -7,19 +7,25 @@ import java.util.Iterator;
 public class Scheduler implements Runnable
 {
     private final ArrayList<Elevator> elevators;
-    private String input;
-    private String tempString;
+    private String genCommandInput;
+    private String userInput;
+    private String tempGenCommandInput;
+    private String tempUserInput;
     private static final Logger LOGGER = LogManager.getLogger(Scheduler.class);
     private ArrayList<Event> schedulerEvents;
     private GenCommands genCommands;
+    private UserInput userInputObj;
 
-    public Scheduler(ArrayList<Elevator> elevators, ArrayList<Event> eControllerEvents, GenCommands genCommands)
+    public Scheduler(ArrayList<Elevator> elevators, GenCommands genCommands, UserInput userInputObj)
     {
         this.elevators = elevators;
         this.schedulerEvents = new ArrayList<>();
         this.genCommands = genCommands;
-        input = "";
-        tempString = "";
+        this.userInputObj = userInputObj;
+        genCommandInput = "";
+        userInput = "";
+        tempUserInput = "";
+        tempGenCommandInput = "";
     }
 
     @Override
@@ -28,17 +34,18 @@ public class Scheduler implements Runnable
         while(true)
         {
             try {
-                Thread.sleep(500);
+                Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 
-            tempString = genCommands.getCommand();
+            tempGenCommandInput = genCommands.getCommand();
+            tempUserInput = userInputObj.getUserInput();
 
-            if(!tempString.equals(input) && !tempString.isBlank())
+            if(!tempGenCommandInput.equals(genCommandInput) && !tempGenCommandInput.isBlank())
             {
-                input = tempString;
-                processInput(input);
+                genCommandInput = tempGenCommandInput;
+                processGenCommandInput(genCommandInput);
 
                 // Loop through all the elevators and move it up or down depending on it's moveState
 
@@ -46,7 +53,19 @@ public class Scheduler implements Runnable
                     // Assign events to the appropriate elevator
                     manageEventList(elevator, schedulerEvents);
                 }
+            }
 
+            if(!tempUserInput.equals(userInput) && !tempUserInput.isBlank())
+            {
+                userInput = tempUserInput;
+                processUserInput(userInput);
+
+                // Loop through all the elevators and move it up or down depending on it's moveState
+
+                for (Elevator elevator : elevators) {
+                    // Assign events to the appropriate elevator
+                    manageEventList(elevator, schedulerEvents);
+                }
             }
         }
     }
@@ -55,9 +74,21 @@ public class Scheduler implements Runnable
      * This function will convert inputs into Event objects and appended to Elevator's jobs
      * @param input in the form of src:dest:numPeople comma-separated
      */
-    public void processInput(String input)
+    public void processGenCommandInput(String input)
     {
         String[] genCommand = input.split(" ");
+        String[] inputsArr = genCommand[1].split(",");
+        for(String str : inputsArr)
+        {
+            Event event = createEvent(str);
+            schedulerEvents.add(event);
+        }
+    }
+
+    public void processUserInput(String userInput)
+    {
+        LOGGER.info("triggered");
+        String[] genCommand = userInput.split(" ");
         String[] inputsArr = genCommand[1].split(",");
         for(String str : inputsArr)
         {

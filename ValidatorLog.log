@@ -1,3 +1,12 @@
 13:09:23.552 [main] ERROR Validator - Incorrect (stop) simulation entered
 13:50:25.934 [main] ERROR Validator - Incorrect (stop) simulation entered
 13:14:59.813 [main] ERROR Validator - Source and Destination are the same floor
+15:06:12.684 [main] ERROR Validator - Incorrect (elevator.getCurrentFloor()) simulation entered
+15:19:48.826 [main] ERROR Validator - Incorrect (/*) simulation entered
+15:19:48.827 [main] ERROR Validator - Incorrect (             * An elevator will either be a UP or DOWN elevator.) simulation entered
+15:19:48.827 [main] ERROR Validator - Incorrect (             * UP elevator means its responsible for getting events that go UP.) simulation entered
+15:19:48.827 [main] ERROR Validator - Incorrect (             * DOWN elevator means its responsible for getting events that go DOWN.) simulation entered
+15:19:48.827 [main] ERROR Validator - Incorrect (             * A DOWN elevator will try to grab UP events only if it's along the way.) simulation entered
+15:19:48.827 [main] ERROR Validator - Incorrect (             */) simulation entered
+15:24:21.011 [main] ERROR Validator - Incorrect (                doorsOpen = true;) simulation entered
+16:06:11.953 [main] ERROR Validator - Incorrect () simulation entered

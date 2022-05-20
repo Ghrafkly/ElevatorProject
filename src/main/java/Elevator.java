@@ -147,7 +147,7 @@ public class Elevator implements Runnable, FrameGUI {
      * @throws InterruptedException
      */
     public void openOrCloseElevator() throws InterruptedException {
-        moveState = EState.STOP;
+//        moveState = EState.STOP;
         Thread.sleep(TIME_TO_OPEN_AND_CLOSE_DOOR);
     }
 

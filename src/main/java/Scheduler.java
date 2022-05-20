@@ -39,39 +39,7 @@ public class Scheduler implements Runnable {
     public void run() {
         // Main loop
         while (true) {
-            try {
-                Thread.sleep(300);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            tempGenCommandInput = genCommands.getCommand();
-            tempUserInput = userInputObj.getUserInput();
-
-            // Check to see if the GenCommand input is new
-            if (!tempGenCommandInput.equals(genCommandInput) && !tempGenCommandInput.isBlank()) {
-                genCommandInput = tempGenCommandInput;
-                processUserInput(genCommandInput);
-
-                // Loop through all the elevators and assign Events as required
-                elevators.forEach(elevator -> manageEventList(elevator, schedulerEvents));
-            }
-
-            // Check to see if the UserInput input is new
-            if (!tempUserInput.equals(userInput) && !tempUserInput.isBlank()) {
-                userInput = tempUserInput;
-                processUserInput(userInput);
-
-                // Loop through all the elevators and assign Events as required
-                // Assign events to the appropriate elevator
-                elevators.forEach(elevator -> manageEventList(elevator, schedulerEvents));
-            }
-
-            // Check to see if there are any leftover events in schedulerEvents that need to be processed
-            if (schedulerEvents.size() > 0) {
-                // Loop through all the elevators and assign Events as required
-                elevators.forEach(elevator -> manageEventList(elevator, schedulerEvents));
-            }
+            listen();
         }
     }
 

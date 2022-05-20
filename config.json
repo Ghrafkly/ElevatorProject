@@ -1,6 +1,6 @@
 {
     "elevator": {
-        "maxFloor": 8,
+        "maxFloor": 5,
         "minFloor": 0,
         "numberOfElevators": 5,
         "capacity": 8

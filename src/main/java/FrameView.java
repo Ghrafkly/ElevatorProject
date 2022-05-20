@@ -39,13 +39,13 @@ public class FrameView implements Runnable {
 	private int gHeight = 34; // Height of section below of floors
 	private int liftWidth; // The lift width
 	int leftOffset = 50; // left offset for floors
-	private int maxFloor; // Maximum number of floors
-	private int minFloor; // Minimum number of floors
-	private int numLift;
+	private final int maxFloor; // Maximum number of floors
+	private final int minFloor; // Minimum number of floors
+	private final int numLift;
 	private int spacer; // Gap between elevators
 	JFrame jframe; // Frame for the graphics
-	private List<Elevator> elevators; // List of the elevators
-	private Point liftPoint; // Point for the lift location
+	private final List<Elevator> elevators; // List of the elevators
+	private final Point liftPoint; // Point for the lift location
 
 	final Timer TIMER; // Timer to draw the graphics
 	Dimension liftDimension; // The lift dimensions
@@ -116,13 +116,13 @@ public class FrameView implements Runnable {
 
 				// ELEVATORS
 				liftDimension = new Dimension(liftWidth, levelHeight);
-				spacer = (int) (getWidth() - leftOffset - numLift * liftDimension.width) / (numLift + 1);
+				spacer = (getWidth() - leftOffset - numLift * liftDimension.width) / (numLift + 1);
 
 				// REDUCE LIFT DIMENSIONS SPACING < MIN SPACING
 				while (spacer < 10) {
 					liftWidth--;
 					liftDimension.width--;
-					spacer = (int) (getWidth() - leftOffset - numLift * liftDimension.width) / (numLift + 1);
+					spacer = (getWidth() - leftOffset - numLift * liftDimension.width) / (numLift + 1);
 				}
 
 				// Draw elevators
@@ -186,7 +186,7 @@ public class FrameView implements Runnable {
 			if (i == numFloors - 1) {
 				levelLabelText.append("Roof");
 			} else {
-				levelLabelText.append("L" + Integer.toString(i + minFloor));
+				levelLabelText.append("L" + (i + minFloor));
 			}
 
 			levelLabelDimension.width = (int) fm.getStringBounds(levelLabelText.toString(), graphics).getWidth();

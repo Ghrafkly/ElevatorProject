@@ -7,6 +7,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class GenCommands implements Runnable {
     public static String simulation = "normal";
+    public int timeInterval;
     public static int floorLock = EController.minFloor;
     private static final Logger LOGGER = LogManager.getLogger(GenCommands.class);
     private final DateTimeFormatter format = DateTimeFormatter.ofPattern("ss.SSS");
@@ -15,7 +16,7 @@ public class GenCommands implements Runnable {
     private final int min = EController.minFloor;
     private String command;
     private String time;
-    public int timeInterval;
+    private boolean alive;
 
     /**
      * Initializer for Jackson usage
@@ -28,7 +29,7 @@ public class GenCommands implements Runnable {
      *
      */
     public void generator() throws InterruptedException {
-        while (true) {
+        while (isAlive()) {
             time = (LocalTime.now().format(format));
             int capacity = ThreadLocalRandom.current().nextInt(1, cap + 1);
 
@@ -42,6 +43,8 @@ public class GenCommands implements Runnable {
             LOGGER.info(time + " " + command);
             Thread.sleep(timeInterval);
         }
+        Thread.currentThread().interrupt();
+        System.out.println("Gen Commands shutdown");
     }
 
     /**
@@ -115,14 +118,33 @@ public class GenCommands implements Runnable {
     }
 
     /**
+     * Returns the status of the class
+     *
+     * @return          Boolean
+     */
+    public boolean isAlive() {
+        return alive;
+    }
+
+    /**
+     * Setter for the status of the class
+     *
+     * @param alive             Takes in a boolean
+     */
+    public void setAlive(boolean alive) {
+        this.alive = alive;
+    }
+
+    /**
      * Override method for run()
      */
     @Override
     public void run() {
         try {
+            setAlive(true);
             generator();
         } catch (InterruptedException e) {
-            System.out.println("Generator Command stopped");
+            System.out.println();
         }
     }
 }

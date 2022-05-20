@@ -16,6 +16,7 @@ public class Elevator implements Runnable, FrameGUI {
     private ArrayList<Event> events;            // Holds events allocated to elevator
     private ArrayList<Event> receivedEvents;    // Holds events received by the scheduler
     private int predictedCapacity;              // Number of people allocated to an elevator to be transported
+    private boolean alive;
 
     /**
      * The default constructor for Elevator
@@ -177,7 +178,8 @@ public class Elevator implements Runnable, FrameGUI {
     @Override
     public void run() {
         // Main loop
-        while (true) {
+        setAlive(true);
+        while (isAlive()) {
             // Batch process all events that have been allocated by the scheduler
             if (receivedEvents.size() > 0) {
                 predictedCapacity += receivedEvents.stream().mapToInt(event -> event.getNumPeople()).sum();
@@ -197,6 +199,8 @@ public class Elevator implements Runnable, FrameGUI {
                 case UP -> moveFloor(EState.UP);
             }
         }
+        Thread.currentThread().interrupt();
+        System.out.printf("Elevator %d shutdown\n", ELEVATOR_ID+1);
     }
 
     /**
@@ -327,5 +331,23 @@ public class Elevator implements Runnable, FrameGUI {
         return event.getDest() > event.getSrc()
                 ? EState.UP
                 : EState.DOWN;
+    }
+
+    /**
+     * Returns the status of the class
+     *
+     * @return          Boolean
+     */
+    public boolean isAlive() {
+        return alive;
+    }
+
+    /**
+     * Setter for the status of the class
+     *
+     * @param alive             Takes in a boolean
+     */
+    public void setAlive(boolean alive) {
+        this.alive = alive;
     }
 }

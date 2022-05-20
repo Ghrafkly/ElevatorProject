@@ -1,7 +1,7 @@
 public class Event {
     private int numPeople;              // Num of people assigned to an event
-    private int src;                    // Source floor
-    private int dest;                   // Destination floor
+    private final int src;                    // Source floor
+    private final int dest;                   // Destination floor
     private boolean delete;             // Boolean to track if the event needs to be deleted
     private boolean srcReached;         // Boolean to track if the source floor has been reached
 

@@ -10,9 +10,10 @@ public class Scheduler implements Runnable {
     private String userInput;                           // The input received from UserInput (user)
     private String tempGenCommandInput;                 // A temporary string to track previous GenCommand input
     private String tempUserInput;                       // A temporary string to track previous UserInput input
-    private ArrayList<Event> schedulerEvents;           // An ArrayList of events received from inputs
-    private GenCommands genCommands;                    // An instance of the GenCommand object
-    private UserInput userInputObj;                     // An instance of the UserInput object
+    private final ArrayList<Event> schedulerEvents;           // An ArrayList of events received from inputs
+    private final GenCommands genCommands;                    // An instance of the GenCommand object
+    private final UserInput userInputObj;                     // An instance of the UserInput object
+    private boolean alive;
 
     /**
      * Default constructor for Scheduler Class
@@ -37,10 +38,17 @@ public class Scheduler implements Runnable {
      */
     @Override
     public void run() {
+        setAlive(true);
         // Main loop
-        while (true) {
+        while (isAlive()) {
             listen();
         }
+        Thread.currentThread().interrupt();
+        System.out.println("Scheduler shutdown");
+    }
+
+    public ArrayList<Elevator> getElevators() {
+        return elevators;
     }
 
     /**
@@ -51,7 +59,7 @@ public class Scheduler implements Runnable {
         try {
             Thread.sleep(300);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            System.out.println("Scheduler Ended");
         }
 
         tempGenCommandInput = genCommands.getCommand();
@@ -241,6 +249,24 @@ public class Scheduler implements Runnable {
                 event.setDelete(true);
             }
         }
+    }
+
+    /**
+     * Returns the status of the class
+     *
+     * @return          Boolean
+     */
+    public boolean isAlive() {
+        return alive;
+    }
+
+    /**
+     * Setter for the status of the class
+     *
+     * @param alive             Takes in a boolean
+     */
+    public void setAlive(boolean alive) {
+        this.alive = alive;
     }
 
     /**

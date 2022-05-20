@@ -43,17 +43,17 @@ public class Runner {
     /**
      * Creates, Starts and Stops threads
      */
-    public void startThreads() throws InterruptedException {
-        Thread commandGen = new Thread(genCommands, "commands");
-
+    public void startThreads() throws InterruptedException, IOException {
         eController.setElevatorThreads();
         eController.runElevators();
-        FrameView fm = new FrameView(eController.getMinFloor(), eController.getMaxFloor(), eController.getNumberOfElevators(), eController.getElevators());
-        Thread graphics = new Thread(fm);
 
+        FrameView fm = new FrameView(eController.getMinFloor(), eController.getMaxFloor(), eController.getNumberOfElevators(), eController.getElevators());
 
         UserInput u = new UserInput();
         Scheduler scheduler = new Scheduler(eController.getElevators(), genCommands, u);
+
+        Thread graphics = new Thread(fm);
+        Thread commandGen = new Thread(genCommands, "commands");
         Thread schedulerThread = new Thread(scheduler);
 
         commandGen.start();
@@ -61,9 +61,12 @@ public class Runner {
         schedulerThread.start();
 
         if (u.userInput(commandGen, genCommands)) {
-            commandGen.interrupt();
+            scheduler.setAlive(false);
+            genCommands.setAlive(false);
+            eController.stopElevators();
             fm.close();
-            Thread.sleep(1);
+
+            commandGen.join();
             System.out.println("Program Ended");
         }
     }

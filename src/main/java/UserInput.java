@@ -1,6 +1,7 @@
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -32,6 +33,7 @@ public class UserInput {
                         Thread.sleep(500);
                     }
                     System.out.println("Command(s): " + v.getCommands());
+                    v.setCommands(new ArrayList<>());
                 }
                 case "interval" -> {
                     int inp = Integer.parseInt(input);

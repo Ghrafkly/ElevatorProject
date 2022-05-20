@@ -37,7 +37,6 @@ public class GenCommands implements Runnable {
                 case "afternoon" -> setCommand(afternoonSim(capacity, floorLock));
                 case "normal" -> setCommand(normalSim(capacity));
             }
-            ;
 
             time = (LocalTime.now().format(format));
             LOGGER.info(time + " " + command);

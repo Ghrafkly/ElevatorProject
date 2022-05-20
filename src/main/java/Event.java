@@ -1,58 +1,95 @@
-public class Event {
-    private int numPeople;
-    private int src;
-    private int dest;
-    private boolean delete;
-    private boolean srcReached;
-    private int elevatorId;
+public class Event
+{
+    private int numPeople;              // Num of people assigned to an event
+    private int src;                    // Source floor
+    private int dest;                   // Destination floor
+    private boolean delete;             // Boolean to track if the event needs to be deleted
+    private boolean srcReached;         // Boolean to track if the source floor has been reached
 
-    public Event(int numPeople, int src, int dest, int elevatorId) {
+    /**
+     * Default constructor of the Event class
+     * @param numPeople number of people assigned to an elevator
+     * @param src starting floor of event
+     * @param dest destination floor of event
+     */
+    public Event(int numPeople, int src, int dest)
+    {
         this.numPeople = numPeople;
         this.src = src;
         this.dest = dest;
         this.delete = false;
         this.srcReached = false;
-        this.elevatorId = elevatorId;
     }
 
-    public int getNumPeople() {
+    /**
+     * Getter for numPeople
+     * @return
+     */
+    public int getNumPeople()
+    {
         return numPeople;
     }
 
-    public synchronized int getSrc() {
+    /**
+     * Getter for source floor
+     * @return
+     */
+    public synchronized int getSrc()
+    {
         return src;
     }
 
-    public synchronized int getDest() {
+    /**
+     * Getter for destination floor
+     * @return
+     */
+    public synchronized int getDest()
+    {
         return dest;
     }
 
-    public synchronized boolean getDelete() {
+    /**
+     * Getter for the boolean 'delete'
+     * @return
+     */
+    public synchronized boolean getDelete()
+    {
         return delete;
     }
 
-    public void setDelete(boolean delete) {
+    /**
+     * Setter for the boolean 'delete'
+     * @param delete
+     */
+    public void setDelete(boolean delete)
+    {
         this.delete = delete;
     }
 
-    public void setNumPeople(int numPeople) {
+    /**
+     * Setter for the number of people in an elevator
+     * @param numPeople
+     */
+    public void setNumPeople(int numPeople)
+    {
         this.numPeople = numPeople;
     }
 
-    public void setSrcReached(boolean srcReached) {
+    /**
+     * Setter for if a source floor is reached
+     * @param srcReached
+     */
+    public void setSrcReached(boolean srcReached)
+    {
         this.srcReached = srcReached;
     }
 
-    public synchronized boolean getSrcReached() {
-        return srcReached;
-    }
-
-    public int getElevatorId() {
-        return elevatorId;
-    }
-
-    public void setElevatorId(int elevatorId)
+    /**
+     * Getter for if a source floor is reached
+     * @return
+     */
+    public synchronized boolean getSrcReached()
     {
-        this.elevatorId = elevatorId;
+        return srcReached;
     }
 }

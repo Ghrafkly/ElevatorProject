@@ -11,7 +11,6 @@ public class GenCommands implements Runnable {
     public static String simulation = "normal";
     public static int floorLock = EController.minFloor;
     private static final Logger LOGGER = LogManager.getLogger(GenCommands.class);
-
     private final DateTimeFormatter format = DateTimeFormatter.ofPattern("ss.SSS");
     private final int cap = EController.capacity;
     private final int max = EController.maxFloor;
@@ -68,8 +67,6 @@ public class GenCommands implements Runnable {
 
         return String.format("%d:%d:%d", src, des, capacity);
     }
-
-
 
     public int getTimeInterval() {
         return timeInterval;

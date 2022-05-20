@@ -3,6 +3,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.awt.*;
@@ -73,10 +74,9 @@ public class RunnerTest {
     @Test
     void test_StartThreads_closes_graphics() throws InterruptedException, IOException {
 
-        when(MAPPER.readValue(elevator, eController)).thenReturn(eController);
-        r.createObjects(file);
+        when(r.createObjects(file)).then(r.readFromJSONFile(file));
 
-        verify(MAPPER, times(1)).readValue(file);
+        verify(r, times(1)).readFromJSONFile(file);
     }
 
 

@@ -13,31 +13,46 @@ public class Validator {
     private final DateTimeFormatter format = DateTimeFormatter.ofPattern("ss.SSS");
     private final Pattern comP = Pattern.compile("^\\d+:\\d+:\\d+$");
     private final Pattern numeric = Pattern.compile("^\\d+$");
-//    private final Pattern alpha = Pattern.compile("^[a-zA-Z]+$");
     private ArrayList<String> commands = new ArrayList<>();
-    private String time;
 
+    /**
+     * Validates the config file
+     *
+     * @return      Returns a boolean based on the validity of the config file
+     */
     public boolean valConfig() {
         return EController.maxFloor > EController.minFloor;
     }
 
+    /**
+     * Validates input
+     *
+     * @param input        Takes in user input
+     * @return             Type of input: command, interval, simulation
+     */
     public String valInput(String input) throws InterruptedException {
-        String str = "";
+        String str = "none";
         input = input.stripTrailing();
         if (input.contains(":")) {
             if (valCommand(input)) {
                 str = "command";
             }
         } else if (numeric.matcher(input).find()) {
-            if (valInterval(Integer.parseInt(input))) {
-                str = "interval";
-            }
+            str = "interval";
         } else if (valSimulation(input)) {
             str = "simulation";
+        } else {
+            return valOther(input);
         }
         return str;
     }
 
+    /**
+     * Validates command
+     *
+     * @param command           Takes in a user entered command
+     * @return                  Boolean
+     */
     public boolean valCommand(String command) throws InterruptedException {
         boolean fail = false;
         String message = "";
@@ -71,14 +86,12 @@ public class Validator {
         return commands.size() > 0;
     }
 
-    public boolean valInterval(int interval) {
-        if (interval <= 100) {
-            logger.error(String.format("Interval of %d is invalid. Please set the interval to a number higher than 100", interval));
-            return false;
-        }
-        return true;
-    }
-
+    /**
+     * Validates simulation entered
+     *
+     * @param sim           Takes in a user inputted interval
+     * @return              Boolean
+     */
     public boolean valSimulation(String sim) {
         String[] justSim = sim.split(" ");
         Set<String> simulations = Set.of("morning", "afternoon", "normal");
@@ -89,10 +102,33 @@ public class Validator {
         return true;
     }
 
+    /**
+     * Accepts other inputs. Handling for halting the program or stopping it outright
+     *
+     * @param other         User input
+     * @return              Input if valid, otherwise returns "none"
+     */
+    public String valOther(String other) {
+        return switch (other) {
+            case "stop", "halt" -> other;
+            default -> "none";
+        };
+    }
+
+    /**
+     * Getter for commands
+     *
+     * @return      An Array of commands
+     */
     public ArrayList<String> getCommands() {
         return commands;
     }
 
+    /**
+     * For the purposes of testing
+     *
+     * @param commands          Takes in an array of commands
+     */
     public void setCommands(ArrayList<String> commands) {
         this.commands = commands;
     }

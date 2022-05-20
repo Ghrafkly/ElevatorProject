@@ -2,7 +2,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class Scheduler implements Runnable {
     private static final Logger LOGGER = LogManager.getLogger(Scheduler.class);
@@ -55,9 +54,7 @@ public class Scheduler implements Runnable {
                 processUserInput(genCommandInput);
 
                 // Loop through all the elevators and assign Events as required
-                for (Elevator elevator : elevators) {
-                    manageEventList(elevator, schedulerEvents);
-                }
+                elevators.forEach(elevator -> manageEventList(elevator, schedulerEvents));
             }
 
             // Check to see if the UserInput input is new
@@ -66,18 +63,14 @@ public class Scheduler implements Runnable {
                 processUserInput(userInput);
 
                 // Loop through all the elevators and assign Events as required
-                for (Elevator elevator : elevators) {
-                    // Assign events to the appropriate elevator
-                    manageEventList(elevator, schedulerEvents);
-                }
+                // Assign events to the appropriate elevator
+                elevators.forEach(elevator -> manageEventList(elevator, schedulerEvents));
             }
 
             // Check to see if there are any leftover events in schedulerEvents that need to be processed
             if (schedulerEvents.size() > 0) {
                 // Loop through all the elevators and assign Events as required
-                for (Elevator elevator : elevators) {
-                    manageEventList(elevator, schedulerEvents);
-                }
+                elevators.forEach(elevator -> manageEventList(elevator, schedulerEvents));
             }
         }
     }

@@ -20,7 +20,7 @@ public class GenCommands implements Runnable {
     public int timeInterval;
 
     /**
-     * Initialize for Jackson
+     * Initializer for Jackson usage
      */
     public GenCommands() {
     }

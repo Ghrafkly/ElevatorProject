@@ -254,7 +254,7 @@ public class ElevatorTest
     }
 
     @Test
-    void test_manageMoveState_function_a_DOWN_elevator_will_go_up_if_it_has_not_reached_all_Source_floors()
+    void test_manageMoveState_function_a_DOWN_elevator_will_go_up_if_it_has_not_reached_its_source_floor()
     {
         elevator.setMoveState(EState.UP);
         elevator.setCurrentFloor(5);
@@ -272,6 +272,27 @@ public class ElevatorTest
         EState resultState = elevator.getState();
 
         assertEquals(EState.UP, resultState);
+    }
+
+    @Test
+    void test_manageMoveState_function_a_DOWN_elevator_going_down_will_go_down_if_it_gets_another_down_event_along_the_way()
+    {
+        elevator.setMoveState(EState.DOWN);         // Elevator is doing Floor 7 to Floor 2 and going down
+        elevator.setCurrentFloor(5);                // It is currently at Floor 5 onwards to Floor 2
+
+        Event event1 = new Event(1, 7, 2);
+        Event event2 = new Event(1, 3, 2);      // A new event is assigned going from Floor 3 to 2
+        event1.setSrcReached(true);
+        event2.setSrcReached(false);
+
+        elevator.getEvents().add(event1);
+        elevator.getEvents().add(event2);
+
+        elevator.manageMoveState();
+
+        EState resultState = elevator.getState();
+
+        assertEquals(EState.DOWN, resultState);     // The elevator will keep going down
     }
 
     @Test

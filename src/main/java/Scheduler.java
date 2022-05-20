@@ -43,49 +43,58 @@ public class Scheduler implements Runnable
         // Main loop
         while(true)
         {
-            try {
-                Thread.sleep(300);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            listen();
+        }
+    }
 
-            tempGenCommandInput = genCommands.getCommand();
-            tempUserInput = userInputObj.getUserInput();
+    /**
+     * This is the main loop logic of the Scheduler, it will continuously listen for inputs and send it to the
+     * assigned elevator.
+     */
+    public void listen()
+    {
+        try {
+            Thread.sleep(300);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
-            // Check to see if the GenCommand input is new
-            if(!tempGenCommandInput.equals(genCommandInput) && !tempGenCommandInput.isBlank())
+        tempGenCommandInput = genCommands.getCommand();
+        tempUserInput = userInputObj.getUserInput();
+
+        // Check to see if the GenCommand input is new
+        if(!tempGenCommandInput.equals(genCommandInput) && !tempGenCommandInput.isBlank())
+        {
+            genCommandInput = tempGenCommandInput;
+            processUserInput(genCommandInput);
+
+            // Loop through all the elevators and assign Events as required
+            for (Elevator elevator : elevators)
             {
-                genCommandInput = tempGenCommandInput;
-                processUserInput(genCommandInput);
-
-                // Loop through all the elevators and assign Events as required
-                for (Elevator elevator : elevators)
-                {
-                    manageEventList(elevator, schedulerEvents);
-                }
+                manageEventList(elevator, schedulerEvents);
             }
+        }
 
-            // Check to see if the UserInput input is new
-            if(!tempUserInput.equals(userInput) && !tempUserInput.isBlank())
-            {
-                userInput = tempUserInput;
-                processUserInput(userInput);
+        // Check to see if the UserInput input is new
+        if(!tempUserInput.equals(userInput) && !tempUserInput.isBlank())
+        {
+            userInput = tempUserInput;
+            processUserInput(userInput);
 
-                // Loop through all the elevators and assign Events as required
-                for (Elevator elevator : elevators) {
-                    // Assign events to the appropriate elevator
-                    manageEventList(elevator, schedulerEvents);
-                }
+            // Loop through all the elevators and assign Events as required
+            for (Elevator elevator : elevators) {
+                // Assign events to the appropriate elevator
+                manageEventList(elevator, schedulerEvents);
             }
+        }
 
-            // Check to see if there are any leftover events in schedulerEvents that need to be processed
-            if(schedulerEvents.size() > 0)
+        // Check to see if there are any leftover events in schedulerEvents that need to be processed
+        if(schedulerEvents.size() > 0)
+        {
+            // Loop through all the elevators and assign Events as required
+            for (Elevator elevator : elevators)
             {
-                // Loop through all the elevators and assign Events as required
-                for (Elevator elevator : elevators)
-                {
-                    manageEventList(elevator, schedulerEvents);
-                }
+                manageEventList(elevator, schedulerEvents);
             }
         }
     }
@@ -177,7 +186,7 @@ public class Scheduler implements Runnable
             {
                 // As explained before, Elevator is considered a UP or DOWN elevator. We determine this by looking at the first event its given
                 EState direction = getDirection(elevator.getEvents().get(0));
-                int maxDest = elevator.getEvents().get(0).getDest();
+                int maxDest = elevator.getEvents().get(0).getSrc();
 
                 // If it's a UP elevator then grab jobs along the way that go UP also
                 if (direction == EState.UP &&
@@ -192,7 +201,7 @@ public class Scheduler implements Runnable
                         eventDir == EState.UP &&
                         elevator.getState() == EState.UP &&
                         currFloor < eventSrc &&
-                        maxDest < eventSrc)
+                        eventDest <= maxDest)
                 {
                     manageEvent(maxCapacity, event, elevator);
                 }

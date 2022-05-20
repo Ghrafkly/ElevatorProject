@@ -44,3 +44,4 @@
 23:20:46.542 [main] ERROR Validator - Incorrect (7,1,6) simulation entered
 23:20:49.695 [main] ERROR Validator - Incorrect (4,2,2) simulation entered
 23:31:17.005 [main] ERROR Validator - Command ( 4:6:2) of length: 2. Commands should have length 3 and format int:int:int.
+12:28:09.926 [main] ERROR Validator - Command ( 2:6:2) of length: 2. Commands should have length 3 and format int:int:int.

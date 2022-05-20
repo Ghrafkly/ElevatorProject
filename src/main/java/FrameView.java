@@ -32,14 +32,10 @@ import javax.swing.Timer;
  * mouse is held above Comment out the ones you want to use.
  *
  */
-public class FrameView implements Runnable
-{
+public class FrameView implements Runnable {
 	private final int LEFT_OFFSET = 10;
 	private final int LABEL_OFFSET = 20;
 	private final int FONT_SIZE = 14;
-	{
-
-	}
 	private int gHeight = 34; // Height of section below of floors
 	private int liftWidth; // The lift width
 	int leftOffset = 50; // left offset for floors
@@ -66,8 +62,7 @@ public class FrameView implements Runnable
 	 * @param numLift   the number of lifts used
 	 * @param elevators A list of the elevator instances used in simulation
 	 */
-	public FrameView(final int minFloor, final int maxFloor, final int numLift, final List<Elevator> elevators)
-	{
+	public FrameView(final int minFloor, final int maxFloor, final int numLift, final List<Elevator> elevators) {
 		this.minFloor = minFloor;
 		this.maxFloor = maxFloor;
 		this.numLift = numLift;
@@ -82,45 +77,33 @@ public class FrameView implements Runnable
 		jframe.setTitle("Simulation for " + (maxFloor) + " Floors and " + numLift + " Elevators");
 
 		TIMER = new Timer(10, null); // call every 10 milliseconds
-
 	}
 
 	/**
 	 * Entry point for the thread
 	 */
 	@Override
-	public void run()
-	{
+	public void run() {
 		startGraphics();
-
 	}
 
-	private void startGraphics()
-	{
+	private void startGraphics() {
 
-		jframe.add(new JComponent()
-		{
+		jframe.add(new JComponent() {
 			/**
 			 * timer for the redraw of component
 			 */
 			private static final long serialVersionUID = 1L;
-			{
 
-				TIMER.addActionListener(new ActionListener()
-				{
-					public void actionPerformed(ActionEvent e)
-					{
-						repaint();
-					}
-				});
+			{
+				TIMER.addActionListener(e -> repaint());
 				TIMER.start();
 			}
 
 			/**
 			 * paintComponent is called each time the JComponent is repainted
 			 */
-			public void paintComponent(Graphics graphics)
-			{
+			public void paintComponent(Graphics graphics) {
 				int numFloors = maxFloor - minFloor + 2;
 				int levelHeight = (getHeight() / (numFloors));
 				int adjustment = -minFloor;
@@ -135,15 +118,15 @@ public class FrameView implements Runnable
 				liftDimension = new Dimension(liftWidth, levelHeight);
 				spacer = (int) (getWidth() - leftOffset - numLift * liftDimension.width) / (numLift + 1);
 
-				while (spacer < 10) // REDUCE LIFT DIMENSIONS SPACING < MIN SPACING
-				{
+				// REDUCE LIFT DIMENSIONS SPACING < MIN SPACING
+				while (spacer < 10) {
 					liftWidth--;
 					liftDimension.width--;
 					spacer = (int) (getWidth() - leftOffset - numLift * liftDimension.width) / (numLift + 1);
 				}
 
-				for (int i = 0; i < numLift; i++) // Draw elevators
-				{
+				// Draw elevators
+				for (int i = 0; i < numLift; i++) {
 					String liftLabelText = elevators.get(i).getCommand();
 
 					liftPoint.x = leftOffset + spacer + i * (spacer + liftDimension.width);
@@ -165,19 +148,16 @@ public class FrameView implements Runnable
 					graphics.setColor(Color.BLACK); // Draw frame for elevator
 					graphics.drawRect(liftPoint.x, liftPoint.y, liftDimension.width, liftDimension.height);
 				}
-
 				// Optional to display the elevator number when mouse held over it
 				doMouseHighlight(graphics, getHeight());
-
 			}
 		});
 
 		/*
-		 * By default frame is not visible so we are setting the visibility to true to
+		 * By default, frame is not visible, so we are setting the visibility to true to
 		 * make it visible.
 		 */
 		jframe.setVisible(true);
-
 	}
 
 	/**
@@ -187,8 +167,7 @@ public class FrameView implements Runnable
 	 * @param height
 	 * @param width
 	 */
-	private void drawBackgroundGrid(Graphics graphics, int height, int width)
-	{
+	private void drawBackgroundGrid(Graphics graphics, int height, int width) {
 		int numFloors = maxFloor - minFloor + 2;
 		int levelHeight = height / (numFloors);
 		StringBuilder levelLabelText = new StringBuilder();
@@ -202,15 +181,12 @@ public class FrameView implements Runnable
 		gHeight = levelLabelDimension.height + 2 * LEFT_OFFSET;
 
 		// Draw the floors, lines and level numbers and background
-		for (int i = 0; i <= (numFloors + 2); i++)
-		{
+		for (int i = 0; i <= (numFloors + 2); i++) {
 			levelLabelText.setLength(0); // clear it
-			if (i == numFloors  - 1){
+			if (i == numFloors - 1) {
 				levelLabelText.append("Roof");
-			}
-			else {
+			} else {
 				levelLabelText.append("L" + Integer.toString(i + minFloor));
-
 			}
 
 			levelLabelDimension.width = (int) fm.getStringBounds(levelLabelText.toString(), graphics).getWidth();
@@ -223,7 +199,6 @@ public class FrameView implements Runnable
 			graphics.setColor(Color.GRAY); // Draw floor lines
 			graphics.drawLine(leftOffset, height - gHeight - levelHeight * i, width,
 					height - gHeight - levelHeight * i);
-
 		}
 
 		// Draw bottom part
@@ -231,7 +206,6 @@ public class FrameView implements Runnable
 		graphics.fillRect(0, height - gHeight, width, gHeight);
 		graphics.setColor(Color.GRAY);
 		graphics.drawRect(0, height - gHeight, width, gHeight);
-
 	}
 
 	/**
@@ -240,30 +214,13 @@ public class FrameView implements Runnable
 	 * @param i the elevator number
 	 * @return the colour to use
 	 */
-	private Color getStateColor(int i)
-	{
-
-		Color color = Color.GRAY;
-
-		switch (elevators.get(i).getState())
-		{
-			case UP:
-				color = Color.RED;
-				break;
-			case DOWN:
-				color = Color.YELLOW;
-				break;
-			case STOP:
-				color = Color.orange;
-				break;
-			case IDLE:
-				color = Color.LIGHT_GRAY;
-				break;
-			default:
-				throw new IllegalArgumentException("Unexpected value: " + elevators.get(i).getState());
-		}
-
-		return color;
+	private Color getStateColor(int i) {
+		return switch (elevators.get(i).getState()) {
+			case UP -> Color.RED;
+			case DOWN -> Color.YELLOW;
+			case STOP -> Color.orange;
+			case IDLE -> Color.LIGHT_GRAY;
+		};
 	}
 
 	/**
@@ -273,11 +230,10 @@ public class FrameView implements Runnable
 	 * @param liftLabelText
 	 * @param graphics
 	 */
-	private void drawStringToSide(String liftLabelText, Graphics graphics)
-	{
+	private void drawStringToSide(String liftLabelText, Graphics graphics) {
 
-		if (liftLabelText != null && liftLabelText.length() > 0) // only do if we have have text
-		{
+		// only do if we have have text
+		if (liftLabelText != null && liftLabelText.length() > 0) {
 
 			Dimension liftLabelTextDimension = new Dimension(
 					(int) fm.getStringBounds(liftLabelText, graphics).getWidth(),
@@ -286,8 +242,8 @@ public class FrameView implements Runnable
 			Dimension liftLabelDimension = new Dimension(liftLabelTextDimension.width + LABEL_OFFSET,
 					liftLabelTextDimension.height + LEFT_OFFSET);
 
-			if (liftLabelDimension.width < spacer) // make sure enough space to draw
-			{
+			// make sure enough space to draw
+			if (liftLabelDimension.width < spacer) {
 
 				graphics.setColor(new Color(244, 240, 232));
 				graphics.fillRect(liftPoint.x + LEFT_OFFSET + liftDimension.width,
@@ -303,10 +259,8 @@ public class FrameView implements Runnable
 						liftPoint.x + 10 + +liftDimension.width
 								+ (liftLabelDimension.width - liftLabelTextDimension.width) / 2,
 						liftPoint.y + liftDimension.height / 2 + liftLabelDimension.height / 2);
-
 			}
 		}
-
 	}
 
 	/**
@@ -316,11 +270,8 @@ public class FrameView implements Runnable
 	 * @param value
 	 * @param liftPoint
 	 */
-	private void drawValueAbove(Graphics graphics, String liftLabelText, Point liftPoint)
-	{
-
-		if (liftLabelText != null && liftLabelText.length() > 0)
-		{
+	private void drawValueAbove(Graphics graphics, String liftLabelText, Point liftPoint) {
+		if (liftLabelText != null && liftLabelText.length() > 0) {
 
 			// Get passenger number and display it above elevator
 			Dimension liftLabelTextDimension = new Dimension(
@@ -329,8 +280,8 @@ public class FrameView implements Runnable
 			Dimension liftLabelDimension = new Dimension(liftLabelTextDimension.width,
 					liftLabelTextDimension.height + LEFT_OFFSET);
 
-			if (liftLabelDimension.width <= liftWidth)		// check it fits
-			{
+			// check it fits
+			if (liftLabelDimension.width <= liftWidth) {
 				graphics.setColor(new Color(244, 240, 232));
 				graphics.fillRect(liftPoint.x, liftPoint.y - liftLabelDimension.height, liftDimension.width,
 						liftLabelDimension.height);
@@ -353,10 +304,8 @@ public class FrameView implements Runnable
 	 * @param liftLabelText
 	 * @param graphics
 	 */
-	private void drawValueToSide(String liftLabelText, Graphics graphics)
-	{
-		if (liftLabelText != null && liftLabelText.length() > 0)
-		{
+	private void drawValueToSide(String liftLabelText, Graphics graphics) {
+		if (liftLabelText != null && liftLabelText.length() > 0) {
 			Dimension liftLabelTextDimension = new Dimension(
 					(int) fm.getStringBounds(liftLabelText, graphics).getWidth(),
 					(int) fm.getStringBounds(liftLabelText, graphics).getHeight());
@@ -364,8 +313,8 @@ public class FrameView implements Runnable
 			Dimension liftLabelDimension = new Dimension(liftLabelTextDimension.width + LABEL_OFFSET,
 					liftLabelTextDimension.height + LEFT_OFFSET);
 
-			if (liftLabelDimension.width < spacer) // room for label to be drawn
-			{
+			// room for label to be drawn
+			if (liftLabelDimension.width < spacer) {
 				graphics.setColor(new Color(244, 240, 232));
 				graphics.fillRect(liftPoint.x + LEFT_OFFSET + liftDimension.width,
 						liftPoint.y + liftDimension.height / 2 - LEFT_OFFSET - liftLabelDimension.height,
@@ -382,21 +331,19 @@ public class FrameView implements Runnable
 						liftPoint.y + liftDimension.height / 2 - LEFT_OFFSET - liftLabelTextDimension.height / 2);
 			}
 		}
-
 	}
 
 	/**
 	 * Option method to display a string value in the base below the elevator.
+	 *
 	 * @param comp
 	 * @param graphics
 	 * @param value
 	 * @param liftPoint
 	 */
-	private void drawStringInBase(JComponent jcomp, Graphics graphics, String liftLabelText, Point liftPoint)
-	{
+	private void drawStringInBase(JComponent jcomp, Graphics graphics, String liftLabelText, Point liftPoint) {
 
-		if (liftLabelText != null && liftLabelText.length() > 0)
-		{
+		if (liftLabelText != null && liftLabelText.length() > 0) {
 			// Get passenger number and display it above elevator
 			Dimension liftLabelTextDimension = new Dimension(
 					(int) fm.getStringBounds(liftLabelText, graphics).getWidth(),
@@ -406,8 +353,8 @@ public class FrameView implements Runnable
 
 			int hSpace = (gHeight - liftLabelDimension.height) / 4;
 
-			if ((liftWidth + spacer) > liftLabelDimension.width) // make sure enough space to draw
-			{
+			// make sure enough space to draw
+			if ((liftWidth + spacer) > liftLabelDimension.width) {
 
 				graphics.setColor(new Color(244, 240, 232));
 
@@ -423,7 +370,6 @@ public class FrameView implements Runnable
 						jcomp.getHeight() - gHeight / 2 + liftLabelTextDimension.height / 2 - hSpace / 2);
 			}
 		}
-
 	}
 
 	/**
@@ -433,8 +379,7 @@ public class FrameView implements Runnable
 	 * @param graphics
 	 * @param height
 	 */
-	private void doMouseHighlight(Graphics graphics, int height)
-	{
+	private void doMouseHighlight(Graphics graphics, int height) {
 		int levelHeight = (height / (maxFloor - minFloor));
 		int adjustment = -minFloor;
 		StringBuilder liftLabelText = new StringBuilder();
@@ -446,21 +391,20 @@ public class FrameView implements Runnable
 
 		// HOVER OVER ELEVATOR LABEL (IN SERIES SO THERE IS PROCEEDING ELEVATORS DON'T
 		// OVERLAP WITH THE LABEL)
-		for (int i = 0; i < numLift; i++)
-		{
+		for (int i = 0; i < numLift; i++) {
 			mLiftPoint.x = leftOffset + spacer + i * (spacer + liftDimension.width);
 			mLiftPoint.y = (height - liftDimension.height - gHeight)
 					- (elevators.get(i).getCurrentFloor() + adjustment) * levelHeight;
 
 			// COLLISION DETECTION
 			if (mousePoint.x > mLiftPoint.x && mousePoint.x < mLiftPoint.x + liftDimension.width
-					&& mousePoint.y > mLiftPoint.y && mousePoint.y < mLiftPoint.y + liftDimension.height)
-			{
+					&& mousePoint.y > mLiftPoint.y && mousePoint.y < mLiftPoint.y + liftDimension.height) {
 
 				liftLabelText.setLength(0);
-				liftLabelText.append("E" + Integer.toString(i + 1));
+				liftLabelText.append("E" + (i + 1));
 
-				mliftLabelTextDimension.width = (int) fm.getStringBounds(liftLabelText.toString(), graphics).getWidth();
+				mliftLabelTextDimension.width = (int) fm.getStringBounds(liftLabelText.toString(), graphics)
+						.getWidth();
 				mliftLabelTextDimension.height = (int) fm.getStringBounds(liftLabelText.toString(), graphics)
 						.getHeight();
 
@@ -487,11 +431,9 @@ public class FrameView implements Runnable
 	/**
 	 * Stop the timer and close Graphics
 	 */
-	public void close()
-	{
+	public void close() {
 		jframe.setVisible(false);
 		jframe.dispose();
 		TIMER.stop();
 	}
-
 }

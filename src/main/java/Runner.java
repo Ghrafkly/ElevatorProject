@@ -9,6 +9,9 @@ public class Runner {
     private EController eController;
     private GenCommands genCommands;
 
+    /**
+     * Main method for the program
+     */
     public static void main(String[] args) throws IOException, InterruptedException {
         Runner r = new Runner();
         Validator v = new Validator();
@@ -22,6 +25,11 @@ public class Runner {
             System.out.println("Issue with config file");
     }
 
+    /**
+     * Creates objects needs for the program such as the EController and GenCommands
+     *
+     * @param file                  Takes in a file name
+     */
     public void createObjects(File file) throws IOException {
         Map<String, Integer> json = readFromJSONFile(file);
 
@@ -32,38 +40,40 @@ public class Runner {
         genCommands = MAPPER.readValue(commands, GenCommands.class);
     }
 
+    /**
+     * Creates, Starts and Stops threads
+     */
     public void startThreads() throws InterruptedException {
         Thread commandGen = new Thread(genCommands, "commands");
-        // Thread eControllerThread = new Thread(eController);
-
-        commandGen.start();
 
         eController.setElevatorThreads();
         eController.runElevators();
         FrameView fm = new FrameView(eController.getMinFloor(), eController.getMaxFloor(), eController.getNumberOfElevators(), eController.getElevators());
         Thread graphics = new Thread(fm);
-        graphics.start();
+
 
         UserInput u = new UserInput();
         Scheduler scheduler = new Scheduler(eController.getElevators(), genCommands, u);
         Thread schedulerThread = new Thread(scheduler);
+
+        commandGen.start();
+        graphics.start();
         schedulerThread.start();
 
         if (u.userInput(commandGen, genCommands)) {
-            stopThreads(commandGen, schedulerThread);
+            commandGen.interrupt();
+            fm.close();
+            Thread.sleep(1);
+            System.out.println("Program Ended");
         }
-
-
-        fm.close();
     }
 
-    public void stopThreads(Thread a, Thread b) throws InterruptedException {
-        a.interrupt();
-//        b.interrupt();
-        Thread.sleep(1);
-        System.out.println("Program Ended");
-    }
-
+    /**
+     * Maps the json file to String Integer pairs
+     *
+     * @param source            File name
+     * @return                  Map
+     */
     public Map<String, Integer> readFromJSONFile(File source) throws IOException {
         return MAPPER.readValue(source, Map.class);
     }

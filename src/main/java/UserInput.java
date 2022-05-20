@@ -1,7 +1,6 @@
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -10,6 +9,13 @@ public class UserInput {
     private static final Logger LOGGER = LogManager.getLogger(UserInput.class);
     private String userInput = "";
 
+    /**
+     * Process user input
+     *
+     * @param commandGen                Takes in a thread
+     * @param genCommands               Takes in an object
+     * @return                          True if "stop" is entered
+     */
     public boolean userInput(Thread commandGen, GenCommands genCommands) throws InterruptedException {
         boolean waitCheck = false;
         String input;
@@ -17,7 +23,8 @@ public class UserInput {
         do {
             input = scanner.nextLine();
 
-            switch (v.valInput(input)) {
+            String s = v.valInput(input);
+            switch (s) {
                 case "command" -> {
                     for (String str : v.getCommands()) {
                         userInput = str;
@@ -25,7 +32,6 @@ public class UserInput {
                         Thread.sleep(500);
                     }
                     System.out.println("Command(s): " + v.getCommands());
-                    v.setCommands(new ArrayList<>());
                 }
                 case "interval" -> {
                     int inp = Integer.parseInt(input);
@@ -57,19 +63,31 @@ public class UserInput {
                             } else {
                                 System.out.println("Simulation: " + justSim[0]);
                                 GenCommands.simulation = justSim[0];
-                                GenCommands.floorLock = 1;
+                                GenCommands.floorLock = EController.minFloor;
                             }
                         }
                         default -> throw new IllegalStateException("Unexpected value: " + input);
                     }
                 }
-                case "none" -> System.out.println("Error in user input");
+                case "halt" -> {
+                    waitCheck = true;
+                    commandGen.interrupt();
+                }
+                case "stop" -> {
+                    return true;
+                }
+                case "", "none" -> System.out.println("Error in user input");
             }
         } while (!Objects.equals(input, "stop"));
 
         return true;
     }
 
+    /**
+     * Getter for user input
+     *
+     * @return          User Input
+     */
     public String getUserInput() {
         return userInput;
     }

@@ -136,6 +136,26 @@ public class ValidatorTest {
     }
 
     @Test
+    void test_containing_stop_returns_stop() throws InterruptedException {
+        assertEquals("stop", validate.valInput("stop"));
+    }
+
+    @Test
+    void test_containing_stop_returns_halt() throws InterruptedException {
+        assertEquals("halt", validate.valInput("halt"));
+    }
+
+    @Test
+    void test_containing_nothing_returns_none() throws InterruptedException {
+        assertEquals("none", validate.valInput(""));
+    }
+
+    @Test
+    void test_containing_anythingNotPredefined_returns_none() throws InterruptedException {
+        assertEquals("none", validate.valInput("none"));
+    }
+
+    @Test
     void test_containing_8_returns_false() {
         assertFalse(validate.valSimulation("8"));
     }

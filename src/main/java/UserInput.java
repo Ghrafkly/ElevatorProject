@@ -1,7 +1,6 @@
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -77,7 +76,7 @@ public class UserInput {
                 case "stop" -> {
                     return true;
                 }
-                case "none" -> System.out.println("Error in user input");
+                case "", "none" -> System.out.println("Error in user input");
             }
         } while (!Objects.equals(input, "stop"));
 

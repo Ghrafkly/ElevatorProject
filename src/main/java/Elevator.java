@@ -1,10 +1,11 @@
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.OptionalInt;
 
-public class Elevator implements Runnable, FrameGUI
+public class Elevator implements Runnable, FrameGUI, Serializable
 {
     private final int TRAVEL_TIME_BETWEEN_FLOORS = 1000;
     private final int TIME_TO_OPEN_AND_CLOSE_DOOR = 1000;
@@ -160,8 +161,10 @@ public class Elevator implements Runnable, FrameGUI
      */
     public void openOrCloseElevator() throws InterruptedException
     {
+        EState prevState = moveState;
         moveState = EState.STOP;
         Thread.sleep(TIME_TO_OPEN_AND_CLOSE_DOOR);
+        moveState = prevState;
     }
 
     /**

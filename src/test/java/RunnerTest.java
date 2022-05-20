@@ -5,6 +5,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,12 +30,25 @@ public class RunnerTest {
     Thread a;
 
 
+    @Mock
+    FrameView fm;
+
+    @Mock
+    EController eController;
+
+    @Mock
+    Elevator elevator;
+
+    @Mock
+    ObjectMapper MAPPER;
 
 
+    Runner runner;
     @BeforeEach
     void setUp(){
 
         validate = new Validator();
+        runner = new Runner();
     }
 
     @Test
@@ -56,7 +70,14 @@ public class RunnerTest {
         verify(r, times(1)).stopThreads(a,a);
     }
 
-    //@Test
+    @Test
+    void test_StartThreads_closes_graphics() throws InterruptedException, IOException {
+
+        when(MAPPER.readValue(elevator, eController)).thenReturn(eController);
+        r.createObjects(file);
+
+        verify(MAPPER, times(1)).readValue(file);
+    }
 
 
 

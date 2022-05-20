@@ -2,13 +2,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.Scanner;
 
 public class UserInput {
     private final Validator v = new Validator();
     private static final Logger LOGGER = LogManager.getLogger(UserInput.class);
+    private String userInput = "";
 
     public boolean userInput(Thread commandGen, GenCommands genCommands) throws InterruptedException {
         boolean waitCheck = false;
@@ -20,8 +20,9 @@ public class UserInput {
             switch (v.valInput(input)) {
                 case "command" -> {
                     for (String str : v.getCommands()) {
+                        userInput = str;
                         LOGGER.info(str);
-                        Thread.sleep(1);
+                        Thread.sleep(500);
                     }
                     System.out.println("Command(s): " + v.getCommands());
                     v.setCommands(new ArrayList<>());
@@ -53,6 +54,10 @@ public class UserInput {
                                     GenCommands.simulation = justSim[0];
                                     GenCommands.floorLock = Integer.parseInt(justSim[1]);
                                 }
+                            } else {
+                                System.out.println("Simulation: " + justSim[0]);
+                                GenCommands.simulation = justSim[0];
+                                GenCommands.floorLock = 1;
                             }
                         }
                         default -> throw new IllegalStateException("Unexpected value: " + input);
@@ -63,5 +68,9 @@ public class UserInput {
         } while (!Objects.equals(input, "stop"));
 
         return true;
+    }
+
+    public String getUserInput() {
+        return userInput;
     }
 }

@@ -1,5 +1,3 @@
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -54,7 +52,6 @@ public class GenCommands implements Runnable {
      */
     public String getCommand() {
         return String.format(time + " " + command);
-
     }
 
     /**
@@ -116,19 +113,6 @@ public class GenCommands implements Runnable {
      */
     public void setTimeInterval(int timeInterval) {
         this.timeInterval = timeInterval;
-    }
-
-    /**
-     * Override method for toString()
-     *
-     * @return      Custom format string
-     */
-    @Override
-    public String toString() {
-        return "GenCommands{" +
-                "command='" + command + '\'' +
-                ", timeInterval=" + timeInterval +
-                '}';
     }
 
     /**

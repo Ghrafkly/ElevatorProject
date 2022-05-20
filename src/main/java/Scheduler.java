@@ -76,6 +76,52 @@ public class Scheduler implements Runnable {
     }
 
     /**
+     * This is the main loop logic of the Scheduler, it will continuously listen for inputs and send it to the
+     * assigned elevator.
+     */
+    public void listen() {
+        try {
+            Thread.sleep(300);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        tempGenCommandInput = genCommands.getCommand();
+        tempUserInput = userInputObj.getUserInput();
+
+        // Check to see if the GenCommand input is new
+        if (!tempGenCommandInput.equals(genCommandInput) && !tempGenCommandInput.isBlank()) {
+            genCommandInput = tempGenCommandInput;
+            processUserInput(genCommandInput);
+
+            // Loop through all the elevators and assign Events as required
+            for (Elevator elevator : elevators) {
+                manageEventList(elevator, schedulerEvents);
+            }
+        }
+
+        // Check to see if the UserInput input is new
+        if (!tempUserInput.equals(userInput) && !tempUserInput.isBlank()) {
+            userInput = tempUserInput;
+            processUserInput(userInput);
+
+            // Loop through all the elevators and assign Events as required
+            for (Elevator elevator : elevators) {
+                // Assign events to the appropriate elevator
+                manageEventList(elevator, schedulerEvents);
+            }
+        }
+
+        // Check to see if there are any leftover events in schedulerEvents that need to be processed
+        if (schedulerEvents.size() > 0) {
+            // Loop through all the elevators and assign Events as required
+            for (Elevator elevator : elevators) {
+                manageEventList(elevator, schedulerEvents);
+            }
+        }
+    }
+
+    /**
      * Getter for scheduler events, this will be used mostly for testing purposes.
      *
      * @return list of scheduler events
@@ -141,6 +187,7 @@ public class Scheduler implements Runnable {
         for (Event event : schedulerEvents) {
             int currFloor = elevator.getCurrentFloor();             // The current floor of the elevator
             int eventSrc = event.getSrc();                          // The source floor of event
+            int eventDest = event.getDest();                        // The destination floor of event
             EState eventDir = getDirection(event);                  // The direction from SRC to DEST
 
             /*
@@ -158,11 +205,11 @@ public class Scheduler implements Runnable {
             else if (elevator.getEvents().size() > 0) {
                 // As explained before, Elevator is considered a UP or DOWN elevator. We determine this by looking at the first event its given
                 EState direction = getDirection(elevator.getEvents().get(0));
-                int maxDest = elevator.getEvents().get(0).getDest();
+                int maxDest = elevator.getEvents().get(0).getSrc();
 
                 // If it's a UP elevator then grab jobs along the way that go UP also
                 if (direction == EState.UP
-                        && getDirection(event) == EState.UP
+                        && eventDir == EState.UP
                         && currFloor < eventSrc) {
                     manageEvent(maxCapacity, event, elevator);
                 }
@@ -171,7 +218,7 @@ public class Scheduler implements Runnable {
                         && eventDir == EState.UP
                         && elevator.getState() == EState.UP
                         && currFloor < eventSrc
-                        && maxDest < eventSrc) {
+                        && eventDest <= maxDest) {
                     manageEvent(maxCapacity, event, elevator);
                 }
                 // If it's a DOWN elevator that's going down then pick up DOWN jobs along the way

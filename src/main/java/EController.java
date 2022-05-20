@@ -1,3 +1,4 @@
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -107,5 +108,16 @@ public class EController {
      */
     public ArrayList<Elevator> getElevators() {
         return elevators;
+    }
+
+
+    /**
+     * For testing purposes
+     *
+     * @return      Array of thread
+     */
+    @JsonIgnore
+    public ArrayList<Thread> getThreads() {
+        return threads;
     }
 }

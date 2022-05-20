@@ -147,8 +147,10 @@ public class Elevator implements Runnable, FrameGUI {
      * @throws InterruptedException
      */
     public void openOrCloseElevator() throws InterruptedException {
-//        moveState = EState.STOP;
+        EState prevState = moveState;
+        moveState = EState.STOP;
         Thread.sleep(TIME_TO_OPEN_AND_CLOSE_DOOR);
+        moveState = prevState;
     }
 
     /**
@@ -306,6 +308,14 @@ public class Elevator implements Runnable, FrameGUI {
                 setMoveState(EState.DOWN);
             }
         }
+    }
+
+    /**
+     * For testing purposes
+     *
+     */
+    public void setPredictedCapacity(int predictedCapacity) {
+        this.predictedCapacity = predictedCapacity;
     }
 
     /**
